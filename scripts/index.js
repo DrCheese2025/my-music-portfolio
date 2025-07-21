@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = '<p class="loading">加载作品中...</p>';
 
     // 1. 加载JSON数据
-    fetch('../data/artworks.json')  //***********注意这里的相对路径
+    fetch('data/artworks.json')  //***********注意这里的相对路径
         .then(response => response.json())
         .then(works => {
             
