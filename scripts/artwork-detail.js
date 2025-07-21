@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 并行加载两个JSON文件
     Promise.all([
-        fetch('../data/artworks.json').then(res => res.json()),
-        fetch('../data/artworks-content.json').then(res => res.json())
+        fetch('/data/artworks.json').then(res => res.json()),
+        fetch('/data/artworks-content.json').then(res => res.json())
     ])
     .then(([artworks, worksContent]) => {
         // 查找当前作品
@@ -189,7 +189,7 @@ function createTabSystem(work, content) {
     }
 
     /*
-    // 如果要添加新的卡片，就添加以下代码
+    // 如果要添加新的卡片，就添加如下代码
     if (content.score_path) {
         tabs.push({
             id: 'story', 
