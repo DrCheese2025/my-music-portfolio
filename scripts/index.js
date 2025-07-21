@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = '<p class="loading">加载作品中...</p>';
 
     // 1. 加载JSON数据
-    fetch('/data/artworks.json')
+    fetch('data/artworks.json')
         .then(response => response.json())
         .then(works => {
             
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // 作品卡片的点击事件
                 workCard.addEventListener('click', () => {
                     // 跳转到详情页，传递作品ID
-                    window.location.href = `/pages/artwork-detail.html?id=${work.id}`;
+                    window.location.href = `pages/artwork-detail.html?id=${work.id}`;
                 });
                 // 阻止音频控制条的点击事件冒泡
                 if (work.type === 'audio') {
