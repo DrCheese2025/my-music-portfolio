@@ -1,0 +1,26 @@
+Code/
+│── index.html        	# 主页面
+│── pages/           	# 其它html页面
+   		└── artwork-detail.html	# 作品详情页
+│── scripts/           	# JavaScript代码
+   		└── index.js   		# 动态加载数据的逻辑
+   		└── artwork-detail.js   	# 动态加载数据的逻辑
+│── styles/            	# CSS样式
+   		└── index.css 		# index页面的css文件
+   		└── artwork-detail.css 	# 作品详情页面的css文件
+│── data/           	# 数据
+   		└── artworks.json  		# 作品元数据
+   		└── artworks-content.json 	# 作品附加信息
+│── artwork/          	# 作品文件
+			└── audio/	# 音频
+	           			└── aud-2024-001.mp3
+	           			└── aud-2024-002.mp3
+	           			└── aud-2025-001.mp3
+			└── score/	# 曲谱
+	           			└── aud-2024-001-score.jpg
+	           			└── aud-2024-002-score.jpg
+	           			└── aud-2025-001-score.jpg
+			└── video/	# 视频
+	           			└── vid-2024-001.mp4
+			└── cover/	# 视频封面
+	           			└── vid-2024-001-cover.webp
