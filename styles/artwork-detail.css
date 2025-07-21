@@ -1,0 +1,369 @@
+/*
+ * 作品详情页专用样式 - 最终修订版
+ * 基于初版配色方案 + 新版结构化组织
+ * 
+ * 配色方案完全采用初版设计：
+ * - 歌词区域背景: #f9f9f9
+ * - 备注区域背景: #f9f9f9
+ * - 内容区域背景: #fff
+ * - 主背景色: #f5f5f5
+ * - 文本颜色: #333 / #555 / #7f8c8d
+ * - 标题颜色: #2c3e50
+ */
+
+/* ==================== 全局样式 ==================== */
+/* 重置所有元素的默认样式，确保跨浏览器一致性 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 页面基础样式 */
+body {
+    background-color: #f5f5f5; /* 初版浅灰背景 */
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==================== 头部样式 ==================== */
+.detail-header {
+    background-color: #fff; /* 初版白色 */
+    padding: 20px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* 返回按钮样式 - 保持初版圆形设计 */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-right: 20px;
+    color: #2c3e50; /* 初版标题色 */
+    text-decoration: none;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+/* 返回按钮悬停效果 - 轻微灰色背景 */
+.back-button:hover {
+    background-color: #f0f0f0; /* 初版悬停色 */
+}
+
+/* 头部标题样式 */
+.detail-header h1 {
+    font-size: 1.5rem;
+    color: #2c3e50; /* 初版标题色 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+/* ==================== 主内容区布局 ==================== */
+/* 桌面端采用两栏布局，左侧媒体内容(2fr)，右侧作品信息(1fr) */
+.detail-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 30px;
+    width: 100%;
+}
+
+/* 左侧内容容器 */
+.left-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 控制媒体区和备注区的间距 */
+}
+
+/* ==================== 媒体展示区 ==================== */
+
+/* 媒体展示区 - 作为左侧内容的第一部分 */
+.media-display {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+/* 视频展示区 - 保持16:9比例 */
+.video-display {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+}
+
+/* 视频元素样式 */
+.video-display video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* 音频展示区 - 简化设计 */
+.audio-display {
+    background-color: #fff; /* 初版白色 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* 音频控件样式 */
+.audio-display audio {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* ==================== 标签页系统 ==================== */
+/* 标签页容器 - 极简风格 */
+.tab-container {
+    margin-top: 20px;
+    background-color: #fff; /* 初版白色 */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* 标签导航栏 - 极简设计 */
+.tab-nav {
+    display: flex;
+    background-color: #fff; /* 初版白色 */
+}
+
+/* 标签按钮 - 完全无装饰的极简设计 */
+.tab-button {
+    flex: 1;
+    padding: 12px 0;
+    border: none;
+    background: none;
+    font-size: 1rem;
+    color: #7f8c8d; /* 初版浅灰文本 */
+    cursor: pointer;
+    transition: color 0.2s;
+    text-align: center;
+    outline: none;
+}
+
+/* 活动标签样式 - 仅改变颜色 */
+.tab-button.active {
+    color: #2c3e50; /* 初版标题色 */
+    font-weight: normal;
+}
+
+/* 标签内容区域 */
+.tab-content {
+    padding: 0;
+    background-color: #f9f9f9; /* 初版歌词区灰色背景 */
+}
+
+/* 标签面板 - 默认隐藏 */
+.tab-pane {
+    display: none;
+    padding: 20px;
+    background-color: #f9f9f9; /* 初版歌词区灰色背景 */
+    border-radius: 0 0 8px 8px;
+}
+
+/* 活动标签面板 */
+.tab-pane.active {
+    display: block;
+}
+
+/* 标签内容通用样式 */
+.tab-pane-content {
+    white-space: pre-line;
+    line-height: 1.8;
+    font-size: 1rem;
+    color: #555; /* 初版次要文本色 */
+}
+
+/* 曲谱图片样式 */
+.score-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* ==================== 备注区域 ==================== */
+/* 备注区域 - 作为左侧内容的第二部分 */
+.notes-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+/* 备注内容样式 */
+.notes-content {
+    white-space: pre-line;
+    line-height: 1.8;
+    font-size: 1rem;
+    color: #555; /* 初版次要文本色 */
+}
+
+/* ==================== 作品信息区 ==================== */
+/* 右侧固定信息区 */
+.content-display {
+    background-color: #fff; /* 初版白色 */
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 84px;
+    align-self: start;
+}
+
+/* 作品信息内部布局 */
+.work-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 作品信息标题样式 */
+.work-info h2 {
+    font-size: 1.3rem;
+    color: #2c3e50; /* 初版标题色 */
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+/* 元数据项布局 */
+.meta-item {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* 元数据标签样式 */
+.meta-item strong {
+    min-width: 80px;
+    color: #7f8c8d; /* 初版浅灰文本 */
+}
+
+/* 元数据内容样式 */
+.meta-item span {
+    flex: 1;
+    color: #333; /* 初版主文本色 */
+}
+
+/* ==================== 加载状态 ==================== */
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d; /* 初版浅灰文本 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ==================== 页脚 ==================== */
+.detail-footer {
+    text-align: center;
+    padding: 20px;
+    color: #7f8c8d; /* 初版浅灰文本 */
+    font-size: 0.9rem;
+    background-color: #fff; /* 初版白色 */
+    border-top: 1px solid #eee;
+    margin-top: auto;
+}
+
+/* ==================== 响应式设计 ==================== */
+
+/* 平板设备适配 (992px及以下) */
+@media (max-width: 992px) {
+    .detail-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    /* 左侧内容在移动端不需要额外gap */
+    .left-content {
+        gap: 0;
+    }
+    
+    /* 移动端媒体区和备注区之间添加间距 */
+    .media-display {
+        margin-bottom: 20px;
+    }
+}
+
+/* 移动设备适配 (768px及以下) */
+@media (max-width: 768px) {
+    .detail-header {
+        padding: 15px 20px;
+    }
+    
+    .back-button {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+    }
+    
+    .detail-header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .content-display {
+        padding: 20px;
+    }
+    
+    /* 标签页调整 */
+    .tab-button {
+        padding: 10px 0;
+        font-size: 0.9rem;
+    }
+    
+    .tab-pane {
+        padding: 15px;
+    }
+}
+
+/* 小屏幕手机适配 (480px及以下) */
+@media (max-width: 480px) {
+    .detail-header {
+        padding: 12px 15px;
+    }
+    
+    .detail-container {
+        padding: 0 15px;
+        margin: 15px auto;
+        gap: 15px;
+    }
+    
+    .content-display,
+    .media-display {
+        padding: 15px;
+    }
+    
+    /* 标签页调整 */
+    .tab-button {
+        padding: 8px 0;
+        font-size: 0.85rem;
+    }
+    
+    .tab-pane {
+        padding: 12px;
+    }
+}
