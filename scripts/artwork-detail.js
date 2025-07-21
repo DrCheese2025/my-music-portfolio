@@ -63,16 +63,18 @@ document.addEventListener('DOMContentLoaded', () => {
  * @param {HTMLElement} container 容器元素
  */
 function renderMedia(work, container) {
-    if (work.type === 'audio') {
+   if (work.type === 'audio') {
+        // 音频作品渲染逻辑
         container.innerHTML = `
             <div class="audio-display">
                 <audio controls preload="metadata" src="../${work.file_path}"></audio>
             </div>
         `;
     } else {
+        // 视频作品渲染逻辑
         container.innerHTML = `
             <div class="video-display">
-                <video controls preload="metadata" poster="../${work.cover_path || '../placeholder.jpg'}">
+                <video controls preload="metadata" poster="../${work.cover_path || '../placeholder.webp'}">
                     <source src="../${work.file_path}" type="video/mp4">
                     您的浏览器不支持HTML5视频
                 </video>

@@ -47,11 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 : `<div class="media-container">
                     <video controls preload="metadata">
                         <picture>
-                            <source srcset="${work.cover_path?.replace('.jpg', '.webp')}" type="image/webp">
                             <img src="${work.cover_path || 'placeholder.jpg'}" alt="${work.title}封面">
                         </picture>
                         <source src="${work.file_path}" type="video/mp4">
                     </video>
+                    
                 </div>`;
                 /*  preload模式，只预加载多媒体的元数据，加载更快。webp比jpg图片体积小。 */
                 
