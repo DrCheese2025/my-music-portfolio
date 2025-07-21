@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 并行加载两个JSON文件
     Promise.all([
-        fetch('/data/artworks.json').then(res => res.json()),
-        fetch('/data/artworks-content.json').then(res => res.json())
+        fetch('../data/artworks.json').then(res => res.json()),
+        fetch('../data/artworks-content.json').then(res => res.json())
     ])
     .then(([artworks, worksContent]) => {
         // 查找当前作品
@@ -66,14 +66,14 @@ function renderMedia(work, container) {
     if (work.type === 'audio') {
         container.innerHTML = `
             <div class="audio-display">
-                <audio controls preload="metadata" src="${work.file_path}"></audio>
+                <audio controls preload="metadata" src="../${work.file_path}"></audio>
             </div>
         `;
     } else {
         container.innerHTML = `
             <div class="video-display">
-                <video controls preload="metadata" poster="${work.cover_path || 'placeholder.jpg'}">
-                    <source src="${work.file_path}" type="video/mp4">
+                <video controls preload="metadata" poster="../${work.cover_path || '../placeholder.jpg'}">
+                    <source src="../${work.file_path}" type="video/mp4">
                     您的浏览器不支持HTML5视频
                 </video>
             </div>
@@ -184,7 +184,7 @@ function createTabSystem(work, content) {
         tabs.push({
             id: 'score', 
             label: '曲谱', 
-            content: `<img src="${content.score_path}" alt="曲谱" class="score-image">`
+            content: `<img src="../${content.score_path}" alt="曲谱" class="score-image">`
         });
     }
 
