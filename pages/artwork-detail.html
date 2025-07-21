@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 
+        基本元数据设置
+        - charset: 确保中文字符正确显示
+        - viewport: 响应式设计必备
+        - title: 动态设置的作品标题
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品详情 | 我的多媒体作品集</title>
+    
+    <!-- 引入详情页专用CSS -->
+    <link rel="stylesheet" href="../styles/artwork-detail.css">
+    
+    <!-- 预加载返回图标（使用SVG更高效） -->
+    <link rel="preload" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE1LjQxIDE2LjA5TDEwLjgzIDEybDQuNTgtNC41OUwxNCA2bC02IDYgNiA2IDEuNDEtMS40MXoiIGZpbGw9IiMzMzMiLz48L3N2Zz4=" as="image">
+</head>
+<body>
+    <!-- 页面头部 -->
+    <header class="detail-header">
+        <!-- 返回按钮 -->
+        <a href="../index.html" class="back-button" aria-label="返回作品列表">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M15.41 16.09L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" fill="currentColor"/>
+            </svg>
+        </a>
+        <h1 id="detail-title">作品详情</h1>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="detail-container">
+        <!-- 左侧内容容器 -->
+        <div class="left-content">
+            <!-- 媒体展示区 -->
+            <div class="media-display" id="media-container">
+                <p class="loading">加载作品中...</p>
+            </div>
+            <!-- 备注区域将由JS动态添加到这里 -->
+        </div>
+        
+        <!-- 右侧作品信息区 -->
+        <div class="content-display" id="content-container"></div>
+    </main>
+    
+    <!-- 页脚 -->
+    <footer class="detail-footer">
+        <p>© 2025 我的多媒体作品集 | 所有权利保留</p>
+    </footer>
+    
+    <!-- 引入详情页JavaScript -->
+    <script src="../scripts/artwork-detail.js"></script>
+</body>
+</html>

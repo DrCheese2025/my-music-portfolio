@@ -1,0 +1,37 @@
+<!-- 主页面 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 选择字符集，确保中文字符正确显示 -->
+    <meta charset="UTF-8"> 
+    <!-- 使页面在不同设备上都能正确缩放 --> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 页面标题，显示在浏览器标签页上-->
+    <title>我的音乐作品集</title>
+    <!-- 引入外部CSS样式文件 -->
+    <link rel="stylesheet" href="styles/index.css">
+</head>
+<body>
+    <!-- 页面头部区域 -->
+    <header>
+        <h1>我的音乐作品集</h1>
+        <p class="description">写歌的人表达自我，听歌的人寻找自我。</p>
+    </header>
+    
+    <!-- 作品展示区域 -->
+    <main>
+        <!-- 初始时显示加载状态，JavaScript会在这里插入作品卡片 -->
+        <div class="works-container" id="works-container">
+        </div>
+    </main>
+
+    <!-- 页脚区域 -->
+    <footer>
+        <p>© 2025 我的音乐作品集 | 所有权利保留</p>
+    </footer>
+
+    <!-- 引入JavaScript，动态加载作品信息 -->
+    <script src="scripts/index.js"></script>
+         
+</body>
+</html>
