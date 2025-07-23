@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品详情 | 我的多媒体作品集</title>
     <!-- 
         基本元数据设置
         - charset: 确保中文字符正确显示
         - viewport: 响应式设计必备
         - title: 动态设置的作品标题
     -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>作品详情 | 我的多媒体作品集</title>
     
     <!-- 引入详情页专用CSS -->
     <link rel="stylesheet" href="../styles/artwork-detail.css">
@@ -34,8 +34,11 @@
         <!-- 左侧内容容器 -->
         <div class="left-content">
             <!-- 媒体展示区 -->
-            <div class="media-display" id="media-container">
-                <p class="loading">加载作品中...</p>
+            <div class="media-display" id="media-container" >
+                <!-- 初始时显示加载状态，若加载出错则显示错误提示 -->
+                <div class="loading-state" aria-live="polite">
+                    <p class="loading">加载作品中...</p>
+                </div>
             </div>
             <!-- 备注区域将由JS动态添加到这里 -->
         </div>

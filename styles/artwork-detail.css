@@ -268,7 +268,7 @@ body {
 }
 
 /* ==================== 加载状态 ==================== */
-.loading {
+.loading-state {
     text-align: center;
     padding: 40px;
     color: #7f8c8d; /* 初版浅灰文本 */

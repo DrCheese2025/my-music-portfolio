@@ -2,8 +2,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <!-- 选择字符集，确保中文字符正确显示 -->
-    <meta charset="UTF-8"> 
+    <meta charset="UTF-8">      <!-- 选择字符集，确保中文字符正确显示 -->
     <!-- 使页面在不同设备上都能正确缩放 --> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 页面标题，显示在浏览器标签页上-->
@@ -20,8 +19,13 @@
     
     <!-- 作品展示区域 -->
     <main>
-        <!-- 初始时显示加载状态，JavaScript会在这里插入作品卡片 -->
+        <!-- 修改后的 works-container 部分 -->
         <div class="works-container" id="works-container">
+            <!-- 初始时显示加载状态，若加载出错则显示错误提示 -->
+            <div class="loading-state" aria-live="polite">
+                <p class="loading">加载作品中...</p>
+            </div>
+            <!-- 作品卡片将在这里由JS动态添加 -->
         </div>
     </main>
 
