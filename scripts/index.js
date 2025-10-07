@@ -213,18 +213,18 @@ function createWorkInfoHTML(work) {
         
         <!-- 元数据部分 -->
         <div class="work-meta">
-            <!-- 基础信息 -->
+            <!-- 标题 -->
             <div class="meta-item"><strong>类别:</strong> ${work.tag}</div>
+
+            <!-- 副标题 -->
+            ${work.subtitle ? `<div class="meta-item"><strong>作者:</strong> ${work.subtitle}</div>` : '\n'}
             
             <!-- 创作者信息 -->
-            ${work.creator ? `<div class="meta-item"><strong>作者:</strong> ${work.creator}</div>` : ''}
-            
-            <!-- 时间信息 -->
-            <div class="meta-item"><strong>创作时间:</strong> ${work.create_date}</div>
+            ${work.creator ? `<div class="meta-item"><strong>作者:</strong> ${work.creator}</div>` : '\n'}
             
             <!-- 作品ID -->
             <div class="meta-item">
-                <span class="work-id">ID: ${work.id}</span>
+                <span class="work-id">${work.id-info}</span>
             </div>
         </div>
     </div>
