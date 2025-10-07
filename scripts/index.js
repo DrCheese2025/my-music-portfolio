@@ -224,7 +224,7 @@ function createWorkInfoHTML(work) {
             
             <!-- 作品ID -->
             <div class="meta-item">
-                <span class="work-id">${work.id-info}</span>
+                <span class="work-id">${work.id_info}</span>
             </div>
         </div>
     </div>
