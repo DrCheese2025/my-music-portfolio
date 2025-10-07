@@ -211,10 +211,7 @@ function generateWorkInfoHTML(work) {
         <div class="meta-item"><strong>类别:</strong> <span>${work.tag}</span></div>
         
         <!-- 创作人员信息 -->
-        ${work.author ? `<div class="meta-item"><strong>作者:</strong> <span>${work.author}</span></div>` : ''}
-        ${work.songwriter ? `<div class="meta-item"><strong>词曲:</strong> <span>${work.songwriter}</span></div>` : ''}
-        ${work.singer ? `<div class="meta-item"><strong>演唱:</strong> <span>${work.singer}</span></div>` : ''}
-        ${work.accompanist ? `<div class="meta-item"><strong>伴奏:</strong> <span>${work.accompanist}</span></div>` : ''}
+        ${work.creator ? `<div class="meta-item"><strong>词曲编混唱:</strong> <span>${work.author}</span></div>` : ''}
         
         <!-- 其他信息 -->
         ${work.duration ? `<div class="meta-item"><strong>时长:</strong> <span>${work.duration}</span></div>` : ''}

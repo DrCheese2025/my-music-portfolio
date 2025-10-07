@@ -5,9 +5,6 @@
     "type": "audio",
     "tag": "原创音乐",
     "creator": "鸥波萍迹",
-    "songwriter": "鸥波萍迹",
-    "singer": "鸥波萍迹",
-    "accompanist": "鸥波萍迹",
     "create_date": "2025年1月",
     "duration": "2分38秒",
     "file_path": "artwork/audio/aud-2025-001.mp3"
@@ -19,9 +16,6 @@
     "type": "audio",
     "tag": "原创音乐",
     "creator": "鸥波萍迹",
-    "songwriter": "鸥波萍迹",
-    "singer": "鸥波萍迹",
-    "accompanist": "鸥波萍迹",
     "create_date": "2024年11月",
     "duration": "3分34秒",
     "file_path": "artwork/audio/aud-2024-002.mp3"
@@ -32,7 +26,6 @@
     "type": "video",
     "tag": "音乐MV",
     "creator": "鸥波萍迹",
-    "author": "鸥波萍迹",
     "create_date": "2024年8月",
     "duration": "3分08秒",
     "file_path": "artwork/video/vid-2024-001.mp4",
@@ -45,9 +38,6 @@
     "type": "audio",
     "tag": "原创音乐",
     "creator": "鸥波萍迹",
-    "songwriter": "鸥波萍迹",
-    "singer": "鸥波萍迹",
-    "accompanist": "鸥波萍迹",
     "create_date": "2024年4月",
     "duration": "2分48秒",
     "file_path": "artwork/audio/aud-2024-001.mp3"
