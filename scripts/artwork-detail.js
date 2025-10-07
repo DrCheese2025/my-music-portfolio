@@ -205,18 +205,14 @@ function generateWorkInfoHTML(work) {
     return `
         <h2>作品信息</h2>
         
-        <!-- 基础信息 -->
-        <div class="meta-item"><strong>标题:</strong> <span>${work.title}</span></div>
-        ${work.subtitle ? `<div class="meta-item"><strong>副标题:</strong> <span>${work.subtitle}</span></div>` : ''}
-        <div class="meta-item"><strong>类别:</strong> <span>${work.tag}</span></div>
-        
-        <!-- 创作人员信息 -->
-        ${work.creator ? `<div class="meta-item"><strong>词曲编混唱:</strong> <span>${work.author}</span></div>` : ''}
-        
-        <!-- 其他信息 -->
-        ${work.duration ? `<div class="meta-item"><strong>时长:</strong> <span>${work.duration}</span></div>` : ''}
-        <div class="meta-item"><strong>创作时间:</strong> <span>${work.create_date}</span></div>
-        <div class="meta-item"><strong>作品ID:</strong> <span>${work.id}</span></div>
+        <div class="meta-item"><strong>作品ID：</strong> <span>${work.id}</span></div>
+        <div class="meta-item"><strong>标题：</strong> <span>${work.title}</span></div>
+        ${work.subtitle ? `<div class="meta-item"><strong>副标题：</strong> <span>${work.subtitle}</span></div>` : ''}
+        ${work.tag ? `<div class="meta-item"><strong>标签：</strong> <span>${work.tag}</span></div>` : ''}
+        ${work.creator ? `<div class="meta-item"><strong>词曲编混唱：</strong> <span>${work.creator}</span></div>` : ''}
+        ${work.create_date ? `<div class="meta-item"><strong>完成时间：</strong> <span>${work.create_date}</span></div>` : ''}
+        ${work.ISRC ? `<div class="meta-item"><strong>ISRC编码：</strong> <span>${work.create_date}</span></div>` : ''}
+
     `;
 }
 
