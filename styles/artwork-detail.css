@@ -257,7 +257,7 @@ body {
 
 /* 元数据标签样式 */
 .meta-item strong {
-    min-width: 80px;
+    min-width: 100px;
     color: #7f8c8d; /* 初版浅灰文本 */
 }
 

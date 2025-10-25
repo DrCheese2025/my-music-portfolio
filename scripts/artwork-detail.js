@@ -36,6 +36,12 @@ const TAB_CONFIG = {
         render: (content) => content.score_path 
         ? `<img src="../${content.score_path}" alt="曲谱" class="score-image">`
         : null
+    },
+    // 创作故事标签配置
+    stories: {
+        label: '创作故事',  // 标签显示文本
+        // 渲染函数 - 返回创作故事内容
+        render: (content) => content.stories 
     }
     // 可以在此处添加新的标签页配置
 };
@@ -204,22 +210,23 @@ function renderMedia(work, container) {
 function generateWorkInfoHTML(work) {
     return `
         <h2>作品信息</h2>
-        
-        <!-- 基础信息 -->
-        <div class="meta-item"><strong>标题:</strong> <span>${work.title}</span></div>
-        ${work.subtitle ? `<div class="meta-item"><strong>副标题:</strong> <span>${work.subtitle}</span></div>` : ''}
-        <div class="meta-item"><strong>类别:</strong> <span>${work.tag}</span></div>
-        
-        <!-- 创作人员信息 -->
-        ${work.author ? `<div class="meta-item"><strong>作者:</strong> <span>${work.author}</span></div>` : ''}
-        ${work.songwriter ? `<div class="meta-item"><strong>词曲:</strong> <span>${work.songwriter}</span></div>` : ''}
-        ${work.singer ? `<div class="meta-item"><strong>演唱:</strong> <span>${work.singer}</span></div>` : ''}
-        ${work.accompanist ? `<div class="meta-item"><strong>伴奏:</strong> <span>${work.accompanist}</span></div>` : ''}
-        
-        <!-- 其他信息 -->
-        ${work.duration ? `<div class="meta-item"><strong>时长:</strong> <span>${work.duration}</span></div>` : ''}
-        <div class="meta-item"><strong>创作时间:</strong> <span>${work.create_date}</span></div>
+
+        <!-- 作品ID -->
         <div class="meta-item"><strong>作品ID:</strong> <span>${work.id}</span></div>
+
+        <!-- 作品标题 -->
+        <div class="meta-item"><strong>标题:</strong> <span>${work.title}</span></div>
+        <!-- 作品副标题 -->
+        ${work.subtitle ? `<div class="meta-item"><strong>副标题:</strong> <span>${work.subtitle}</span></div>` : ''}
+        <!-- 作品类别 -->
+        <div class="meta-item"><strong>类别:</strong> <span>${work.tag}</span></div>
+        <!-- 创作人员信息 -->
+        ${work.creator ? `<div class="meta-item"><strong>词曲编混唱:</strong> <span>${work.creator}</span></div>` : ''}
+        <!-- 完成时间 -->
+        <div class="meta-item"><strong>创作时间:</strong> <span>${work.create_date}</span></div>
+        <!-- ISRC编码 -->
+        ${work.isrc ? `<div class="meta-item"><strong>词曲编混唱:</strong> <span>${work.isrc}</span></div>` : ''}
+        
     `;
 }
 

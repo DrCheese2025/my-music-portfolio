@@ -1,42 +1,45 @@
 [
   {
-    "id": "AUD-2025-001",
+    "id": "S003",
     "title": "睡不着的夜晚星河璀璨",
     "type": "audio",
+    "tag": "歌曲",
     "creator": "鸥波萍迹",
     "create_date": "2025年1月",
     "duration": "2分38秒",
-    "file_path": "artwork/audio/aud-2025-001.mp3"
+    "file_path": "artwork/audio/S003-media.mp3"
   },
   {
-    "id": "AUD-2024-002",
+    "id": "S002",
     "title": "我想化作风",
     "subtitle":"写给S的思念",
     "type": "audio",
+    "tag": "歌曲",
     "creator": "鸥波萍迹",
     "create_date": "2024年11月",
     "duration": "3分34秒",
-    "file_path": "artwork/audio/aud-2024-002.mp3"
+    "file_path": "artwork/audio/S002-media.mp3"
   },
   {
-    "id": "VID-2024-001",
+    "id": "V001",
     "title": "《写给春天的歌》MV",
     "type": "video",
     "tag": "音乐MV",
     "creator": "鸥波萍迹",
     "create_date": "2024年8月",
     "duration": "3分08秒",
-    "file_path": "artwork/video/vid-2024-001.mp4",
-    "cover_path": "artwork/cover/vid-2024-001-cover.webp"
+    "file_path": "artwork/video/V001-media.mp4",
+    "cover_path": "artwork/cover/V001-cover.webp"
   },
   {
-    "id": "AUD-2024-001",
+    "id": "S001",
     "title": "写给春天的歌",
     "subtitle":"献给最敬爱的人",
     "type": "audio",
+    "tag": "歌曲",
     "creator": "鸥波萍迹",
     "create_date": "2024年4月",
     "duration": "2分48秒",
-    "file_path": "artwork/audio/aud-2024-001.mp3"
+    "file_path": "artwork/audio/S001-media.mp3"
   }
 ]
