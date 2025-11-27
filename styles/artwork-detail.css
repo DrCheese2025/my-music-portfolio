@@ -28,6 +28,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll; /* 始终显示竖直滚动条 */
 }
 
 /* ==================== 头部样式 ==================== */
@@ -61,14 +62,35 @@ body {
     background-color: #f0f0f0; /* 初版悬停色 */
 }
 
+/* 页面标题组样式 */
+.page-title-group {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+}
+
 /* 头部标题样式 */
-.detail-header h1 {
+#detail-title {
     font-size: 1.5rem;
     color: #2c3e50; /* 初版标题色 */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
+}
+
+/* 头部副标题样式 */
+.brand-subtitle {
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: normal;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+/* 悬停时显示完整品牌信息 */
+.detail-header:hover .brand-subtitle {
+    opacity: 1;
 }
 
 /* ==================== 主内容区布局 ==================== */
@@ -306,6 +328,19 @@ body {
     /* 移动端媒体区和备注区之间添加间距 */
     .media-display {
         margin-bottom: 20px;
+    }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .page-title-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .brand-subtitle {
+        font-size: 0.8rem;
     }
 }
 

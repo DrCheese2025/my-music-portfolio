@@ -1,0 +1,335 @@
+/*
+ * 动态页面专用样式
+ * 基于现有配色方案和设计风格
+ */
+
+/* ==================== 全局样式 ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll; /* 始终显示竖直滚动条 */
+}
+
+/* ==================== 头部样式 ==================== */
+.detail-header {
+    background-color: #fff;
+    padding: 20px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-right: 20px;
+    color: #2c3e50;
+    text-decoration: none;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #f0f0f0;
+}
+
+/* 页面标题组样式 */
+.page-title-group {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+}
+
+/* 头部标题样式 */
+#detail-title {
+    font-size: 1.5rem;
+    color: #2c3e50; /* 初版标题色 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+/* 头部副标题样式 */
+.brand-subtitle {
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: normal;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+/* 悬停时显示完整品牌信息 */
+.detail-header:hover .brand-subtitle {
+    opacity: 1;
+}
+
+
+/* ==================== 主内容区 ==================== */
+.dynamics-container {
+    flex: 1;
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 30px;
+    width: 100%;
+}
+
+/* 动态列表容器 */
+.dynamics-list {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* ==================== 动态卡片 ==================== */
+.dynamic-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 将来如果要点击卡片跳转，那么这几行代码就可以使用，所以保留 */
+/* 
+.dynamic-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+*/
+
+/* 动态头部信息 */
+.dynamic-header {
+    display: flex;
+    justify-content: between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dynamic-meta {
+    flex: 1;
+    min-width: 200px;
+}
+
+.dynamic-title {
+    font-size: 1.3rem;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.dynamic-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+.dynamic-date {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.dynamic-type {
+    background-color: #eaeaea;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+/* 动态内容 */
+.dynamic-content {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    white-space: pre-line;
+}
+
+/* 封面图片 */
+.dynamic-cover {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+/* ==================== 附件样式 ==================== */
+.dynamic-attachments {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.attachment-item {
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.attachment-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.attachment-icon {
+    font-size: 1.1rem;
+}
+
+.attachment-content audio {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* ==================== 加载状态 ==================== */
+.loading-state {
+    text-align: center;
+    padding: 40px;
+    color: #7f8c8d;
+}
+
+.loading-state.error-state {
+    background-color: #ffeeee;
+    border: 1px solid #ffcccc;
+    border-radius: 4px;
+}
+
+.loading-state.error-state button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.loading-state.error-state button:hover {
+    background-color: #e9ecef;
+}
+
+/* ==================== 空状态 ==================== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #7f8c8d;
+}
+
+.empty-state .icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* ==================== 页脚 ==================== */
+.dynamics-footer {
+    text-align: center;
+    padding: 20px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    margin-top: auto;
+}
+
+/* ==================== 响应式设计 ==================== */
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .page-title-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .brand-subtitle {
+        font-size: 0.8rem;
+    }
+}
+
+
+/* 平板设备适配 */
+@media (max-width: 768px) {
+    .dynamics-header {
+        padding: 15px 20px;
+    }
+    
+    .back-button {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+    }
+    
+    .dynamics-header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .dynamics-container {
+        padding: 0 20px;
+        margin: 20px auto;
+    }
+    
+    .dynamic-card {
+        padding: 20px;
+    }
+    
+    .dynamic-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .dynamic-type {
+        align-self: flex-start;
+    }
+}
+
+/* 移动设备适配 */
+@media (max-width: 480px) {
+    .dynamics-header {
+        padding: 12px 15px;
+    }
+    
+    .dynamics-container {
+        padding: 0 15px;
+        margin: 15px auto;
+    }
+    
+    .dynamic-card {
+        padding: 15px;
+    }
+    
+    .dynamic-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .dynamic-title {
+        font-size: 1.1rem;
+    }
+}

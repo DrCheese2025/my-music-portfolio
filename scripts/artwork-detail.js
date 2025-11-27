@@ -46,6 +46,13 @@ const TAB_CONFIG = {
     // 可以在此处添加新的标签页配置
 };
 
+// 页面来源配置
+const PAGE_SOURCES = {
+    index: '../index.html',
+    artworks: '../pages/artworks.html',
+    dynamics: '../pages/dynamics.html',
+    external: '../index.html' // 默认值
+};
 
 /* **************************************
  *              主流程代码               *
@@ -64,6 +71,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!workId) {
         throw new Error(ERROR_MSG.NO_ID);
         }
+        
+        // 设置返回按钮
+        setupBackButton();
         
         // 加载作品数据
         const [work, content] = await loadWorkData(workId);
@@ -216,8 +226,15 @@ function generateWorkInfoHTML(work) {
 
         <!-- 作品标题 -->
         <div class="meta-item"><strong>标题:</strong> <span>${work.title}</span></div>
-        <!-- 作品副标题 -->
-        ${work.subtitle ? `<div class="meta-item"><strong>副标题:</strong> <span>${work.subtitle}</span></div>` : ''}
+
+        <!-- 副标题，添加彩蛋功能 -->
+            ${work.subtitle ? `
+            <div class="meta-item">
+                <strong>副标题:</strong> 
+                <span ${work.id === 'S001' ? 'id="thanksgiving-trigger"' : ''}>${work.subtitle}</span>
+            </div>
+        ` : ''}
+
         <!-- 作品类别 -->
         <div class="meta-item"><strong>类别:</strong> <span>${work.tag}</span></div>
         <!-- 创作人员信息 -->
@@ -377,7 +394,7 @@ function createTabSystem(content) {
  */
 function renderWorkDetail(work, content) {
     // 设置页面标题
-    document.title = `${work.title} | 我的多媒体作品集`;
+    document.title = `${work.title} | 鸥波艺境`;
     document.getElementById('detail-title').textContent = work.title;
     
     // 渲染媒体内容
@@ -385,4 +402,111 @@ function renderWorkDetail(work, content) {
     
     // 渲染文字内容
     renderContent(work, content, document.getElementById('content-container'));
+
+    // 初始化2025感恩节彩蛋（只在特定作品页面）
+    initThanksgivingEasterEgg(work);
+}
+
+
+/* **************************************
+ *            页面返回函数               *
+ * **************************************/
+
+/**
+ * 设置返回按钮链接
+ * 优先使用sessionStorage记录的来源，其次根据referrer推断
+ */
+function setupBackButton() {
+    const backButton = document.querySelector('.back-button');
+    if (!backButton) return;
+    
+    // 获取来源，优先用sessionStorage，其次用referrer判断
+    let source = sessionStorage.getItem('artworkSource');
+    if (!source) {
+        // 根据上一页URL判断来源
+        const referrer = document.referrer;
+        if (referrer.includes('artworks.html')) source = 'artworks';
+        else if (referrer.includes('index.html') || referrer.endsWith('/')) source = 'index';
+        else source = 'index'; // 默认返回首页
+    }
+    
+    // 设置返回链接
+    if (source === 'artworks') {
+        backButton.href = '../pages/artworks.html';
+    } else {
+        backButton.href = '../index.html';
+    }
+    
+    // 清除记录
+    sessionStorage.removeItem('artworkSource');
+}
+
+
+/* **************************************
+ *            2025感恩节彩蛋             *
+ * **************************************/
+
+/**
+ * 初始化感恩节彩蛋
+ * 只在《写给春天的歌》页面显示（作品ID: S001）
+ */
+function initThanksgivingEasterEgg(work) {
+    // 只在特定作品页面启用彩蛋
+    if (work.id !== 'S001') return;
+    
+    const trigger = document.getElementById('thanksgiving-trigger');
+    if (!trigger) return;
+
+    // 为副标题添加特效类名
+    trigger.classList.add('subtitle-clickable');
+    
+    // 创建彩蛋HTML结构 - 将关闭按钮移到卡片外部
+    const easterEggHTML = `
+        <div class="thanksgiving-overlay" id="thanksgiving-easter-egg">
+            <button class="thanksgiving-close" aria-label="关闭">×</button>
+            <div class="thanksgiving-card">
+                <div class="thanksgiving-heart">❤️</div>
+                <div class="thanksgiving-message">
+                    <div class="line1">特别的爱给特别的你</div>
+                    <div class="line2">愿您开心快乐</div>
+                    <div class="line3">鸥波萍迹 2025感恩节</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // 插入到页面
+    document.body.insertAdjacentHTML('beforeend', easterEggHTML);
+    
+    const overlay = document.getElementById('thanksgiving-easter-egg');
+    const closeBtn = overlay.querySelector('.thanksgiving-close');
+    
+    // 计算滚动条宽度-防止弹出彩蛋时页面左右跳动
+    function getScrollbarWidth() {
+        return window.innerWidth - document.documentElement.clientWidth;
+    }
+    
+    // 关闭彩蛋的统一函数
+    function closeThanksgiving() {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+    }
+    
+    // 点击副标题显示彩蛋
+    trigger.addEventListener('click', () => {
+        const scrollbarWidth = getScrollbarWidth();
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+        document.body.style.overflow = 'hidden';
+        overlay.style.display = 'flex';
+    });
+    
+    // 关闭事件
+    closeBtn.addEventListener('click', closeThanksgiving);
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeThanksgiving();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && overlay.style.display === 'flex') closeThanksgiving();
+    });
 }

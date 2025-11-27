@@ -1,0 +1,134 @@
+/* ==================== 2025感恩节彩蛋样式 ==================== */
+
+/* 彩蛋遮罩层 - 半透明背景 */
+.thanksgiving-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* 深色半透明遮罩 */
+    display: none; /* 默认隐藏 */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* 确保在最上层 */
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* 彩蛋内容卡片 */
+.thanksgiving-card {
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 3px solid #e74c3c;  /* 使用与文字相同的温暖红色 */
+    background: linear-gradient(135deg, #fff 0%, #fdf6f6 100%); /* 极浅的红色背景 */
+    max-width: 400px;
+    width: 90%;
+    animation: scaleIn 0.6s ease-out;
+}
+
+/* 爱心图标 */
+.thanksgiving-heart {
+    font-size: 4rem;
+    color: #e74c3c; /* 红色爱心 */
+    margin-bottom: 20px;
+    animation: heartbeat 1.5s ease-in-out infinite;
+    display: block;
+}
+
+/* 文字内容 */
+.thanksgiving-message {
+    color: #2c3e50; /* 与网站标题色一致 */
+    line-height: 1.6;
+}
+
+.thanksgiving-message .line1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #e74c3c; /* 温暖红色 */
+}
+
+.thanksgiving-message .line2 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.thanksgiving-message .line3 {
+    font-size: 1.1rem;
+    color: #7f8c8d; /* 与网站副标题色一致 */
+    font-style: italic;
+}
+
+.thanksgiving-close {
+    position: fixed; /* 改为 fixed 定位 */
+    top: 20px;
+    right: 20px;
+    background: none;
+    /*
+    这两行给关闭按钮一个圆盘背景，也许有点干扰注意力，但是这两行代码保留备用
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    */
+    border: none;
+    font-size: 1.8rem;
+    color: #7f8c8d;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 1001; /* 确保在彩蛋卡片上层 */
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thanksgiving-close:hover {
+    background: rgba(255, 255, 255, 1);
+    color: #e74c3c;
+    transform: scale(1.1);
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { 
+        opacity: 0;
+        transform: scale(0.8); 
+    }
+    to { 
+        opacity: 1;
+        transform: scale(1); 
+    }
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* 副标题点击效果 */
+.subtitle-clickable {
+    cursor: pointer;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.subtitle-clickable:hover {
+    color: #e74c3c; /* #ff6b9d;  */ /* 悬停时变成爱心颜色 */
+}
+
+.subtitle-clickable:hover::after {
+    content: "❤️";  /* 原版为红色爱心绑着礼物丝带 💝 */
+    font-size: 0.9rem;
+    filter: none; /* 确保清晰显示 */
+}

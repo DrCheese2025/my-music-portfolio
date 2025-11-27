@@ -1,14 +1,12 @@
-/**
- * 功能：加载作品数据，并生成作品卡片Html
- * @file 首页作品列表展示逻辑
- */
+// 配置常量
+const FEATURED_WORK_IDS = ['S003', 'V001']; // 指定展示的作品ID
+const RECENT_DYNAMICS_COUNT = 2; // 最新动态显示条数
 
-/* **************************************
- *               常量定义               *
- * **************************************/
-
-// JSON数据路径常量（相对于当前HTML文件）
-const DATA_PATH = 'data/artworks.json';     // 作品基本信息路径
+// 修正路径常量 - 相对于index.html的位置
+const DATA_PATHS = {
+    ARTWORKS: '../data/artworks.json',      // 从scripts/到data/
+    DYNAMICS: '../data/dynamics.json'       // 从scripts/到data/
+};
 
 // 错误提示信息
 const ERROR_MSG = {
@@ -20,138 +18,230 @@ const ERROR_MSG = {
 
 /**
  * 媒体类型模板定义
- * 使用对象映射不同媒体类型的HTML模板，便于扩展新的媒体类型
- * 每个模板函数接收work对象作为参数，返回对应的HTML字符串
  */
 const MEDIA_TEMPLATES = {
-    /**
-     * 音频作品模板
-     * @param {Object} work 作品数据对象
-     * @returns {string} 音频播放器HTML
-     */
     audio: (work) => `
         <div class="media-container audio">
-            <div class="audio-icon">🎵</div>    <!-- 音频图标 -->
-            <audio controls preload="metadata" src="${work.file_path}"></audio> <!-- 音频播放器 -->
+            <div class="audio-icon">🎵</div>
+            <audio controls preload="metadata" src="${work.file_path}"></audio>
         </div>
     `,
     
-    /**
-     * 视频作品模板
-     * @param {Object} work 作品数据对象
-     * @returns {string} 视频播放器HTML
-     */
     video: (work) => `
         <div class="media-container">
-            <video controls preload="metadata"> <!-- 视频播放器 -->
-            <!-- preload="metadata" - 只预加载多媒体的元数据，加载更快 -->
+            <video controls preload="metadata">
                 <picture>
-                    <!-- 视频封面图片，如果cover_path不存在则使用占位图 -->
                     <img src="${work.cover_path || 'placeholder.webp'}" alt="${work.title}封面">
-                    <!-- webp比jpg图片体积小，加载更快-->
                 </picture>
-                <source src="${work.file_path}" type="video/mp4"> <!-- 视频源文件 -->
+                <source src="${work.file_path}" type="video/mp4">
             </video>
         </div>
     `
 };
 
-/* **************************************
- *            主流程代码               *
- * **************************************/
-
-// 当DOM内容完全加载后执行以下代码
-document.addEventListener('DOMContentLoaded', () => {
-    // 获取作品集容器对象 - 这是HTML中id为'works-container'的div元素
-    const container = document.getElementById('works-container');
-
-    // 加载作品数据并处理
-    loadArtworksData()
-        .then(works => {
-            // 使用文档片段优化性能 - 先在内存中构建DOM，最后一次性添加到页面
-            // 这样可以减少页面重绘次数，提高性能
-            const fragment = document.createDocumentFragment();
-
-            // 获取加载状态元素
-            const loadingState = container.querySelector('.loading-state');
-            
-            // 遍历works数组，为每个作品创建卡片并添加到片段中
-            works.forEach(work => {
-                fragment.appendChild(createWorkCard(work));
-            });
-            
-            // 向页面添加新内容
-            container.appendChild(fragment);
-            
-            // 移除html中显示的加载状态（而不是清空整个容器）
-            loadingState.remove();
-
-        })
-        .catch(error => {
-            // 显示适当的错误信息
-            handleDataError(error, loadingState);
-        });
+/**
+ * 首页主函数
+ */
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        console.log('开始加载首页数据...');
+        
+        // 并行加载作品和动态数据
+        const [works, dynamics] = await Promise.all([
+            loadArtworksData(),
+            loadRecentDynamics()
+        ]);
+        
+        console.log('数据加载成功:', { works, dynamics });
+        
+        // 渲染作品区域
+        renderFeaturedWorks(works);
+        
+        // 渲染动态区域
+        renderRecentDynamics(dynamics);
+        
+    } catch (error) {
+        console.error('首页数据加载失败:', error);
+        handleDataError(error);
+    }
 });
 
-/* **************************************
- *              功能函数               *
- * **************************************/
-
 /**
- * 加载作品数据
- * @returns {Promise<Array>} 包含作品数据的Promise
- * @throws {Error} 当数据加载或解析失败时抛出错误
+ * 加载作品数据（修正路径）
  */
 async function loadArtworksData() {
-    const response = await fetch(DATA_PATH);
-    /* 这里的fetch()，路径参数是相对于调用本JS代码的index.html所在目录的。 */
+    console.log('加载作品数据，路径:', DATA_PATHS.ARTWORKS);
+    const response = await fetch(DATA_PATHS.ARTWORKS);
     
-    // 检查HTTP状态码
     if (!response.ok) {
-        throw new Error(`HTTP错误! 状态: ${response.status}`);
+        throw new Error(`作品数据加载失败! 状态: ${response.status}`);
     }
     
-    // 检查Content-Type是否正确
     const contentType = response.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
-        throw new Error('服务器返回的不是JSON数据');
+        throw new Error('作品数据不是JSON格式');
     }
     
     const works = await response.json();
     
-    // 检查数据格式是否正确
     if (!Array.isArray(works)) {
-        throw new Error('数据格式错误：预期是数组');
+        throw new Error('作品数据格式错误：预期是数组');
     }
     
+    console.log('作品数据加载成功，数量:', works.length);
     return works;
 }
 
 /**
- * 处理数据加载错误
- * @param {Error} error 错误对象
- * @param {HTMLElement} container 容器元素
+ * 加载最新动态（修正路径）
  */
-function handleDataError(error, container) {
-    console.error('加载作品数据失败:', error);
+async function loadRecentDynamics() {
+    console.log('加载动态数据，路径:', DATA_PATHS.DYNAMICS);
+    const response = await fetch(DATA_PATHS.DYNAMICS);
     
-    let errorMessage = ERROR_MSG.DEFAULT;
-    if (error.message.includes('状态: 404')) {
-        errorMessage = ERROR_MSG.NOT_FOUND;
-    } else if (error.message.includes('不是JSON数据')) {
-        errorMessage = ERROR_MSG.INVALID_FORMAT;
-    } else if (error.message.includes('数据格式错误')) {
-        errorMessage = ERROR_MSG.INVALID_DATA;
+    if (!response.ok) {
+        throw new Error(`动态数据加载失败! 状态: ${response.status}`);
     }
     
-    // 更新加载状态元素而不是替换整个容器
-    loadingState.innerHTML = `
-        <p class="error" style="color: red;">${errorMessage}</p>
-        <button onclick="window.location.reload()">重试</button>
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('动态数据不是JSON格式');
+    }
+    
+    const dynamics = await response.json();
+    
+    if (!Array.isArray(dynamics)) {
+        throw new Error('动态数据格式错误：预期是数组');
+    }
+    
+    // 按时间倒序排序并取前N条
+    const sortedDynamics = dynamics
+        .sort((a, b) => {
+            // 组合date和time进行排序
+            const dateA = new Date(`${a.date} ${a.time}`);
+            const dateB = new Date(`${b.date} ${b.time}`);
+            return dateB - dateA;
+        })
+        .slice(0, RECENT_DYNAMICS_COUNT);
+    
+    console.log('动态数据加载成功，数量:', sortedDynamics.length);
+    return sortedDynamics;
+}
+
+/**
+ * 渲染指定作品
+ */
+function renderFeaturedWorks(works) {
+    const container = document.getElementById('featured-works-container');
+    if (!container) {
+        console.error('未找到作品容器元素');
+        return;
+    }
+    
+    const loadingState = container.querySelector('.loading-state');
+    
+    // 筛选出指定ID的作品
+    const featuredWorks = works.filter(work => 
+        FEATURED_WORK_IDS.includes(work.id)
+    );
+    
+    console.log('筛选出的展示作品:', featuredWorks);
+    
+    if (featuredWorks.length === 0) {
+        loadingState.innerHTML = '<p class="error">未找到指定的展示作品</p>';
+        return;
+    }
+    
+    // 使用文档片段优化性能
+    const fragment = document.createDocumentFragment();
+    featuredWorks.forEach(work => {
+        const card = createWorkCard(work);
+        if (card) {
+            fragment.appendChild(card);
+        }
+    });
+    
+    // 更新容器
+    container.appendChild(fragment);
+    loadingState.remove();
+}
+
+/**
+ * 渲染最新动态
+ */
+function renderRecentDynamics(dynamics) {
+    const container = document.getElementById('dynamics-container');
+    if (!container) {
+        console.error('未找到动态容器元素');
+        return;
+    }
+    
+    const loadingState = container.querySelector('.loading-state');
+    
+    if (dynamics.length === 0) {
+        loadingState.innerHTML = '<p>暂无动态</p>';
+        return;
+    }
+    
+    const fragment = document.createDocumentFragment();
+    dynamics.forEach(dynamic => {
+        const card = createDynamicCard(dynamic);
+        if (card) {
+            fragment.appendChild(card);
+        }
+    });
+    
+    container.appendChild(fragment);
+    loadingState.remove();
+}
+
+/**
+ * 创建动态卡片
+ */
+function createDynamicCard(dynamic) {
+    const dynamicCard = document.createElement('div');
+    dynamicCard.className = 'dynamic-card';
+    dynamicCard.setAttribute('data-type', dynamic.type);
+    dynamicCard.setAttribute('data-dynamic-id', dynamic.id); // 添加ID属性
+    
+    // 添加点击事件
+    dynamicCard.addEventListener('click', () => {
+        // 跳转到动态页面，并传递动态ID
+        window.location.href = `pages/dynamics.html?highlight=${dynamic.id}`;
+    });
+    
+    // 格式化日期
+    const date = new Date(`${dynamic.date} ${dynamic.time}`).toLocaleDateString('zh-CN', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    
+    // 构建动态内容HTML
+    let dynamicHTML = `
+        <div class="dynamic-header">
+            <span class="dynamic-type">${dynamic.type}</span>
+            <h3 class="dynamic-title">${dynamic.title}</h3>
+        </div>
+        <div class="dynamic-content">
+            <p>${dynamic.content}</p>
+        </div>
+        <div class="dynamic-meta">
+            <span class="dynamic-date">${date}</span>
     `;
     
-    // 添加重试按钮的样式（可以在CSS中添加）
-    loadingState.classList.add('error-state');
+    // 如果有附件，添加附件信息
+    if (dynamic.attachments && dynamic.attachments.length > 0) {
+        dynamic.attachments.forEach(attachment => {
+            dynamicHTML += `<span class="dynamic-attachment">${attachment.title}</span>`;
+        });
+    }
+    
+    dynamicHTML += `</div>`;
+    
+    dynamicCard.innerHTML = dynamicHTML;
+    
+    return dynamicCard;
 }
 
 /**
@@ -168,23 +258,26 @@ function createWorkCard(work) {
     // 当点击卡片时跳转到详情页，并传递作品ID作为URL参数
     workCard.addEventListener('click', () => {
         // 跳转到详情页
+        sessionStorage.setItem('artworkSource', 'index');
         window.location.href = `pages/artwork-detail.html?id=${work.id}`;
-        /* 注意路径是相对于index.html的，因为这是生成index.html中的片段 */
     });
     
-    // 如果是音频作品，防止点击音频控制条时触发卡片点击事件
-    if (work.type === 'audio') {
-        // 查找卡片中的audio元素，如果存在则阻止其点击事件冒泡
-        workCard.querySelector('audio')?.addEventListener('click', e => {
-            e.stopPropagation(); // 阻止事件冒泡
-        });
-    }
-
     // 组装完整的作品卡片
     workCard.innerHTML = `
         ${createWorkPlayHTML(work)} <!-- 媒体播放区域HTML -->
         ${createWorkInfoHTML(work)} <!-- 作品信息区域HTML -->
     `;
+
+    // 如果是音频作品，防止点击音频控制条时触发卡片点击事件
+    if (work.type === 'audio') {
+        // 查找卡片中的audio元素，如果存在则阻止其点击事件冒泡
+        const audioElement = workCard.querySelector('audio');
+        if (audioElement) {
+            audioElement.addEventListener('click', e => {
+                e.stopPropagation(); // 阻止事件冒泡
+            });
+        }
+    }
 
     return workCard;
 }
@@ -209,7 +302,7 @@ function createWorkInfoHTML(work) {
     <!-- 作品信息 -->
     <div class="work-info">
         <!-- 标题部分 -->
-        <h2 class="work-title">${work.title}</h2>
+        <h3 class="work-title">${work.title}</h2>
         
         <!-- 元数据部分 -->
         <div class="work-meta">
@@ -229,4 +322,30 @@ function createWorkInfoHTML(work) {
         </div>
     </div>
     `;
+}
+
+/**
+ * 统一错误处理
+ */
+function handleDataError(error) {
+    console.error('处理数据错误:', error);
+    
+    const errorMessage = `
+        <div class="error-state">
+            <p class="error">数据加载失败: ${error.message}</p>
+            <button onclick="window.location.reload()">重新加载</button>
+        </div>
+    `;
+    
+    // 同时更新两个容器的错误状态
+    ['featured-works-container', 'dynamics-container'].forEach(containerId => {
+        const container = document.getElementById(containerId);
+        if (container) {
+            const loadingState = container.querySelector('.loading-state');
+            if (loadingState) {
+                loadingState.innerHTML = errorMessage;
+                loadingState.classList.add('error-state');
+            }
+        }
+    });
 }

@@ -1,0 +1,38 @@
+/* 懒加载相关样式 */
+.media-container {
+    position: relative;
+    background: #f8f9fa;
+}
+
+.media-container.loading {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.media-container.loading::after {
+    content: '';
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.media-container img,
+.media-container video {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.media-container.loaded img,
+.media-container.loaded video {
+    opacity: 1;
+}

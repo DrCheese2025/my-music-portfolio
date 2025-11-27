@@ -1,0 +1,270 @@
+/* ==================== 全局样式 ==================== */
+/* 重置所有元素的默认样式，确保跨浏览器一致性 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 页面基础样式 */
+body {
+    background-color: #f5f5f5; /* 初版浅灰背景 */
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll; /* 始终显示竖直滚动条 */
+}
+
+/* ==================== 头部样式 ==================== */
+.detail-header {
+    background-color: #fff; /* 初版白色 */
+    padding: 20px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* 返回按钮样式 - 保持初版圆形设计 */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-right: 20px;
+    color: #2c3e50; /* 初版标题色 */
+    text-decoration: none;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+/* 返回按钮悬停效果 - 轻微灰色背景 */
+.back-button:hover {
+    background-color: #f0f0f0; /* 初版悬停色 */
+}
+
+
+/* 页面标题组样式 */
+.page-title-group {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+}
+
+/* 头部标题样式 */
+#detail-title {
+    font-size: 1.5rem;
+    color: #2c3e50; /* 初版标题色 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+/* 头部副标题样式 */
+.brand-subtitle {
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: normal;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+/* 悬停时显示完整品牌信息 */
+.detail-header:hover .brand-subtitle {
+    opacity: 1;
+}
+
+/* ==================== 主体内容 ==================== */
+
+/* about.css */
+.about-container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    line-height: 1.7;
+    color: #333;
+}
+
+/* 作者信息头部 */
+.author-hero {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.author-avatar {
+    margin-right: 1.5rem;
+}
+
+.avatar-placeholder {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.author-basic h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.author-tagline {
+    margin: 0 0 0.5rem 0;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.author-meta {
+    margin: 0;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* 个人故事部分 */
+.personal-story {
+    margin-bottom: 3rem;
+}
+
+.story-section {
+    margin-bottom: 2.5rem;
+}
+
+.story-section h3 {
+    color: #4a5568;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.story-section h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    height: 1.2rem;
+    width: 3px;
+    background: linear-gradient(to bottom, #667eea, #764ba2);
+    border-radius: 2px;
+}
+
+.story-section p {
+    margin: 0;
+    text-align: justify;
+    color: #555;
+}
+
+/* 写作元信息样式 */
+.writing-meta {
+    margin-top: 3rem;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.signature-line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #667eea, transparent);
+    margin: 0 auto 1.5rem auto;
+    position: relative;
+}
+
+.signature-line::before {
+    content: "♪";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 0 10px;
+    color: #667eea;
+    font-size: 0.9rem;
+}
+
+.writing-date {
+    color: #888;
+    font-size: 0.95rem;
+    font-style: italic;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* 悬停时的微妙动效 */
+.writing-meta:hover .signature-line {
+    width: 100px;
+    transition: width 0.3s ease;
+}
+
+.writing-meta:hover .writing-date {
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+
+/* ==================== 页脚 ==================== */
+.detail-footer {
+    text-align: center;
+    padding: 20px;
+    color: #7f8c8d; /* 初版浅灰文本 */
+    font-size: 0.9rem;
+    background-color: #fff; /* 初版白色 */
+    border-top: 1px solid #eee;
+    margin-top: auto;
+}
+
+
+/* ==================== 响应式设计 ==================== */
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .page-title-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .brand-subtitle {
+        font-size: 0.8rem;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .about-container {
+        padding: 1.5rem 1rem;
+    }
+    
+    .author-hero {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .author-avatar {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+    
+    .guestbook-section {
+        padding: 1.5rem;
+    }
+    
+    .story-section h3 {
+        font-size: 1.2rem;
+    }
+}
+

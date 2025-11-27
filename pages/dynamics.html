@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态时光 | 鸥波艺境</title>
+    
+    <!-- 引入动态页面专用CSS -->
+    <link rel="stylesheet" href="../styles/dynamics.css">
+    
+    <!-- 预加载返回图标 -->
+    <link rel="preload" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE1LjQxIDE2LjA5TDEwLjgzIDEybDQuNTgtNC41OUwxNCA2bC02IDYgNiA2IDEuNDEtMS40MXoiIGZpbGw9IiMzMzMiLz48L3N2Zz4=" as="image">
+</head>
+<body>
+    <!-- 页面头部 -->
+    <header class="detail-header">
+        <a href="../index.html" class="back-button" aria-label="返回首页">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M15.41 16.09L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" fill="currentColor"/>
+            </svg>
+        </a>
+        <div class="page-title-group">
+            <h1 id="detail-title">动态时光</h1>
+            <span class="brand-subtitle">鸥波艺境</span>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="dynamics-container">
+        <div class="dynamics-list" id="dynamics-list">
+            <!-- 初始加载状态 -->
+            <div class="loading-state" aria-live="polite">
+                <p>加载动态中...</p>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 页脚 -->
+    <footer class="dynamics-footer">
+        <p>© 2025 鸥波艺境 | 探索艺术的无限可能</p>
+    </footer>
+    
+    <!-- 引入动态页面JavaScript -->
+    <script src="../scripts/dynamics.js"></script>
+</body>
+</html>

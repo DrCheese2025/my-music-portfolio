@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品集 | 鸥波艺境</title>
+    <link rel="stylesheet" href="../styles/artworks.css">
+</head>
+<body>
+    <!-- 小header - 与其他二级页面统一 -->
+    <header class="detail-header">
+        <a href="../index.html" class="back-button" aria-label="返回首页">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M15.41 16.09L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" fill="currentColor"/>
+            </svg>
+        </a>
+        <div class="page-title-group">
+            <h1 id="detail-title">作品集</h1>
+            <span class="brand-subtitle">鸥波艺境</span>
+        </div>
+    </header>
+
+    <main class="artworks-main">
+        <!-- 搜索区域 -->
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor"/>
+                    </svg>
+                    <input type="text" id="search-input" placeholder="搜索作品名称、歌词、创作日期..." class="search-input">
+                    <button type="button" id="clear-search" class="clear-search">×</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 作品展示区域 -->
+        <section class="artworks-content">
+            <div class="works-container" id="works-container">
+                <div class="loading-state" aria-live="polite">
+                    <p class="loading">加载作品中...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="detail-footer">
+        <p>© 2025 鸥波艺境 | 探索艺术的无限可能</p>
+    </footer>
+
+    <script src="../scripts/artworks.js"></script>
+</body>
+</html>

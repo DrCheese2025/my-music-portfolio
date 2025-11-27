@@ -1,199 +1,509 @@
+
 /* ==================== 全局样式 ==================== */
 /* 重置所有元素的默认样式，确保跨浏览器一致性 */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; /* 边框和填充包含在元素尺寸内 */
-    font-family: 'Arial', sans-serif; /* 设置默认字体 */
+    margin: 0; /* 清除默认外边距 */
+    padding: 0; /* 清除默认内边距 */
+    box-sizing: border-box; /* 边框和填充包含在元素尺寸内，便于布局计算 */
+    font-family: 'Arial', sans-serif; /* 设置默认字体为Arial，备选为无衬线字体 */
 }
 
 /* 页面基础样式 */
 body {
-    background-color: #f5f5f5; /* 浅灰色背景 */
-    color: #333; /* 主文字颜色 */
-    line-height: 1.6; /* 行高为字体大小的1.6倍 */
-    padding: 20px; /* 页面四周留白 */
+    background-color: #f5f5f5; /* 设置页面背景色为浅灰色 */
+    color: #333; /* 设置主文字颜色为深灰色 */
+    line-height: 1.6; /* 设置行高为字体大小的1.6倍，提高可读性 */
+    padding: 20px; /* 页面四周留白，增加呼吸感 */
+    overflow-y: scroll; /* 始终显示竖直滚动条 */
 }
 
 /* ==================== 头部区域 ==================== */
 header {
-    text-align: center; /* 内容居中 */
-    margin-bottom: 30px; /* 底部外边距 */
-    padding: 20px 0; /* 上下内边距 */
-    background-color: #fff; /* 白色背景 */
-    border-radius: 8px; /* 圆角边框 */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 轻微阴影效果 */
+    text-align: center; /* 内容水平居中 */
+    padding: 20px 0; /* 上下内边距为20px，左右为0 */
+    background-color: #fff; /* 白色背景，与页面背景形成对比 */
+    border-radius: 8px; /* 圆角边框，半径为8px */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 轻微阴影效果，增加层次感 */
 }
 
 /* 主标题样式 */
 h1 {
-    color: #2c3e50; /* 深蓝色文字 */
-    margin-bottom: 10px; /* 底部外边距 */
+    color: #2c3e50; /* 深蓝色文字，营造专业感 */
+    margin-bottom: 10px; /* 底部外边距，与描述文字保持距离 */
 }
 
 /* 副标题/描述文字样式 */
 .description {
-    color: #7f8c8d; /* 灰色文字 */
-    max-width: 800px; /* 最大宽度限制 */
-    margin: 0 auto; /* 水平居中 */
+    color: #7f8c8d; /* 灰色文字，与主标题形成层次 */
+    max-width: 800px; /* 最大宽度限制，避免在大屏幕上过宽 */
+    margin: 0 auto; /* 水平居中显示 */
+}
+
+/* ==================== 区块链接样式 ==================== */
+
+/* 区块标题链接 - 保持原有外观 */
+.section-link {
+    text-decoration: none; /* 移除下划线 */
+    color: inherit; /* 继承父元素颜色 */
+    display: block; /* 块级显示，占据整行 */
+    text-align: center; /* 内容居中 */
+    margin-bottom: 1.5rem; /* 底部外边距，与内容区域保持距离 */
+    transition: all 0.3s ease; /* 所有属性变化添加0.3秒缓动效果 */
+}
+
+/* 悬停状态下的区块标题链接 */
+.section-link:hover {
+    transform: none;    /*取消位移 */   /* translateY(-2px); /* 向上轻微移动，创造浮动效果 */
+}
+
+/* 悬停时标题颜色变化 */
+.section-link:hover h2 {
+    color: #667eea; /* 变为蓝色，提供视觉反馈 */
+}
+
+/* 悬停时描述文字保持原有颜色 */
+.section-link:hover .section-desc {
+    color: #7f8c8d; /* 保持原有灰色，只改变标题颜色 */
+}
+
+/* ==================== 区域标题样式 ==================== */
+
+/* 特色区域和动态区域的通用样式 */
+.featured-section,
+.dynamics-section {
+    margin-bottom: 3rem; /* 底部外边距，区域间保持距离 */
+}
+
+/* 区域标题样式 */
+.featured-section h2,
+.dynamics-section h2 {
+    text-align: center; /* 标题居中 */
+    color: #2c3e50; /* 深蓝色，与主标题保持一致 */
+    margin-bottom: 0.5rem; /* 底部外边距，与描述文字保持距离 */
+    font-size: 1.5rem; /* 字体大小 */
+}
+
+/* 区域描述文字样式 */
+.section-desc {
+    text-align: center; /* 描述文字居中 */
+    color: #7f8c8d; /* 灰色文字，形成层次 */
+    font-style: italic; /* 斜体，增加设计感 */
+    margin-bottom: 1.5rem; /* 底部外边距，与内容区域保持距离 */
+    font-size: 0.95rem; /* 稍小的字体大小 */
+}
+
+/* ==================== 主页区块间距调整 ==================== */
+
+/* 第一个特色区域的上边距调整 */
+.featured-section:first-of-type {
+    margin-top: 3rem; /* 在header和第一个区块之间增加间距 */
+}
+
+/* 特色区域和动态区域的底部间距 */
+.featured-section,
+.dynamics-section {
+    margin-bottom: 4rem; /* 增加区块之间的间距 */
+}
+
+/* ==================== 预览卡片样式 ==================== */
+
+/* 预览卡片链接样式 */
+.preview-card {
+    display: block; /* 块级显示 */
+    text-decoration: none; /* 移除下划线 */
+    color: inherit; /* 继承父元素颜色 */
+    max-width: 500px; /* 最大宽度限制 */
+    margin: 1.5rem auto 0 auto; /* 上边距1.5rem，水平居中，底部无外边距 */
+}
+
+/* 预览内容区域样式 */
+.preview-content {
+    background: #fff; /* 白色背景 */
+    border-radius: 12px; /* 圆角边框 */
+    padding: 2rem; /* 内边距 */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* 轻微阴影效果 */
+    border: 1px solid #f0f0f0; /* 浅灰色边框 */
+    transition: all 0.3s ease; /* 所有属性变化添加0.3秒缓动效果 */
+    text-align: center; /* 内容居中 */
+}
+
+/* 预览卡片悬停效果 */
+.preview-card:hover .preview-content {
+    transform: translateY(-5px); /* 向上移动5px，创造浮动效果 */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* 增强阴影，增加层次感 */
+}
+
+/* 预览卡片点击反馈 */
+.preview-card:active .preview-content {
+    transform: translateY(0); /* 恢复原位 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 减弱阴影 */
+}
+
+/* 预览内容段落样式 */
+.preview-content p {
+    color: #555; /* 中灰色文字 */
+    line-height: 1.6; /* 行高，提高可读性 */
+    margin-bottom: 1rem; /* 底部外边距 */
+}
+
+/* 阅读更多链接样式 */
+.read-more {
+    color: #667eea; /* 蓝色文字 */
+    font-size: 0.9rem; /* 稍小的字体大小 */
+    font-weight: 500; /* 中等字重 */
+    transition: color 0.3s ease; /* 颜色变化添加0.3秒缓动效果 */
+}
+
+/* 悬停时阅读更多链接颜色变化 */
+.preview-card:hover .read-more {
+    color: #5a6fd8; /* 变为深蓝色 */
 }
 
 /* ==================== 作品容器 ==================== */
-/* 使用Grid布局实现响应式设计 */
-.works-container {
-    display: grid; /* 网格布局 */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 自动填充列 */
-    gap: 20px; /* 网格间距 */
+
+/* 特色作品容器样式 */
+#featured-works-container {
+    display: flex; /* 弹性布局 */
+    flex-wrap: wrap; /* 允许换行 */
+    justify-content: center; /* 内容水平居中 */
+    gap: 25px; /* 子元素间距 */
     margin: 0 auto; /* 水平居中 */
     max-width: 1200px; /* 最大宽度限制 */
 }
 
 /* ==================== 作品卡片 ==================== */
+
+/* 作品卡片基础样式 */
 .work-card {
     background: #fff; /* 白色背景 */
-    border-radius: 8px; /* 圆角边框 */
+    border-radius: 12px; /* 圆角边框 */
     overflow: hidden; /* 隐藏溢出内容 */
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1); /* 阴影效果 */
-    transition: transform 0.3s ease; /* 平滑变换效果 */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* 阴影效果 */
+    transition: all 0.3s ease; /* 所有属性变化添加0.3秒缓动效果 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    border: 1px solid #f0f0f0; /* 浅灰色边框 */
+    width: 100%; /* 宽度100% */
+    max-width: 350px; /* 固定最大宽度 */
+    flex: 0 1 350px; /* 不伸缩，固定基础宽度 */
 }
 
-/* 鼠标悬停时卡片上浮效果 */
+/* 作品卡片悬停效果 */
 .work-card:hover {
-    transform: translateY(-5px); /* 向上移动5像素 */
+    transform: translateY(-5px); /* 向上移动5px */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* 增强阴影效果 */
+}
+
+/* 预览卡片点击反馈 */
+.work-card:active{
+    transform: translateY(0); /* 恢复原位 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 减弱阴影 */
 }
 
 /* ==================== 多媒体容器 ==================== */
+
+/* 多媒体容器基础样式 */
 .media-container {
     width: 100%; /* 宽度100% */
     height: 200px; /* 固定高度 */
     overflow: hidden; /* 隐藏溢出内容 */
-    position: relative; /* 相对定位 */
+    position: relative; /* 相对定位，为子元素定位提供参考 */
+    background: #f8f9fa; /* 浅灰色背景 */
 }
 
-/* 视频/音频元素通用样式 */
+/* 确保多媒体内容适应卡片宽度 */
 .media-container video,
 .media-container audio {
     width: 100%; /* 宽度100% */
     height: 100%; /* 高度100% */
-    object-fit: cover; /* 保持比例填满容器 */
-}
-
-/* 图片和视频的绝对定位 */
-.media-container video, 
-.media-container picture,
-.media-container img {
-    position: absolute; /* 绝对定位 */
-    width: 100%; /* 宽度100% */
-    height: 100%; /* 高度100% */
-    object-fit: cover; /* 保持比例填满容器 */
+    object-fit: cover; /* 保持宽高比覆盖容器 */
 }
 
 /* ==================== 音频特定样式 ==================== */
+
+/* 音频容器特殊样式 */
 .media-container.audio {
-    background: linear-gradient(135deg, #3498db, #9b59b6); /* 渐变背景 */
+    background: linear-gradient(135deg, #667eea, #764ba2); /* 蓝色到紫色的渐变背景 */
     display: flex; /* 弹性布局 */
-    flex-direction: column; /* 纵向排列 */
-    align-items: stretch; /* 拉伸子元素宽度 */
+    flex-direction: column; /* 垂直排列子元素 */
+    align-items: stretch; /* 子元素宽度拉伸 */
     padding: 0; /* 无内边距 */
+    min-height: 200px; /* 最小高度 */
 }
 
 /* 音频图标样式 */
 .audio-icon {
     color: white; /* 白色图标 */
-    font-size: 50px; /* 大号字体 */
-    text-align: center; /* 居中显示 */
-    padding: 20px 0; /* 上下内边距 */
-    flex-shrink: 0; /* 防止压缩 */
+    font-size: 50px; /* 图标大小 */
+    text-align: center; /* 居中 */
+    padding: 40px 0 20px 0; /* 内边距 */
+    flex-shrink: 0; /* 不允许收缩 */
+}
+
+/* 音频元素样式 */
+.media-container.audio audio {
+    width: 100%; /* 宽度100% */
+    height: auto; /* 高度自适应 */
+    min-height: 50px; /* 最小高度 */
+    flex-shrink: 0; /* 不允许收缩 */
+    display: block; /* 块级显示 */
+    margin-top: auto; /* 顶部自动外边距，推到容器底部 */
+    border-radius: 0; /* 无圆角 */
 }
 
 /* ==================== 作品信息区域 ==================== */
+
+/* 作品信息区域样式 */
 .work-info {
-    padding: 15px; /* 内边距 */
+    padding: 20px; /* 内边距 */
 }
 
 /* 作品标题样式 */
 .work-title {
-    font-size: 1.2rem; /* 较大字体 */
-    margin-bottom: 10px; /* 底部外边距 */
+    font-size: 1.3rem; /* 字体大小 */
+    margin-bottom: 12px; /* 底部外边距 */
     color: #2c3e50; /* 深蓝色文字 */
+    line-height: 1.4; /* 行高 */
 }
 
-/* 作品元数据容器 */
+/* 作品元数据容器样式 */
 .work-meta {
-    font-size: 0.9rem; /* 较小字体 */
-    color: #7f8c8d; /* 灰色文字 */
+    font-size: 0.9rem; /* 稍小的字体大小 */
+    color: #666; /* 灰色文字 */
 }
 
-/* 单个元数据项样式 */
+/* 元数据项样式 */
 .meta-item {
-    margin-bottom: 5px; /* 底部外边距 */
+    margin-bottom: 6px; /* 底部外边距 */
+    display: flex; /* 弹性布局 */
+    align-items: flex-start; /* 顶部对齐 */
 }
 
-/* 作品编号的特殊样式 */
+/* 元数据标签样式 */
+.meta-item strong {
+    color: #333; /* 深灰色文字 */
+    min-width: 80px; /* 最小宽度，保持对齐 */
+    margin-right: 8px; /* 右边距 */
+}
+
+/* 作品ID样式 */
 .work-id {
     display: inline-block; /* 行内块元素 */
-    background: #eaeaea; /* 浅灰色背景 */
-    padding: 2px 8px; /* 内边距 */
-    border-radius: 10px; /* 圆角边框 */
-    font-size: 0.8rem; /* 较小字体 */
+    background: #f8f9fa; /* 浅灰色背景 */
+    padding: 4px 12px; /* 内边距 */
+    border-radius: 15px; /* 圆角边框 */
+    font-size: 0.8rem; /* 小字体 */
+    color: #6c757d; /* 灰色文字 */
+    border: 1px solid #e9ecef; /* 浅灰色边框 */
+}
+
+/* ==================== 动态卡片样式 ==================== */
+
+/* 动态容器样式 */
+.dynamics-container {
+    max-width: 800px; /* 最大宽度限制 */
+    margin: 0 auto; /* 水平居中 */
+}
+
+/* 动态卡片基础样式 */
+.dynamic-card {
+    background: #fff; /* 白色背景 */
+    border-radius: 12px; /* 圆角边框 */
+    padding: 1.5rem; /* 内边距 */
+    margin-bottom: 1.5rem; /* 底部外边距 */
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08); /* 轻微阴影 */
+    border-left: 4px solid #667eea; /* 左侧边框，默认蓝色 */
+    transition: all 0.3s ease; /* 所有属性变化添加0.3秒缓动效果 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+}
+
+/* 动态卡片悬停效果 */
+.dynamic-card:hover {
+    transform: translateY(-5px); /* 向上移动3px */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12); /* 增强阴影 */
+}
+
+/* 动态卡片点击反馈 */
+.dynamic-card:active {
+    transform: translateY(0); /* 恢复原位 */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* 减弱阴影 */
+}
+
+/* 动态头部区域样式 */
+.dynamic-header {
+    display: flex; /* 弹性布局 */
+    align-items: center; /* 垂直居中 */
+    margin-bottom: 1rem; /* 底部外边距 */
+    gap: 0.8rem; /* 子元素间距 */
+}
+
+/* 动态类型标签样式 */
+.dynamic-type {
+    background: #667eea; /* 蓝色背景 */
+    color: white; /* 白色文字 */
+    padding: 0.3rem 0.8rem; /* 内边距 */
+    border-radius: 20px; /* 圆角边框 */
+    font-size: 0.8rem; /* 小字体 */
+    font-weight: 500; /* 中等字重 */
+}
+
+/* 动态标题样式 */
+.dynamic-title {
+    color: #2c3e50; /* 深蓝色文字 */
+    font-size: 1.2rem; /* 字体大小 */
+    margin: 0; /* 无外边距 */
+}
+
+/* 动态内容区域样式 */
+.dynamic-content {
+    margin-bottom: 1rem; /* 底部外边距 */
+}
+
+/* 动态内容段落样式 */
+.dynamic-content p {
+    line-height: 1.6; /* 行高 */
+    color: #555; /* 中灰色文字 */
+    margin: 0; /* 无外边距 */
+}
+
+/* 动态元数据区域样式 */
+.dynamic-meta {
+    display: flex; /* 弹性布局 */
+    justify-content: space-between; /* 两端对齐 */
+    align-items: center; /* 垂直居中 */
+    font-size: 0.85rem; /* 小字体 */
+    color: #7f8c8d; /* 灰色文字 */
+    flex-wrap: wrap; /* 允许换行 */
+    gap: 0.5rem; /* 子元素间距 */
+}
+
+/* 动态日期样式 */
+.dynamic-date {
+    font-style: italic; /* 斜体 */
+}
+
+/* 动态附件样式 */
+.dynamic-attachment {
+    display: flex; /* 弹性布局 */
+    align-items: center; /* 垂直居中 */
+    gap: 0.5rem; /* 子元素间距 */
+    background: #f8f9fa; /* 浅灰色背景 */
+    padding: 0.3rem 0.8rem; /* 内边距 */
+    border-radius: 6px; /* 圆角边框 */
+    font-size: 0.8rem; /* 小字体 */
+}
+
+/* 附件类型图标样式 */
+.attachment-type {
+    font-size: 1rem; /* 正常字体大小 */
+}
+
+/* ==================== 动态类型颜色区分 ==================== */
+
+/* 创作类型动态的左侧边框颜色 */
+.dynamic-card[data-type="创作"] {
+    border-left-color: #4caf50; /* 绿色 */
+}
+
+/* 演出类型动态的左侧边框颜色 */
+.dynamic-card[data-type="演出"] {
+    border-left-color: #ff9800; /* 橙色 */
+}
+
+/* 分享类型动态的左侧边框颜色 */
+.dynamic-card[data-type="分享"] {
+    border-left-color: #9c27b0; /* 紫色 */
 }
 
 /* ==================== 加载状态 ==================== */
+
+/* 加载状态容器样式 */
 .loading-state {
-    text-align: center; /* 居中显示 */
-    padding: 20px; /* 内边距 */
+    text-align: center; /* 内容居中 */
+    padding: 2rem; /* 内边距 */
     color: #7f8c8d; /* 灰色文字 */
-    padding: 2rem;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; /* 所有属性变化添加0.3秒缓动效果 */
+    grid-column: 1 / -1; /* 网格布局中占据整行 */
 }
 
+/* 错误状态样式 */
 .loading-state.error-state {
-    background-color: #ffeeee;
-    border: 1px solid #ffcccc;
-    border-radius: 4px;
+    background-color: #ffeeee; /* 浅红色背景 */
+    border: 1px solid #ffcccc; /* 红色边框 */
+    border-radius: 8px; /* 圆角边框 */
 }
 
+/* 错误状态按钮样式 */
 .loading-state.error-state button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
+    margin-top: 1rem; /* 顶部外边距 */
+    padding: 0.5rem 1.5rem; /* 内边距 */
+    background-color: #4a6ee0; /* 蓝色背景 */
+    color: white; /* 白色文字 */
+    border: none; /* 无边框 */
+    border-radius: 6px; /* 圆角边框 */
+    cursor: pointer; /* 鼠标指针变为手型 */
+    transition: background-color 0.3s ease; /* 背景色变化添加0.3秒缓动效果 */
 }
 
+/* 错误状态按钮悬停效果 */
 .loading-state.error-state button:hover {
-    background-color: #e9ecef;
+    background-color: #3a5ec0; /* 深蓝色背景 */
 }
 
 /* ==================== 页脚 ==================== */
+
 footer {
-    text-align: center; /* 居中显示 */
+    text-align: center; /* 内容居中 */
     margin-top: 40px; /* 顶部外边距 */
     padding: 20px; /* 内边距 */
     color: #7f8c8d; /* 灰色文字 */
-    font-size: 0.9rem; /* 较小字体 */
+    font-size: 0.9rem; /* 稍小的字体大小 */
 }
 
 /* ==================== 响应式设计 ==================== */
-@media (max-width: 600px) {
-    /* 小屏幕上单列显示 */
-    .works-container {
-        grid-template-columns: 1fr;
-    }
-    
-    /* 减小多媒体容器高度 */
-    .media-container {
-        height: 150px;
-    }
 
-    /* 调整音频图标大小 */
-    .audio-icon {
-        font-size: 40px;
+/* 中等屏幕尺寸（平板）响应式调整 */
+@media (max-width: 768px) {
+    /* 第一个特色区域上边距调整 */
+    .featured-section:first-of-type {
+        margin-top: 2rem; /* 减少上边距 */
     }
     
-    /* 调整头部内边距 */
-    header {
-        padding: 15px 10px;
+    /* 特色区域和动态区域底部间距调整 */
+    .featured-section,
+    .dynamics-section {
+        margin-bottom: 3rem; /* 减少底部间距 */
+    }
+}
+
+/* 小屏幕尺寸（手机）响应式调整 */
+@media (max-width: 600px) {
+    /* 特色区域和动态区域底部间距调整 */
+    .featured-section,
+    .dynamics-section {
+        margin-bottom: 2rem; /* 进一步减少底部间距 */
+    }
+    
+    /* 动态卡片内边距调整 */
+    .dynamic-card {
+        padding: 1rem; /* 减少内边距 */
+    }
+    
+    /* 动态头部区域布局调整 */
+    .dynamic-header {
+        flex-direction: column; /* 垂直排列 */
+        align-items: flex-start; /* 左对齐 */
+        gap: 0.5rem; /* 减少间距 */
+    }
+    
+    /* 动态元数据区域布局调整 */
+    .dynamic-meta {
+        flex-direction: column; /* 垂直排列 */
+        align-items: flex-start; /* 左对齐 */
+        gap: 0.5rem; /* 减少间距 */
+    }
+    
+    /* 动态类型标签对齐调整 */
+    .dynamic-type {
+        align-self: flex-start; /* 左对齐 */
     }
 }

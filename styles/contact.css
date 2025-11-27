@@ -1,0 +1,252 @@
+/* ==================== 全局样式 ==================== */
+/* 重置所有元素的默认样式，确保跨浏览器一致性 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* 页面基础样式 */
+body {
+    background-color: #f5f5f5; /* 初版浅灰背景 */
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll; /* 始终显示竖直滚动条 */
+}
+
+/* ==================== 头部样式 ==================== */
+.detail-header {
+    background-color: #fff; /* 初版白色 */
+    padding: 20px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* 返回按钮样式 - 保持初版圆形设计 */
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-right: 20px;
+    color: #2c3e50; /* 初版标题色 */
+    text-decoration: none;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+/* 返回按钮悬停效果 - 轻微灰色背景 */
+.back-button:hover {
+    background-color: #f0f0f0; /* 初版悬停色 */
+}
+
+
+/* 页面标题组样式 */
+.page-title-group {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+}
+
+/* 头部标题样式 */
+#detail-title {
+    font-size: 1.5rem;
+    color: #2c3e50; /* 初版标题色 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+/* 头部副标题样式 */
+.brand-subtitle {
+    color: #888;
+    font-size: 0.9rem;
+    font-weight: normal;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+/* 悬停时显示完整品牌信息 */
+.detail-header:hover .brand-subtitle {
+    opacity: 1;
+}
+
+/* ==================== 主体内容 ==================== */
+
+/* ==================== 联系页面样式 - 沉静优雅版 ==================== */
+
+.contact-container {
+    max-width: 500px; /* 更紧凑的宽度 */
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+.contact-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e8e8e8; /* 更细的分隔线 */
+}
+
+.contact-intro h2 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-size: 1.6rem;
+    font-weight: 300; /* 更细的字体权重 */
+    letter-spacing: 1px; /* 字间距增加优雅感 */
+}
+
+.contact-intro p {
+    color: #7f8c8d;
+    font-size: 1rem;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.contact-form {
+    background: #fafafa; /* 更浅的背景 */
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #e8e8e8;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+    font-weight: 400;
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #dce1e5;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.form-group textarea {
+    min-height: 120px; /* 稍小的高度 */
+    resize: vertical;
+}
+
+.char-count {
+    text-align: right;
+    color: #a0aec0;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+}
+
+.char-count.warning {
+    color: #e53e3e;
+}
+
+.submit-button {
+    background: #2c3e50; /* 深色按钮，更沉稳 */
+    color: white;
+    border: none;
+    padding: 0.875rem 2rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    letter-spacing: 0.5px;
+}
+
+.submit-button:hover:not(:disabled) {
+    background: #34495e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.2);
+}
+
+.submit-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.contact-notice {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 6px;
+    border-left: 3px solid #667eea;
+}
+
+.contact-notice h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+}
+
+.contact-notice ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.contact-notice li {
+    margin-bottom: 0.3rem;
+}
+
+
+/* ==================== 页脚 ==================== */
+.detail-footer {
+    text-align: center;
+    padding: 20px;
+    color: #7f8c8d; /* 初版浅灰文本 */
+    font-size: 0.9rem;
+    background-color: #fff; /* 初版白色 */
+    border-top: 1px solid #eee;
+    margin-top: auto;
+}
+
+/* ==================== 响应式设计 ==================== */
+@media (max-width: 768px) {
+    .contact-container {
+        padding: 1.5rem 1rem;
+    }
+    
+    .contact-form {
+        padding: 1.5rem;
+    }
+    
+    .contact-intro h2 {
+        font-size: 1.4rem;
+    }
+}
+
+

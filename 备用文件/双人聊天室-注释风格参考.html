@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- 文档基础设置 -->
+    <meta charset="UTF-8"> <!-- 设置字符编码为UTF-8，支持中文显示 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 响应式设计，适配移动设备 -->
+    <title>双人聊天室</title> <!-- 页面标题 -->
+    
+    <!-- CSS样式部分 -->
+    <style>
+        /* 全局重置样式 */
+        * {
+            margin: 0; /* 清除所有元素的外边距 */
+            padding: 0; /* 清除所有元素的内边距 */
+            box-sizing: border-box; /* 盒模型设置为border-box，便于尺寸计算 */
+            font-family: 'Helvetica Neue', Arial, sans-serif; /* 设置全局字体 */
+        }
+        
+        /* 页面主体样式 */
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%); /* 渐变背景 */
+            min-height: 100vh; /* 最小高度为视口高度 */
+            display: flex; /* 使用flex布局 */
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            padding: 20px; /* 内边距 */
+            color: #333; /* 文字颜色 */
+        }
+        
+        /* 聊天容器样式 */
+        .chat-container {
+            width: 100%; /* 宽度100% */
+            max-width: 800px; /* 最大宽度限制 */
+            height: 85vh; /* 高度为视口高度的85% */
+            background-color: white; /* 白色背景 */
+            border-radius: 16px; /* 圆角边框 */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* 阴影效果 */
+            display: flex; /* flex布局 */
+            flex-direction: column; /* 垂直方向排列 */
+            overflow: hidden; /* 隐藏溢出内容 */
+            border: 1px solid #f0f0f0; /* 边框 */
+        }
+        
+        /* 聊天头部样式 */
+        .chat-header {
+            background: linear-gradient(90deg, #6c8ef5 0%, #4a6ee0 100%); /* 渐变背景 */
+            color: white; /* 文字颜色 */
+            padding: 20px; /* 内边距 */
+            text-align: center; /* 文字居中 */
+            font-size: 1.4rem; /* 字体大小 */
+            font-weight: 500; /* 字体粗细 */
+            letter-spacing: 0.5px; /* 字间距 */
+            position: relative; /* 相对定位 */
+        }
+        
+        /* 控制区域样式 */
+        .controls {
+            display: flex; /* flex布局 */
+            justify-content: space-between; /* 两端对齐 */
+            align-items: center; /* 垂直居中 */
+            padding: 12px 20px; /* 内边距 */
+            background-color: #f9fafc; /* 背景色 */
+            border-bottom: 1px solid #eaeef2; /* 底部边框 */
+        }
+        
+        /* 用户选择器样式 */
+        .user-selector {
+            display: flex; /* flex布局 */
+            gap: 10px; /* 按钮间距 */
+        }
+        
+        /* 用户按钮样式 */
+        .user-btn {
+            padding: 8px 16px; /* 内边距 */
+            border: 1px solid #dce1e8; /* 边框 */
+            border-radius: 20px; /* 圆角 */
+            background-color: white; /* 背景色 */
+            cursor: pointer; /* 鼠标手型 */
+            transition: all 0.3s; /* 过渡效果 */
+            font-size: 0.9rem; /* 字体大小 */
+            color: #5a6570; /* 文字颜色 */
+        }
+        
+        /* 激活状态的用户按钮样式 */
+        .user-btn.active {
+            background: linear-gradient(90deg, #6c8ef5 0%, #4a6ee0 100%); /* 渐变背景 */
+            color: white; /* 文字颜色 */
+            border-color: #4a6ee0; /* 边框颜色 */
+        }
+        
+        /* 清除按钮样式 */
+        .clear-btn {
+            padding: 8px 16px; /* 内边距 */
+            border: 1px solid #ffcdd2; /* 边框 */
+            border-radius: 20px; /* 圆角 */
+            background-color: white; /* 背景色 */
+            cursor: pointer; /* 鼠标手型 */
+            transition: all 0.3s; /* 过渡效果 */
+            font-size: 0.9rem; /* 字体大小 */
+            color: #e57373; /* 文字颜色 */
+        }
+        
+        /* 清除按钮悬停效果 */
+        .clear-btn:hover {
+            background-color: #ffebee; /* 悬停背景色 */
+        }
+        
+        /* 消息显示区域样式 */
+        .chat-messages {
+            flex: 1; /* 占据剩余空间 */
+            padding: 20px; /* 内边距 */
+            overflow-y: auto; /* 垂直滚动 */
+            display: flex; /* flex布局 */
+            flex-direction: column; /* 垂直排列 */
+            gap: 16px; /* 消息间距 */
+            background-color: #f9fafc; /* 背景色 */
+        }
+        
+        /* 单条消息样式 */
+        .message {
+            max-width: 75%; /* 最大宽度 */
+            padding: 14px 18px; /* 内边距 */
+            border-radius: 18px; /* 圆角 */
+            position: relative; /* 相对定位 */
+            word-wrap: break-word; /* 单词换行 */
+            line-height: 1.5; /* 行高 */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); /* 阴影 */
+            white-space: pre-wrap; /* 保留空格和换行 */
+        }
+        
+        /* 用户1消息样式 */
+        .user1 {
+            align-self: flex-start; /* 左侧对齐 */
+            background-color: white; /* 背景色 */
+            border: 1px solid #e8edf5; /* 边框 */
+            border-bottom-left-radius: 6px; /* 左下角圆角 */
+            color: #4a5568; /* 文字颜色 */
+        }
+        
+        /* 用户2消息样式 */
+        .user2 {
+            align-self: flex-end; /* 右侧对齐 */
+            background: linear-gradient(135deg, #6c8ef5 0%, #4a6ee0 100%); /* 渐变背景 */
+            color: white; /* 文字颜色 */
+            border-bottom-right-radius: 6px; /* 右下角圆角 */
+        }
+        
+        /* 消息时间样式 */
+        .message-time {
+            font-size: 0.75rem; /* 字体大小 */
+            opacity: 0.7; /* 透明度 */
+            margin-top: 6px; /* 上边距 */
+            text-align: right; /* 右对齐 */
+        }
+        
+        /* 用户1消息时间样式 */
+        .user1 .message-time {
+            color: #8a9bb1; /* 文字颜色 */
+        }
+        
+        /* 用户2消息时间样式 */
+        .user2 .message-time {
+            color: rgba(255, 255, 255, 0.8); /* 文字颜色 */
+        }
+        
+        /* 输入区域容器样式 */
+        .chat-input-container {
+            padding: 15px 20px 20px; /* 内边距 */
+            background-color: white; /* 背景色 */
+            border-top: 1px solid #eaeef2; /* 顶部边框 */
+            position: relative; /* 相对定位 */
+        }
+        
+        /* 消息输入框样式 */
+        .message-input {
+            width: 100%; /* 宽度100% */
+            padding: 14px 18px; /* 内边距 */
+            border: 1px solid #e0e6ed; /* 边框 */
+            border-radius: 12px; /* 圆角 */
+            outline: none; /* 去除轮廓 */
+            font-size: 1rem; /* 字体大小 */
+            background-color: white; /* 背景色 */
+            resize: vertical; /* 垂直调整大小 */
+            min-height: 60px; /* 最小高度 */
+            max-height: 200px; /* 最大高度 */
+            line-height: 1.5; /* 行高 */
+            transition: border-color 0.3s; /* 过渡效果 */
+        }
+        
+        /* 输入框聚焦状态 */
+        .message-input:focus {
+            border-color: #6c8ef5; /* 边框颜色 */
+            box-shadow: 0 0 0 2px rgba(108, 142, 245, 0.1); /* 阴影 */
+        }
+        
+        /* 调整大小手柄样式 */
+        .resize-handle {
+            position: absolute; /* 绝对定位 */
+            bottom: 10px; /* 底部距离 */
+            right: 30px; /* 右侧距离 */
+            width: 20px; /* 宽度 */
+            height: 20px; /* 高度 */
+            cursor: ns-resize; /* 鼠标样式 */
+            opacity: 0.5; /* 透明度 */
+            display: flex; /* flex布局 */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+        }
+        
+        /* 手柄悬停效果 */
+        .resize-handle:hover {
+            opacity: 0.8; /* 透明度变化 */
+        }
+        
+        /* 手柄图标 */
+        .resize-handle::after {
+            content: "⋮"; /* 图标内容 */
+            font-size: 18px; /* 图标大小 */
+            color: #8a9bb1; /* 图标颜色 */
+        }
+        
+        /* 输入提示文字样式 */
+        .input-hint {
+            font-size: 0.8rem; /* 字体大小 */
+            color: #8a9bb1; /* 文字颜色 */
+            margin-top: 8px; /* 上边距 */
+            text-align: right; /* 右对齐 */
+        }
+        
+        /* 使用说明区域样式 */
+        .instructions {
+            text-align: center; /* 文字居中 */
+            padding: 12px; /* 内边距 */
+            color: #8a9bb1; /* 文字颜色 */
+            font-size: 0.85rem; /* 字体大小 */
+            background-color: #f9fafc; /* 背景色 */
+            border-bottom: 1px solid #eaeef2; /* 底部边框 */
+        }
+        
+        /* 移动端响应式样式 */
+        @media (max-width: 600px) {
+            .chat-container {
+                height: 90vh; /* 调整高度 */
+            }
+            
+            .message {
+                max-width: 85%; /* 调整消息最大宽度 */
+            }
+            
+            .controls {
+                flex-direction: column; /* 垂直排列 */
+                gap: 10px; /* 间距 */
+                align-items: stretch; /* 拉伸对齐 */
+            }
+            
+            .user-selector {
+                justify-content: center; /* 居中 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 聊天室主容器 -->
+    <div class="chat-container">
+        <!-- 聊天室头部 -->
+        <div class="chat-header">
+            双人聊天室
+        </div>
+        
+        <!-- 使用说明区域 -->
+        <div class="instructions">
+            选择您的身份开始聊天。使用 Ctrl+1/Ctrl+2 切换用户，Ctrl+Enter 换行
+        </div>
+        
+        <!-- 控制区域 -->
+        <div class="controls">
+            <!-- 用户选择器 -->
+            <div class="user-selector">
+                <button class="user-btn active" id="user1-btn">用户 A</button>
+                <button class="user-btn" id="user2-btn">用户 B</button>
+            </div>
+            <!-- 清除聊天记录按钮 -->
+            <button class="clear-btn" id="clear-btn">清除记录</button>
+        </div>
+        
+        <!-- 消息显示区域 -->
+        <div class="chat-messages" id="chat-messages">
+            <!-- 消息将通过JavaScript动态添加 -->
+        </div>
+        
+        <!-- 输入区域 -->
+        <div class="chat-input-container">
+            <!-- 消息输入框 -->
+            <textarea class="message-input" id="message-input" placeholder="输入消息..."></textarea>
+            <!-- 调整大小手柄 -->
+            <div class="resize-handle" id="resize-handle"></div>
+            <!-- 输入提示 -->
+            <div class="input-hint">按 Enter 发送，Ctrl+Enter 换行，拖拽右下角调整高度</div>
+        </div>
+    </div>
+
+    <!-- JavaScript代码部分 -->
+    <script>
+        // 全局变量定义
+        
+        // 当前用户（默认为用户A）
+        let currentUser = 'user1';
+        
+        // DOM元素引用
+        const chatMessages = document.getElementById('chat-messages'); // 消息显示区域
+        const messageInput = document.getElementById('message-input'); // 消息输入框
+        const user1Btn = document.getElementById('user1-btn'); // 用户A按钮
+        const user2Btn = document.getElementById('user2-btn'); // 用户B按钮
+        const clearBtn = document.getElementById('clear-btn'); // 清除记录按钮
+        const resizeHandle = document.getElementById('resize-handle'); // 调整大小手柄
+        
+        // 初始化聊天记录
+        function initChat() {
+            // 检查本地存储中是否有聊天记录，如果没有则初始化空数组
+            if (!localStorage.getItem('chatMessages')) {
+                localStorage.setItem('chatMessages', JSON.stringify([]));
+            }
+            // 显示已有消息
+            displayMessages();
+        }
+        
+        // 显示消息 - 优化版本，避免消息颤动
+        function displayMessages() {
+            // 从本地存储获取消息数组
+            const messages = JSON.parse(localStorage.getItem('chatMessages'));
+            
+            // 只有当消息数量变化时才更新DOM，避免不必要的重绘
+            const currentMessageCount = chatMessages.children.length;
+            if (currentMessageCount === messages.length) return;
+            
+            // 清空当前显示的消息
+            chatMessages.innerHTML = '';
+            
+            // 遍历所有消息并创建DOM元素
+            messages.forEach(msg => {
+                // 创建消息容器
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.classList.add(msg.user); // 添加用户类名
+                
+                // 创建消息文本节点
+                const textNode = document.createElement('div');
+                textNode.style.whiteSpace = 'pre-wrap'; // 保留空格和换行
+                textNode.textContent = msg.text; // 设置消息内容
+                
+                // 创建时间节点
+                const timeNode = document.createElement('div');
+                timeNode.classList.add('message-time');
+                timeNode.textContent = msg.time; // 设置时间
+                
+                // 将文本和时间添加到消息容器
+                messageElement.appendChild(textNode);
+                messageElement.appendChild(timeNode);
+                
+                // 将消息添加到消息显示区域
+                chatMessages.appendChild(messageElement);
+            });
+            
+            // 滚动到底部，显示最新消息
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // 发送消息函数
+        function sendMessage() {
+            // 获取输入框内容
+            let text = messageInput.value;
+    
+            // 文本处理：删除开头和结尾的换行符、制表符，但保留空格
+            text = text.replace(/^[\r\n\t]+|[\r\n\t]+$/g, '');
+            
+            // 如果消息为空则不发送
+            if (text === '') return;
+            
+            // 获取现有消息
+            const messages = JSON.parse(localStorage.getItem('chatMessages'));
+            
+            // 获取当前时间
+            const now = new Date();
+            const time = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            
+            // 添加新消息到数组
+            messages.push({
+                user: currentUser, // 发送用户
+                text: text, // 消息内容
+                time: time // 发送时间
+            });
+            
+            // 保存到本地存储
+            localStorage.setItem('chatMessages', JSON.stringify(messages));
+            
+            // 清空输入框
+            messageInput.value = '';
+            
+            // 更新消息显示
+            displayMessages();
+        }
+        
+        // 清除聊天记录函数
+        function clearChat() {
+            // 确认对话框
+            if (confirm('确定要清除所有聊天记录吗？')) {
+                // 清空本地存储中的消息
+                localStorage.setItem('chatMessages', JSON.stringify([]));
+                // 更新显示
+                displayMessages();
+            }
+        }
+        
+        // 切换用户函数
+        function switchUser(user) {
+            // 更新当前用户
+            currentUser = user;
+            
+            // 更新按钮状态
+            if (user === 'user1') {
+                user1Btn.classList.add('active');
+                user2Btn.classList.remove('active');
+            } else {
+                user2Btn.classList.add('active');
+                user1Btn.classList.remove('active');
+            }
+            
+            // 聚焦到输入框
+            messageInput.focus();
+        }
+        
+        // 初始化调整大小手柄
+        function initResizeHandle() {
+            let isResizing = false; // 调整状态标志
+            
+            // 鼠标按下事件 - 开始调整
+            resizeHandle.addEventListener('mousedown', function(e) {
+                isResizing = true;
+                document.body.style.userSelect = 'none'; // 禁用文本选择
+                e.preventDefault(); // 阻止默认行为
+            });
+            
+            // 鼠标移动事件 - 调整高度
+            document.addEventListener('mousemove', function(e) {
+                if (!isResizing) return; // 如果不是调整状态则返回
+                
+                // 计算容器位置和新高度
+                const containerRect = document.querySelector('.chat-input-container').getBoundingClientRect();
+                const newHeight = e.clientY - containerRect.top - 20; // 减去底部padding
+                
+                // 设置最小高度限制
+                if (newHeight >= 60) {
+                    messageInput.style.height = newHeight + 'px';
+                }
+            });
+            
+            // 鼠标释放事件 - 结束调整
+            document.addEventListener('mouseup', function() {
+                isResizing = false;
+                document.body.style.userSelect = ''; // 恢复文本选择
+            });
+        }
+        
+        // 事件监听器设置
+        
+        // 输入框键盘事件
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (e.ctrlKey) {
+                    // Ctrl+Enter 换行
+                    const start = messageInput.selectionStart;
+                    const end = messageInput.selectionEnd;
+                    // 在光标位置插入换行符
+                    messageInput.value = messageInput.value.substring(0, start) + '\n' + messageInput.value.substring(end);
+                    // 设置光标位置
+                    messageInput.selectionStart = messageInput.selectionEnd = start + 1;
+                    e.preventDefault(); // 阻止默认行为
+                } else {
+                    // 仅按Enter发送消息
+                    e.preventDefault();
+                    sendMessage();
+                }
+            }
+        });
+        
+        // 用户按钮点击事件
+        user1Btn.addEventListener('click', () => switchUser('user1'));
+        user2Btn.addEventListener('click', () => switchUser('user2'));
+        
+        // 清除按钮点击事件
+        clearBtn.addEventListener('click', clearChat);
+        
+        // 全局键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey) {
+                if (e.key === '1') {
+                    e.preventDefault(); // 阻止默认行为
+                    switchUser('user1'); // 切换到用户1
+                } else if (e.key === '2') {
+                    e.preventDefault(); // 阻止默认行为
+                    switchUser('user2'); // 切换到用户2
+                }
+            }
+        });
+        
+        // 初始化函数调用
+        initChat(); // 初始化聊天
+        initResizeHandle(); // 初始化调整大小功能
+        
+        // 定时器：每3秒自动检查新消息
+        setInterval(displayMessages, 3000);
+    </script>
+</body>
+</html>

@@ -1,41 +1,79 @@
-<!-- 主页面 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">      <!-- 选择字符集，确保中文字符正确显示 -->
-    <!-- 使页面在不同设备上都能正确缩放 --> 
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 页面标题，显示在浏览器标签页上-->
-    <title>我的音乐作品集</title>
-    <!-- 引入外部CSS样式文件 -->
+    <title>鸥波艺境 | 个人艺术创作空间</title>
     <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
-    <!-- 页面头部区域 -->
+   <!-- 保持原有的头部和导航不变 -->
     <header>
-        <h1>我的音乐作品集</h1>
+        <h1>鸥波艺境</h1>
         <p class="description">写歌的人表达自我，听歌的人寻找自我。</p>
     </header>
-    
-    <!-- 作品展示区域 -->
+
     <main>
-        <!-- 修改后的 works-container 部分 -->
-        <div class="works-container" id="works-container">
-            <!-- 初始时显示加载状态，若加载出错则显示错误提示 -->
-            <div class="loading-state" aria-live="polite">
-                <p class="loading">加载作品中...</p>
+        <!-- 近作与常伴 - 移除说明框，增加上边距 -->
+        <section class="featured-section">
+            <a href="pages/artworks.html" class="section-link">
+                <h2>近作与常伴</h2>
+                <p class="section-desc">时光中的声音印记</p>
+            </a>
+            <div class="works-container" id="featured-works-container">
+                <div class="loading-state">
+                    <p class="loading">加载作品中...</p>
+                </div>
             </div>
-            <!-- 作品卡片将在这里由JS动态添加 -->
-        </div>
+        </section>
+
+        <!-- 动态时光 - 移除说明框 -->
+        <section class="dynamics-section">
+            <a href="pages/dynamics.html" class="section-link">
+                <h2>动态时光</h2>
+                <p class="section-desc">创作路上的零星碎影</p>
+            </a>
+            <div class="dynamics-container" id="dynamics-container">
+                <div class="loading-state">
+                    <p class="loading">加载动态中...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于 -->
+        <!-- 关于模块 -->
+        <section class="featured-section">
+            <a href="pages/about.html" class="section-link">
+                <h2>关于</h2>
+                <p class="section-desc">创作者的故事与心声</p>
+            </a>
+            <a href="pages/about.html" class="preview-card">
+                <div class="preview-content">
+                    <p>"一个平平无奇的音乐爱好者，在创作中探寻自我。"</p>
+                    <span class="read-more">阅读完整故事 →</span>
+                </div>
+            </a>
+        </section>
+
+        <!-- 联系模块 -->
+        <section class="dynamics-section">
+            <a href="pages/contact-close.html" class="section-link">
+                <h2>联系</h2>
+                <p class="section-desc">留下你的声音与印记</p>
+            </a>
+            <a href="pages/contact-close.html" class="preview-card">
+                <div class="preview-content">
+                    <p>"每一条留言都会认真阅读，期待真诚的交流。"</p>
+                    <span class="read-more">静候知音 →</span>
+                </div>
+            </a>
+        </section>
     </main>
 
-    <!-- 页脚区域 -->
     <footer>
-        <p>© 2025 我的音乐作品集 | 所有权利保留</p>
+        <p>© 2025 鸥波艺境 | 探索艺术的无限可能</p>
     </footer>
 
-    <!-- 引入JavaScript，动态加载作品信息 -->
     <script src="scripts/index.js"></script>
-         
 </body>
 </html>
