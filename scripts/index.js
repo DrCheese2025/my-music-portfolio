@@ -4,8 +4,8 @@ const RECENT_DYNAMICS_COUNT = 2; // 最新动态显示条数
 
 // 修正路径常量 - 相对于index.html的位置
 const DATA_PATHS = {
-    ARTWORKS: '/data/artworks.json',      // 从scripts/到data/
-    DYNAMICS: '/data/dynamics.json'       // 从scripts/到data/
+    ARTWORKS: '/my-music-portfolio/data/artworks.json',      // 从scripts/到data/
+    DYNAMICS: '/my-music-portfolio/data/dynamics.json'       // 从scripts/到data/
 };
 
 // 错误提示信息
