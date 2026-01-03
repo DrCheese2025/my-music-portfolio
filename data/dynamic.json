@@ -9,7 +9,7 @@
     "attachments": [
       {
         "type": "audio",
-        "url": "../artwork/audio/S001-media.mp3",
+        "url": "../artwork/audio/S001.mp3",
         "title": "《写给春天的歌》"
       }
     ]
@@ -24,7 +24,7 @@
     "attachments": [
       {
         "type": "audio",
-        "url": "../artwork/audio/S002-media.mp3",
+        "url": "../artwork/audio/S002.mp3",
         "title": "《我想化作风》"
       }
     ]
@@ -153,7 +153,7 @@
     "id": "18",
     "date": "2026-01-02",
     "time": "13:14",
-    "title": "得起所愿",
+    "title": "得其所愿",
     "content": "如果求生的人和求死的人都能得其所愿，那这个世界会减少多少哀怨。",
     "type": "生活随笔"
   }
