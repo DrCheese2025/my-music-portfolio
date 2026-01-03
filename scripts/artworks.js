@@ -8,7 +8,7 @@
  * **************************************/
 
 // JSON数据路径常量（相对于当前HTML文件）
-const DATA_PATH = '../data/artwork.json';
+const DATA_PATH = '../data/artworks.json';
 
 // 错误提示信息
 const ERROR_MSG = {
@@ -239,7 +239,7 @@ function createWorkCard(work) {
     // 点击卡片跳转到详情页
     workCard.addEventListener('click', () => {
         sessionStorage.setItem('artworkSource', 'artworks');
-        window.location.href = `../page/artwork-detail.html?id=${work.id}`;
+        window.location.href = `../pages/artwork-detail.html?id=${work.id}`;
     });
     
     // 组装完整的作品卡片

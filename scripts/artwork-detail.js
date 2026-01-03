@@ -8,10 +8,9 @@
  * **************************************/
 
 // JSON数据路径常量（相对于当前HTML文件）
-// 修改：现在只使用一个JSON文件路径
 const DATA_PATHS = {
-    ARTWORKS: '../data/artwork.json'      // 作品完整数据路径（包含基本信息和内容）
-    // 移除：不再需要artwork-content.json
+    ARTWORKS: '../data/artworks.json',      // 作品基本信息路径
+    CONTENT: '../data/artworks-content.json' // 作品内容数据路径
 };
 
 // 错误信息常量
@@ -48,11 +47,11 @@ const TAB_CONFIG = {
 };
 
 // 页面来源配置
-const PAGE_SOURCES = {  // 使用绝对路径
-    index: '/index.html',
-    artworks: '/page/artwork-list.html',
-    dynamics: '/page/dynamic.html',
-    external: '/index.html' // 默认值
+const PAGE_SOURCES = {
+    index: '../index.html',
+    artworks: '../pages/artworks.html',
+    dynamics: '../pages/dynamics.html',
+    external: '../index.html' // 默认值
 };
 
 /* **************************************
@@ -76,11 +75,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 设置返回按钮
         setupBackButton();
         
-        // 修改：现在只加载一个JSON文件，获取完整的作品数据
-        const work = await loadWorkData(workId);
+        // 加载作品数据
+        const [work, content] = await loadWorkData(workId);
         
         // 渲染作品详情页
-        renderWorkDetail(work);
+        renderWorkDetail(work, content);
         
     } catch (error) {
         // 捕获并处理错误
@@ -141,25 +140,30 @@ function showError(message, container) {
 /**
  * 加载作品数据
  * @param {string} workId 作品ID
- * @returns {Promise<Object>} 包含作品完整信息的对象
+ * @returns {Promise<[Object, Object]>} 包含作品基本信息和内容的数组
  * @throws {Error} 当作品不存在或数据加载失败时抛出错误
  */
 async function loadWorkData(workId) {
-    // 修改：现在只加载一个JSON文件
-    // 加载作品完整信息（包含基本信息和内容）
-    const artworks = await fetch(DATA_PATHS.ARTWORKS).then(handleResponse);
+    // 使用Promise.all并行加载两个数据文件
+    const [artworks, worksContent] = await Promise.all([
+        // 加载作品基本信息
+        fetch(DATA_PATHS.ARTWORKS).then(handleResponse),
+        // 加载作品内容数据
+        fetch(DATA_PATHS.CONTENT).then(handleResponse)
+    ]);
 
-    // 在数组中查找匹配ID的作品
+    // 在基本信息数组中查找匹配ID的作品
     const work = artworks.find(item => item.id === workId);
+    // 获取对应ID的作品内容
+    const content = worksContent[workId];
     
-    // 如果找不到作品，抛出错误
-    if (!work) {
+    // 如果找不到作品或内容，抛出错误
+    if (!work || !content) {
         throw new Error(ERROR_MSG.NOT_FOUND);
     }
     
-    // 返回找到的作品数据
-    // 注意：现在work对象包含完整信息，包括之前content.json中的数据
-    return work;
+    // 返回找到的作品数据和内容
+    return [work, content];
 }
 
 /* **************************************
@@ -168,7 +172,7 @@ async function loadWorkData(workId) {
 
 /**
  * 渲染媒体内容(音频/视频)
- * @param {Object} work 作品数据（包含完整信息）
+ * @param {Object} work 作品数据
  * @param {HTMLElement} container 容器元素
  */
 function renderMedia(work, container) {
@@ -210,7 +214,7 @@ function renderMedia(work, container) {
 
 /**
  * 生成作品信息HTML
- * @param {Object} work 作品数据（包含完整信息）
+ * @param {Object} work 作品数据
  * @returns {string} 作品信息HTML字符串
  */
 function generateWorkInfoHTML(work) {
@@ -245,10 +249,11 @@ function generateWorkInfoHTML(work) {
 
 /**
  * 渲染作品内容区域
- * @param {Object} work 作品数据（包含完整信息）
+ * @param {Object} work 作品数据
+ * @param {Object} content 作品内容
  * @param {HTMLElement} container 容器元素
  */
-function renderContent(work, container) {
+function renderContent(work, content, container) {
     // 创建文档片段(优化性能，减少DOM操作)
     const fragment = document.createDocumentFragment();
     
@@ -259,9 +264,8 @@ function renderContent(work, container) {
     fragment.appendChild(infoElement);
     
     // 如果有备注内容，添加到左侧区域
-    // 修改：现在从work对象直接获取notes
-    if (work.notes && work.notes.trim() !== '') {
-        addNotesContent(work.notes);
+    if (content.notes && content.notes.trim() !== '') {
+        addNotesContent(content.notes);
     }
 
     // 清空容器并一次性添加所有元素
@@ -270,8 +274,10 @@ function renderContent(work, container) {
     
     // 如果是音频作品，创建标签页系统
     if (work.type === 'audio') {
-        // 修改：直接将work对象传递给标签系统，它包含所有内容数据
-        createTabSystem(work);
+        createTabSystem({
+        ...content,
+        notes: undefined // 防止在标签页重复显示备注
+        });
     }
 }
 
@@ -300,10 +306,11 @@ function addNotesContent(notes) {
 
 /**
  * 创建极简风格的标签页系统
- * @param {Object} work 作品数据（包含完整信息）
+ * @param {Object} content 作品内容(已过滤掉notes)
  */
-function createTabSystem(work) {
-    // 修改：现在直接使用work对象，它包含所有标签页所需的内容
+function createTabSystem(content) {
+    // content参数是过滤后的作品内容对象，已经移除了notes属性
+        
     const mediaContainer = document.getElementById('media-container');
     
     // 创建文档片段(优化性能)
@@ -326,7 +333,7 @@ function createTabSystem(work) {
         .map(([id, config]) => ({
         id,
         label: config.label,
-        content: config.render(work) // 修改：直接从work对象获取内容
+        content: config.render(content)
         }))
         .filter(tab => tab.content); // 过滤掉内容为空的标签
 
@@ -382,9 +389,10 @@ function createTabSystem(work) {
 
 /**
  * 渲染整个作品详情页
- * @param {Object} work 作品完整数据
+ * @param {Object} work 作品数据
+ * @param {Object} content 作品内容
  */
-function renderWorkDetail(work) {
+function renderWorkDetail(work, content) {
     // 设置页面标题
     document.title = `${work.title} | 鸥波艺境`;
     document.getElementById('detail-title').textContent = work.title;
@@ -393,8 +401,7 @@ function renderWorkDetail(work) {
     renderMedia(work, document.getElementById('media-container'));
     
     // 渲染文字内容
-    // 修改：现在只传递work对象，不需要单独的content对象
-    renderContent(work, document.getElementById('content-container'));
+    renderContent(work, content, document.getElementById('content-container'));
 
     // 初始化2025感恩节彩蛋（只在特定作品页面）
     initThanksgivingEasterEgg(work);
@@ -418,14 +425,14 @@ function setupBackButton() {
     if (!source) {
         // 根据上一页URL判断来源
         const referrer = document.referrer;
-        if (referrer.includes('artwork-list.html')) source = 'artworks';
+        if (referrer.includes('artworks.html')) source = 'artworks';
         else if (referrer.includes('index.html') || referrer.endsWith('/')) source = 'index';
         else source = 'index'; // 默认返回首页
     }
     
     // 设置返回链接
     if (source === 'artworks') {
-        backButton.href = '../page/artwork-list.html';
+        backButton.href = '../pages/artworks.html';
     } else {
         backButton.href = '../index.html';
     }
