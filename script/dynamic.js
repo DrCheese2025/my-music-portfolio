@@ -5,7 +5,7 @@
  */
 
 // ==================== 常量定义 ====================
-const DATA_PATH = 'data/dynamic.json';    // 动态数据JSON文件路径
+const DATA_PATH = '/my-music-portfolio/data/dynamic.json';    // 动态数据JSON文件路径
 const ITEMS_PER_PAGE = 5;                  // 每页显示动态数
 
 // 错误信息常量
