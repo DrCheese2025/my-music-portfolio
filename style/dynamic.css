@@ -246,6 +246,90 @@ body {
     opacity: 0.5;
 }
 
+/* ==================== 页码区域 ==================== */
+
+/* 页码导航容器 */
+.pagination-container {
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+/* 页码列表 */
+.pagination-list {
+    display: inline-flex;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 页码项 - 继承您卡片的设计语言 */
+.pagination-item {
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px; /* 比卡片的12px稍小，保持层次 */
+    background-color: #fff;
+    border: 1px solid #e8e8e8;
+    color: #555;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+/* 悬停效果 - 与卡片一致 */
+.pagination-item:hover:not(.active, .disabled) {
+    border-color: #667eea;
+    color: #667eea;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+/* 当前页 */
+.pagination-item.active {
+    background-color: #f8f9fa;
+    border-color: #667eea;
+    color: #667eea;
+    font-weight: 500;
+    pointer-events: none;
+}
+
+/* 禁用状态（上一页/下一页在边界时） */
+.pagination-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f9f9f9;
+}
+
+/* 省略号 */
+.pagination-ellipsis {
+    min-width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7f8c8d;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .pagination-item {
+        min-width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+    
+    .pagination-list {
+        gap: 0.25rem;
+    }
+}
+
 /* ==================== 页脚 ==================== */
 .dynamics-footer {
     text-align: center;

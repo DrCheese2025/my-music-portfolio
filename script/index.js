@@ -4,8 +4,8 @@ const RECENT_DYNAMICS_COUNT = 2; // 最新动态显示条数
 
 // 修正路径常量 - 相对于index.html的位置
 const DATA_PATHS = {
-    ARTWORKS: '/my-music-portfolio/data/artworks.json',      // 从scripts/到data/
-    DYNAMICS: '/my-music-portfolio/data/dynamics.json'       // 从scripts/到data/
+    ARTWORKS: '/my-music-portfolio/data/artwork.json',      // 作品数据JSON文件
+    DYNAMICS: '/my-music-portfolio/data/dynamic.json'       // 动态数据JSON文件
 };
 
 // 错误提示信息
@@ -207,7 +207,7 @@ function createDynamicCard(dynamic) {
     // 添加点击事件
     dynamicCard.addEventListener('click', () => {
         // 跳转到动态页面，并传递动态ID
-        window.location.href = `pages/dynamics.html?highlight=${dynamic.id}`;
+        window.location.href = `page/dynamic.html?highlight=${dynamic.id}`;
     });
     
     // 格式化日期
@@ -259,7 +259,7 @@ function createWorkCard(work) {
     workCard.addEventListener('click', () => {
         // 跳转到详情页
         sessionStorage.setItem('artworkSource', 'index');
-        window.location.href = `pages/artwork-detail.html?id=${work.id}`;
+        window.location.href = `page/artwork-detail.html?id=${work.id}`;
     });
     
     // 组装完整的作品卡片
@@ -349,3 +349,6 @@ function handleDataError(error) {
         }
     });
 }
+
+
+
