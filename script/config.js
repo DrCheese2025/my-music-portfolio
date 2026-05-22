@@ -168,7 +168,7 @@ const CONFIG = {
 
     featured: {
         /** 选录展示的作品 ID 列表（按列表顺序展示） */
-        workIds: ['S003', 'S001', 'S002'],
+        workIds: ['I001', 'S003', 'S002'],
 
         /** 最近动态显示条数 */
         dynamicsCount: 2,
