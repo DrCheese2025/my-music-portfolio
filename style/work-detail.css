@@ -1,0 +1,320 @@
+/**
+ * ============================================================================
+ * 鸥波艺境 - 作品详情页专用样式 (work-detail.css)
+ * ============================================================================
+ *
+ * 作品详情页的专用样式，包括：
+ *   - 播放器区域（音频/视频）
+ *   - 内容主区域与侧边栏布局
+ *   - 标签页内容样式
+ *   - 歌词展示样式
+ *   - 曲谱图片展示样式
+ *   - 创作手记样式
+ *   - 元信息侧边栏样式
+ *
+ * @version 1.0.0
+ * ============================================================================
+ */
+
+
+/* ==================== 播放器区域 ==================== */
+
+/**
+ * 媒体播放器容器
+ * 位于页面顶部，包含音频或视频播放器
+ */
+.detail-player {
+    max-width: var(--max-width-content);
+    margin: 0 auto var(--space-xl);
+    padding: 0 var(--page-padding);
+}
+
+/**
+ * 音频播放器包裹
+ * 白色卡片内嵌音频播放器
+ */
+.detail-player__audio-wrap {
+    background-color: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+/**
+ * 音频播放器标题区
+ * 包含封面缩略图、标题、副标题
+ */
+.detail-player__info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+/**
+ * 封面缩略图
+ */
+.detail-player__cover {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+    flex-shrink: 0;
+    background-color: var(--color-bg-subtle);
+}
+
+/**
+ * 封面占位符（无封面时）
+ */
+.detail-player__cover-placeholder {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--color-primary-lighter), var(--color-bg-subtle));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-xl);
+    color: var(--color-primary-light);
+    flex-shrink: 0;
+}
+
+/**
+ * 播放器文字信息
+ */
+.detail-player__text {
+    min-width: 0;  /* 允许文本截断 */
+}
+
+.detail-player__title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-xs);
+}
+
+.detail-player__subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+/**
+ * 音频元素样式
+ * 宽度100%填充容器
+ */
+.detail-player__audio {
+    width: 100%;
+    border-radius: var(--radius-md);
+}
+
+/**
+ * 视频播放器样式
+ * 宽度100%，圆角
+ */
+.detail-player__video {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    background-color: #000;
+}
+
+
+/* ==================== 内容主体布局 ==================== */
+
+/**
+ * 详情页主体区域
+ * 左侧为标签页内容，右侧为元信息侧边栏
+ * 在小屏幕上变为上下排列
+ */
+.detail-body {
+    max-width: var(--max-width-content);
+    margin: 0 auto;
+    padding: 0 var(--page-padding);
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: var(--space-xl);
+    align-items: start;
+}
+
+/**
+ * 左侧主内容区
+ */
+.detail-content {
+    min-width: 0;  /* 允许文本截断 */
+}
+
+/**
+ * 右侧元信息栏
+ */
+.detail-sidebar {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-lg));
+    background-color: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* ==================== 标签页内容样式 ==================== */
+
+/**
+ * 歌词展示区域
+ * 保持诗歌般的排版风格，居中显示
+ */
+.lyrics-content {
+    text-align: center;
+    white-space: pre-line;     /* 保留换行 */
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    font-style: normal;     /* 歌词用正常字体，不用斜体 */
+    padding: var(--space-lg) 0;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/**
+ * 曲谱图片展示区域
+ * 居中显示曲谱图片
+ */
+.score-content {
+    text-align: center;
+    padding: var(--space-lg) 0;
+}
+
+.score-content img {
+    max-width: 100%;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+/**
+ * 曲谱图片加载失败的替代提示
+ */
+.score-fallback {
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: var(--space-lg);
+    background: var(--color-bg-subtle);
+    border-radius: var(--radius-md);
+}
+
+/**
+ * 创作手记样式
+ */
+.diary-content {
+    padding: var(--space-lg) 0;
+}
+
+/* 创作手记标题：居中显示，不使用斜体 */
+.diary-content__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-lg);
+    text-align: center;
+    font-style: normal;
+}
+
+/**
+ * 手记段落
+ */
+.diary-content__paragraph {
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-lg);
+    text-align: justify;
+    text-indent: 2em;   /* 首行缩进2字符 */
+}
+
+.diary-content__paragraph:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ==================== 侧边栏元信息 ==================== */
+
+/**
+ * 侧边栏标题
+ */
+.detail-sidebar__title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--color-divider);
+    font-family: var(--font-ui);
+}
+
+
+/* ==================== 响应式调整 ==================== */
+
+/**
+ * 平板及以下 - 侧边栏移至下方
+ */
+@media (max-width: 768px) {
+    .detail-body {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 480px) {
+    .detail-player__info {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+
+/* ==================== 媒体加载失败状态 ==================== */
+
+/**
+ * 媒体加载失败时的提示信息
+ * 当音频或视频文件无法加载时，显示在播放器位置的友好提示
+ */
+.media-error {
+    padding: var(--space-lg);
+    text-align: center;
+    background: var(--color-bg-subtle);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+}
+
+/* 媒体错误提示文字 */
+.media-error__message {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-md);
+}
+
+/* 媒体错误重试按钮 */
+.media-error__retry {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+/* 重试按钮焦点样式 */
+.media-error__retry:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* 重试按钮激活状态 */
+.media-error__retry:active {
+    background: var(--color-border);
+}

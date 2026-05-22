@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="鸥波艺境 - 作品详情">
+    <title>作品详情 | 鸥波艺境</title>
+
+    <!-- ==================== CSS 样式引入 ==================== -->
+    <link rel="stylesheet" href="/style/variables.css">
+    <link rel="stylesheet" href="/style/base.css">
+    <link rel="stylesheet" href="/style/layout.css">
+    <link rel="stylesheet" href="/style/components.css">
+    <link rel="stylesheet" href="/style/work-detail.css">
+</head>
+<body>
+
+    <!-- 跳过导航链接（无障碍：允许键盘用户快速跳到主内容区） -->
+    <a href="#main-content" class="skip-nav">跳到主要内容</a>
+
+    <!-- ==================== 页面头部 ==================== -->
+    <header class="page-header">
+        <!-- 返回作品集按钮 -->
+        <a href="/page/works.html" class="back-btn" aria-label="返回作品集">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+                <path d="M15.41 16.09L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" fill="currentColor"/>
+            </svg>
+        </a>
+        <div class="page-header__title-group">
+            <h1 class="page-header__title">作品详情</h1>
+            <span class="page-header__brand">鸥波艺境</span>
+        </div>
+    </header>
+
+    <!-- ==================== 主内容区 ==================== -->
+    <main id="main-content" class="page-main">
+
+        <!-- 媒体播放器区域 -->
+        <div id="detail-player" class="detail-player">
+            <!-- 由 JS 动态渲染音频/视频播放器 -->
+        </div>
+
+        <!-- 内容主体：标签页 + 侧边栏 -->
+        <div class="detail-body">
+
+            <!-- 左侧：标签页内容区 -->
+            <div class="detail-content">
+                <!-- 标签页容器（由 JS 通过 createTabs 动态生成完整结构） -->
+                <div id="detail-tabs">
+                </div>
+            </div>
+
+            <!-- 右侧：元信息侧边栏 -->
+            <aside id="detail-sidebar" class="detail-sidebar" aria-label="作品元信息">
+                <!-- 由 JS 动态渲染元信息 -->
+            </aside>
+
+        </div>
+
+    </main>
+
+    <!-- ==================== 页脚 ==================== -->
+    <footer class="page-footer">
+        <p>
+            &copy; 2025 鸥波艺境
+            <span class="page-footer__divider" aria-hidden="true">|</span>
+            探索艺术的无限可能
+        </p>
+    </footer>
+
+    <!-- ==================== JavaScript 引入 ==================== -->
+    <script src="/script/config.js"></script>
+    <script src="/script/utils.js"></script>
+    <script src="/script/data-loader.js"></script>
+    <script src="/script/components.js"></script>
+    <script src="/script/work-detail.js"></script>
+
+</body>
+</html>

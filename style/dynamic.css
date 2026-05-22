@@ -1,419 +1,87 @@
-/*
- * 动态页面专用样式
- * 基于现有配色方案和设计风格
+/**
+ * ============================================================================
+ * 鸥波艺境 - 动态页面专用样式 (dynamic.css)
+ * ============================================================================
+ *
+ * 动态页面的专用样式，包括：
+ *   - 动态列表布局
+ *   - 动态卡片增强样式
+ *   - 分页区域
+ *
+ * @version 1.0.0
+ * ============================================================================
  */
 
-/* ==================== 全局样式 ==================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
 
-body {
-    background-color: #f5f5f5;
-    color: #333;
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll; /* 始终显示竖直滚动条 */
-}
+/* ==================== 动态列表容器 ==================== */
 
-/* ==================== 头部样式 ==================== */
-.detail-header {
-    background-color: #fff;
-    padding: 20px 30px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-.back-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    margin-right: 20px;
-    color: #2c3e50;
-    text-decoration: none;
-    border-radius: 50%;
-    transition: background-color 0.3s;
-}
-
-.back-button:hover {
-    background-color: #f0f0f0;
-}
-
-/* 页面标题组样式 */
-.page-title-group {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-}
-
-/* 头部标题样式 */
-#detail-title {
-    font-size: 1.5rem;
-    color: #2c3e50; /* 初版标题色 */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: 0;
-}
-
-/* 头部副标题样式 */
-.brand-subtitle {
-    color: #888;
-    font-size: 0.9rem;
-    font-weight: normal;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-}
-
-/* 悬停时显示完整品牌信息 */
-.detail-header:hover .brand-subtitle {
-    opacity: 1;
-}
-
-
-/* ==================== 主内容区 ==================== */
-.dynamics-container {
-    flex: 1;
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 0 30px;
-    width: 100%;
-}
-
-/* 动态列表容器 */
+/**
+ * 动态列表主容器
+ * 居中显示，限制最大宽度
+ */
 .dynamics-list {
+    max-width: var(--max-width-content);
+    margin: 0 auto;
+    padding: 0 var(--page-padding);
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: var(--space-lg);
 }
 
-/* ==================== 动态卡片 ==================== */
-.dynamic-card {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 25px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/**
+ * 分页容器
+ */
+.dynamics-pagination {
+    max-width: var(--max-width-content);
+    margin: 0 auto;
+    padding: 0 var(--page-padding);
 }
 
-/* 将来如果要点击卡片跳转，那么这几行代码就可以使用，所以保留 */
-/* 
-.dynamic-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+
+/* ==================== 动态卡片增强（动态页面专用） ==================== */
+
+/**
+ * 动态页面中的动态卡片增强样式
+ * 相比首页的紧凑展示，动态页面的卡片间距更宽松
+ */
+
+/* 我在动态页面和首页采用相同的动态卡片样式。以下是扣子编程写的，留作备用。 */
+
+/*
+.dynamics-list .dynamic-card {
+    padding: var(--space-lg);
 }
+
+.dynamics-list .dynamic-card__title {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-sm);
+}
+
+.dynamics-list .dynamic-card__content {
+    font-size: var(--text-base);
+    line-height: 1.8;
+}
+
+.dynamics-list .dynamic-card__image {
+    margin-top: var(--space-md);
+}
+
+.dynamics-list .dynamic-card__meta {
+    margin-top: var(--space-md);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--border-light);
+}
+
 */
 
-/* 动态头部信息 */
-.dynamic-header {
-    display: flex;
-    justify-content: between;
-    align-items: flex-start;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-    gap: 10px;
-}
+/* ==================== 响应式调整 ==================== */
 
-.dynamic-meta {
-    flex: 1;
-    min-width: 200px;
-}
-
-.dynamic-title {
-    font-size: 1.3rem;
-    color: #2c3e50;
-    margin-bottom: 8px;
-    line-height: 1.4;
-}
-
-.dynamic-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-size: 0.9rem;
-    color: #7f8c8d;
-}
-
-.dynamic-date {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.dynamic-type {
-    background-color: #eaeaea;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    color: #555;
-}
-
-/* 动态内容 */
-.dynamic-content {
-    color: #555;
-    line-height: 1.8;
-    margin-bottom: 20px;
-    white-space: pre-line;
-}
-
-/* 封面图片 */
-.dynamic-cover {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 15px;
-}
-
-/* ==================== 附件样式 ==================== */
-.dynamic-attachments {
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-}
-
-.attachment-item {
-    background-color: #f9f9f9;
-    border-radius: 6px;
-    padding: 12px;
-    margin-bottom: 10px;
-}
-
-.attachment-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-    color: #2c3e50;
-    font-weight: 500;
-}
-
-.attachment-icon {
-    font-size: 1.1rem;
-}
-
-.attachment-content audio {
-    width: 100%;
-    max-width: 100%;
-}
-
-/* ==================== 加载状态 ==================== */
-.loading-state {
-    text-align: center;
-    padding: 40px;
-    color: #7f8c8d;
-}
-
-.loading-state.error-state {
-    background-color: #ffeeee;
-    border: 1px solid #ffcccc;
-    border-radius: 4px;
-}
-
-.loading-state.error-state button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.loading-state.error-state button:hover {
-    background-color: #e9ecef;
-}
-
-/* ==================== 空状态 ==================== */
-.empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: #7f8c8d;
-}
-
-.empty-state .icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
-}
-
-/* ==================== 页码区域 ==================== */
-
-/* 页码导航容器 */
-.pagination-container {
-    margin-top: 2.5rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    padding-top: 1.5rem;
-    border-top: 1px solid #eee;
-}
-
-/* 页码列表 */
-.pagination-list {
-    display: inline-flex;
-    gap: 0.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-/* 页码项 - 继承您卡片的设计语言 */
-.pagination-item {
-    min-width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px; /* 比卡片的12px稍小，保持层次 */
-    background-color: #fff;
-    border: 1px solid #e8e8e8;
-    color: #555;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-decoration: none;
-}
-
-/* 悬停效果 - 与卡片一致 */
-.pagination-item:hover:not(.active, .disabled) {
-    border-color: #667eea;
-    color: #667eea;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
-}
-
-/* 当前页 */
-.pagination-item.active {
-    background-color: #f8f9fa;
-    border-color: #667eea;
-    color: #667eea;
-    font-weight: 500;
-    pointer-events: none;
-}
-
-/* 禁用状态（上一页/下一页在边界时） */
-.pagination-item.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background-color: #f9f9f9;
-}
-
-/* 省略号 */
-.pagination-ellipsis {
-    min-width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #7f8c8d;
-}
-
-/* 响应式调整 */
-@media (max-width: 768px) {
-    .pagination-item {
-        min-width: 32px;
-        height: 32px;
-        font-size: 0.9rem;
-    }
-    
-    .pagination-list {
-        gap: 0.25rem;
-    }
-}
-
-/* ==================== 页脚 ==================== */
-.dynamics-footer {
-    text-align: center;
-    padding: 20px;
-    color: #7f8c8d;
-    font-size: 0.9rem;
-    background-color: #fff;
-    border-top: 1px solid #eee;
-    margin-top: auto;
-}
-
-/* ==================== 响应式设计 ==================== */
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-    .page-title-group {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
-    }
-    
-    .brand-subtitle {
-        font-size: 0.8rem;
-    }
-}
-
-
-/* 平板设备适配 */
-@media (max-width: 768px) {
-    .dynamics-header {
-        padding: 15px 20px;
-    }
-    
-    .back-button {
-        width: 40px;
-        height: 40px;
-        margin-right: 15px;
-    }
-    
-    .dynamics-header h1 {
-        font-size: 1.3rem;
-    }
-    
-    .dynamics-container {
-        padding: 0 20px;
-        margin: 20px auto;
-    }
-    
-    .dynamic-card {
-        padding: 20px;
-    }
-    
-    .dynamic-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .dynamic-type {
-        align-self: flex-start;
-    }
-}
-
-/* 移动设备适配 */
 @media (max-width: 480px) {
-    .dynamics-header {
-        padding: 12px 15px;
+    .dynamics-list {
+        gap: var(--space-md);
     }
-    
-    .dynamics-container {
-        padding: 0 15px;
-        margin: 15px auto;
-    }
-    
-    .dynamic-card {
-        padding: 15px;
-    }
-    
-    .dynamic-info {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-    
-    .dynamic-title {
-        font-size: 1.1rem;
+
+    .dynamics-list .dynamic-card {
+        padding: var(--space-md);
     }
 }

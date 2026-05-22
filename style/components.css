@@ -1,0 +1,863 @@
+/**
+ * ============================================================================
+ * 鸥波艺境 - 通用组件样式 (components.css)
+ * ============================================================================
+ *
+ * 本文件定义了全站通用的 UI 组件样式，包括：
+ *   1. 卡片组件
+ *   2. 按钮组件
+ *   3. 标签/徽章组件
+ *   4. 搜索框组件
+ *   5. 分页组件
+ *   6. 标签页组件
+ *   7. 加载状态组件
+ *   8. 表单组件
+ *
+ * 【设计原则】
+ *   - 组件使用 BEM 命名规范（Block__Element--Modifier）
+ *   - 不使用 :hover 伪类，保证移动端体验一致
+ *   - 所有交互反馈通过 :active 实现
+ *   - 使用 CSS 变量确保主题一致性
+ *
+ * @version 1.0.0
+ * ============================================================================
+ */
+
+
+/* ==================== 1. 卡片组件 ==================== */
+
+/**
+ * 基础卡片
+ * 白色背景、圆角、微阴影，是内容承载的核心容器。
+ */
+.card {
+    background-color: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow var(--duration-normal) var(--ease-default),
+                transform var(--duration-normal) var(--ease-default);
+}
+
+/**
+ * 卡片 - 按下状态
+ * 轻微下沉 + 阴影减弱，提供触摸反馈
+ */
+.card:active {
+    box-shadow: var(--shadow-sm);
+    transform: translateY(2px);
+}
+
+/**
+ * 卡片 - 可点击样式
+ * 增加 cursor: pointer 表示可交互
+ */
+.card--clickable {
+    cursor: pointer;
+}
+
+/** 可点击卡片 - 键盘焦点可见样式 */
+.card--clickable:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/**
+ * 卡片内容区
+ * 使用 flex 列布局，使日期等元信息自动推至底部
+ */
+.card__body {
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;             /* 填充卡片剩余空间 */
+}
+
+/**
+ * 卡片封面区
+ * 用于展示封面图片，固定宽高比
+ */
+.card__cover {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background-color: var(--color-bg-subtle);
+}
+
+/**
+ * 卡片封面占位符
+ * 当没有封面图时显示的默认图案
+ */
+.card__cover-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary-lighter), var(--color-bg-subtle));
+    color: var(--color-primary-light);
+    font-size: var(--text-3xl);
+}
+
+
+/* ==================== 1.2 作品卡片内容样式 ==================== */
+
+/**
+ * 作品分类标签
+ * 显示在卡片顶部，小号文字+浅色背景
+ */
+.work-card__tag {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    color: var(--color-primary);
+    background-color: var(--color-primary-lighter);
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    margin-bottom: var(--space-sm);
+    align-self: flex-start;
+}
+
+/**
+ * 作品标题
+ * 卡片中的主标题，中等粗细
+ */
+.work-card__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+    line-height: var(--leading-snug);
+}
+
+/**
+ * 作品副标题
+ * 可选，位于主标题下方
+ */
+.work-card__subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+}
+
+/**
+ * 作品元信息（日期）
+ * margin-top: auto 使日期推至卡片底部
+ */
+.work-card__meta {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-top: auto;
+}
+
+
+/* ==================== 1.3 动态卡片内容样式 ==================== */
+
+/**
+ * 动态卡片头部
+ * 标签和标题水平排列
+ */
+.dynamic-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+}
+
+/**
+ * 动态标题
+ */
+.dynamic-card__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+/**
+ * 动态正文内容
+ * 使用辅助文字色，与标题和日期形成视觉层次
+ */
+.dynamic-card__content {
+    color: var(--color-text-secondary);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-md);
+}
+
+/**
+ * 动态配图
+ */
+.dynamic-card__image {
+    margin-bottom: var(--space-md);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.dynamic-card__image img {
+    width: 100%;
+    border-radius: var(--radius-md);
+}
+
+/**
+ * 动态元信息（时间）
+ * 使用小号 UI 字体+柔和色，与正文内容形成视觉区分
+ */
+.dynamic-card__meta {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+
+/**
+ * 动态关联作品区域
+ * 当动态关联了某部作品时，显示一个可点击的跳转入口
+ * 使用背景色与手型鼠标来提示用户这是一个可交互元素
+ */
+.dynamic-card__related-work {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-primary-lighter);
+    border-radius: var(--radius-md);
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: background-color var(--duration-fast) var(--ease-default);
+    align-self: flex-start;
+    margin-bottom: var(--space-md);
+}
+
+/** 关联作品区域 - 按下时的视觉反馈（代替 hover，兼容移动端） */
+.dynamic-card__related-work:active {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+}
+
+/** 关联作品 - 图标 */
+.dynamic-card__related-icon {
+    font-size: var(--text-base);
+}
+
+/** 关联作品 - 文字（加粗以区别于普通正文） */
+.dynamic-card__related-text {
+    font-weight: 500;
+}
+
+/** 关联作品区域 - 键盘焦点可见样式 */
+.dynamic-card__related-work:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+
+/* ==================== 2. 按钮组件 ==================== */
+
+/**
+ * 基础按钮
+ * 所有按钮的公共样式
+ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    line-height: var(--leading-tight);
+    border-radius: var(--radius-md);
+    transition: background-color var(--duration-fast) var(--ease-default),
+                color var(--duration-fast) var(--ease-default),
+                opacity var(--duration-fast) var(--ease-default);
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
+}
+
+/**
+ * 主要按钮 - 实心填充
+ */
+.btn--primary {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+}
+
+/**
+ * 主要按钮 - 按下状态
+ */
+.btn--primary:active {
+    background-color: var(--color-primary-dark);
+}
+
+/**
+ * 次要按钮 - 描边样式
+ */
+.btn--outline {
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    background-color: transparent;
+}
+
+/**
+ * 次要按钮 - 按下状态
+ */
+.btn--outline:active {
+    background-color: var(--color-bg-subtle);
+}
+
+/**
+ * 文字按钮 - 无边框无背景
+ */
+.btn--text {
+    color: var(--color-primary);
+    padding: var(--space-xs) var(--space-sm);
+}
+
+/**
+ * 文字按钮 - 按下状态
+ */
+.btn--text:active {
+    background-color: var(--color-primary-lighter);
+    border-radius: var(--radius-sm);
+}
+
+/**
+ * 禁用状态
+ */
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* ==================== 3. 标签/徽章组件 ==================== */
+
+/**
+ * 基础标签
+ * 用于分类、类型标注等场景
+ *
+ * 标签颜色体系说明：
+ * - 各标签的具体颜色在 variables.css 中以 CSS 变量定义（--tag-{key}-bg / --tag-{key}-text）
+ * - 修改标签颜色只需编辑 variables.css，无需改动此处
+ * - 新增标签类型需在 variables.css 添加对应变量，并在 config.js 的 tags.registry 中注册
+ */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    /* 标签内边距：确保背景色区域大小合适，内容两侧有充裕留白 */
+    padding: var(--space-xs) var(--space-sm);
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    /* 缺省背景色：使用 --tag-default 变量，未注册标签统一显示为浅灰色 */
+    background-color: var(--tag-default-bg, var(--color-primary-lighter));
+    color: var(--tag-default-text, var(--color-primary));
+    line-height: var(--leading-tight);
+    white-space: nowrap;
+}
+
+/* --- 标签变体：各类型标签使用 variables.css 中定义的 CSS 变量 --- */
+
+/** 缺省标签（未注册的标签类型） */
+.tag--default {
+    background-color: var(--tag-default-bg);
+    color: var(--tag-default-text);
+}
+
+/** 原创歌曲 */
+.tag--song {
+    background-color: var(--tag-song-bg);
+    color: var(--tag-song-text);
+}
+
+/** 纯音乐 */
+.tag--instrumental {
+    background-color: var(--tag-instrumental-bg);
+    color: var(--tag-instrumental-text);
+}
+
+/** 音乐MV */
+.tag--video {
+    background-color: var(--tag-video-bg);
+    color: var(--tag-video-text);
+}
+
+/** 生活随笔 */
+.tag--essay {
+    background-color: var(--tag-essay-bg);
+    color: var(--tag-essay-text);
+}
+
+/** 创作记录 */
+.tag--creation {
+    background-color: var(--tag-creation-bg);
+    color: var(--tag-creation-text);
+}
+
+
+/* ==================== 4. 搜索框组件 ==================== */
+
+/**
+ * 搜索容器
+ * 包含搜索图标和输入框的容器
+ */
+.search {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto var(--space-lg);
+}
+
+/**
+ * 搜索图标
+ * 绝对定位在输入框左侧
+ */
+.search__icon {
+    position: absolute;
+    left: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: var(--color-text-muted);
+    pointer-events: none;   /* 不拦截点击事件 */
+}
+
+/**
+ * 搜索输入框
+ * 左侧留出图标空间
+ */
+.search__input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md) var(--space-sm) var(--space-xl);
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    transition: border-color var(--duration-fast) var(--ease-default),
+                box-shadow var(--duration-fast) var(--ease-default);
+}
+
+/**
+ * 搜索输入框 - 聚焦状态
+ */
+.search__input:focus {
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 3px var(--color-primary-lighter);
+}
+
+/**
+ * 搜索输入框 - 占位符文字
+ */
+.search__input::placeholder {
+    color: var(--color-text-muted);
+}
+
+
+/* ==================== 5. 分页组件 ==================== */
+
+/**
+ * 分页容器
+ * 居中排列分页按钮
+ */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-xl) 0;
+    font-family: var(--font-ui);
+}
+
+/**
+ * 分页按钮
+ */
+.pagination__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 var(--space-sm);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-md);
+    transition: background-color var(--duration-fast) var(--ease-default),
+                color var(--duration-fast) var(--ease-default);
+    -webkit-tap-highlight-color: transparent;
+}
+
+/**
+ * 分页按钮 - 按下状态
+ */
+.pagination__btn:active {
+    background-color: var(--color-primary-lighter);
+    color: var(--color-primary);
+}
+
+/**
+ * 分页按钮 - 当前页
+ */
+.pagination__btn--active {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+    font-weight: 600;
+}
+
+/**
+ * 分页按钮 - 禁用状态
+ */
+.pagination__btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/**
+ * 分页省略号
+ */
+.pagination__ellipsis {
+    color: var(--color-text-muted);
+    padding: 0 var(--space-xs);
+}
+
+
+/* ==================== 6. 标签页组件 ==================== */
+
+/**
+ * 标签页整体容器
+ * 包含导航栏(nav.tabs)和内容面板(.tabs__panel)
+ * 由 UIComponents.createTabs() 方法生成
+ */
+.tabs-container {
+    width: 100%;
+}
+
+/**
+ * 标签页导航栏
+ * 用于作品详情页中的"歌词/曲谱/创作手记"等内容切换
+ */
+.tabs {
+    border-bottom: 1px solid var(--color-divider);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;         /* 小屏幕时允许横向滚动 */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;    /* Firefox 隐藏滚动条 */
+}
+
+/* 隐藏 Webkit 浏览器的标签页滚动条 */
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+/**
+ * 单个标签按钮
+ */
+.tabs__item {
+    padding: var(--space-md) var(--space-lg);
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color var(--duration-fast) var(--ease-default),
+                border-color var(--duration-fast) var(--ease-default);
+    -webkit-tap-highlight-color: transparent;
+}
+
+/**
+ * 标签按钮 - 按下状态
+ */
+.tabs__item:active {
+    color: var(--color-primary);
+}
+
+/**
+ * 标签按钮 - 选中状态
+ * 底部显示主色调边框
+ */
+.tabs__item--active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+}
+
+/** 标签按钮 - 键盘焦点可见样式 */
+.tabs__item:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/**
+ * 标签页内容面板
+ * 默认隐藏，选中时显示
+ * 面板始终占满容器宽度，内容居中排列
+ */
+.tabs__panel {
+    display: none;
+    width: 100%;
+    padding: var(--space-lg) 0;
+    animation: tabFadeIn var(--duration-normal) var(--ease-default);
+}
+
+/**
+ * 标签页内容 - 激活状态
+ */
+.tabs__panel--active {
+    display: block;
+}
+
+/**
+ * 标签页切换的淡入动画
+ */
+@keyframes tabFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==================== 7. 加载状态组件 ==================== */
+
+/**
+ * 加载中状态
+ * 在数据加载时显示
+ */
+.loading {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-md);
+    color: var(--color-text-muted);
+    font-family: var(--font-ui);
+}
+
+/**
+ * 加载动画 - 三个跳动的点
+ */
+.loading__dots {
+    display: inline-flex;
+    gap: var(--space-xs);
+}
+
+.loading__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-primary-light);
+    animation: loadingBounce 1.4s infinite ease-in-out both;
+}
+
+.loading__dot:nth-child(1) { animation-delay: -0.32s; }
+.loading__dot:nth-child(2) { animation-delay: -0.16s; }
+.loading__dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes loadingBounce {
+    0%, 80%, 100% {
+        transform: scale(0.4);
+        opacity: 0.4;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/**
+ * 错误状态 - 数据加载失败或操作出错时显示
+ * 包含图标、错误信息和重试按钮的样式
+ */
+.loading--error {
+    color: var(--color-error);
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+/* 错误状态中的重试按钮 */
+.loading--error__retry {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-subtle);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+/* 重试按钮焦点样式（键盘导航可见） */
+.loading--error__retry:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* 重试按钮激活状态 */
+.loading--error__retry:active {
+    background: var(--color-border);
+}
+
+/**
+ * 空状态
+ */
+.loading--empty {
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+
+/* ==================== 8. 表单组件 ==================== */
+
+/**
+ * 表单组 - 一个标签 + 一个输入控件的组合
+ */
+.form-group {
+    margin-bottom: var(--space-lg);
+}
+
+/**
+ * 表单标签
+ */
+.form-label {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+}
+
+/**
+ * 表单输入框
+ */
+.form-input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    transition: border-color var(--duration-fast) var(--ease-default),
+                box-shadow var(--duration-fast) var(--ease-default);
+}
+
+/**
+ * 表单输入框 - 聚焦状态
+ */
+.form-input:focus {
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 3px var(--color-primary-lighter);
+}
+
+/**
+ * 多行文本框
+ */
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;    /* 仅允许纵向调整大小 */
+    line-height: var(--leading-relaxed);
+}
+
+/**
+ * 表单提示文字
+ */
+.form-hint {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-xs);
+}
+
+/**
+ * 表单错误提示
+ */
+.form-error {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    color: var(--color-error);
+    margin-top: var(--space-xs);
+}
+
+
+/* ==================== 9. 元信息列表组件 ==================== */
+
+/**
+ * 元信息列表
+ * 用于展示作品的元数据（ID、标题、作者、时间等）
+ * 采用 key-value 水平排列
+ * 语义上使用 <dl>/<dt>/<dd> 标签，提供更好的无障碍访问体验
+ */
+.meta-list {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    margin: 0;  /* 重置 <dl> 默认外边距 */
+}
+
+/**
+ * 单条元信息
+ */
+.meta-list__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--color-divider);
+}
+
+/**
+ * 元信息 - 标签（key）
+ * 语义对应 <dt> 元素
+ */
+.meta-list__label {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    margin-right: var(--space-md);
+    display: inline;  /* 重置 <dt> 默认块级显示 */
+}
+
+/**
+ * 元信息 - 值（value）
+ * 语义对应 <dd> 元素
+ */
+.meta-list__value {
+    color: var(--color-text);
+    text-align: right;
+    word-break: break-word;
+    margin: 0;  /* 重置 <dd> 默认外边距 */
+    display: inline;  /* 重置 <dd> 默认块级显示 */
+}
+
+
+/* ==================== 响应式调整 ==================== */
+
+@media (max-width: 768px) {
+    .card__body {
+        padding: var(--space-md);
+    }
+
+    .tabs__item {
+        padding: var(--space-sm) var(--space-md);
+        font-size: var(--text-xs);
+    }
+
+    .meta-list__item {
+        flex-direction: column;
+        gap: var(--space-xs);
+    }
+
+    .meta-list__value {
+        text-align: left;
+    }
+}

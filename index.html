@@ -3,77 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鸥波艺境 | 个人艺术创作空间</title>
-    <link rel="stylesheet" href="style/index.css">
+    <meta name="description" content="鸥波艺境 - 写歌的人表达自我，听歌的人寻找自我。个人原创音乐作品展示。">
+    <title>鸥波艺境</title>
+
+    <!-- ==================== CSS 样式引入 ==================== -->
+    <!-- 注意：引入顺序很重要，后引入的样式优先级更高 -->
+    <!-- 1. CSS 变量与主题（最底层，定义所有变量） -->
+    <link rel="stylesheet" href="/style/variables.css">
+    <!-- 2. 基础样式重置 -->
+    <link rel="stylesheet" href="/style/base.css">
+    <!-- 3. 布局组件 -->
+    <link rel="stylesheet" href="/style/layout.css">
+    <!-- 4. 通用组件 -->
+    <link rel="stylesheet" href="/style/components.css">
+    <!-- 5. 首页专用样式 -->
+    <link rel="stylesheet" href="/style/index.css">
 </head>
 <body>
-   <!-- 保持原有的头部和导航不变 -->
-    <header>
-        <h1>鸥波艺境</h1>
-        <p class="description">写歌的人表达自我，听歌的人寻找自我。</p>
+
+    <!-- 跳过导航链接（无障碍：允许键盘用户快速跳到主内容区） -->
+    <a href="#main-content" class="skip-nav">跳到主要内容</a>
+
+    <!-- ==================== 首页 Hero 头部 ==================== -->
+    <header class="hero-header">
+        <!-- 站点主标题 -->
+        <h1 class="hero-header__title">鸥波艺境</h1>
+
+        <!--
+            站点副标题
+        -->
+        <p class="hero-header__subtitle" id="site-subtitle">
+            写歌的人表达自我，听歌的人寻找自我。
+        </p>
+
+        <!-- 导航入口 -->
+        <nav class="hero-nav" aria-label="站点导航">
+            <a href="/page/works.html" class="hero-nav__link hero-nav__link--active">作品集</a>
+            <a href="/page/dynamic.html" class="hero-nav__link">动态</a>
+            <a href="/page/about.html" class="hero-nav__link">关于</a>
+            <a href="/page/contact.html" class="hero-nav__link">留言</a>
+        </nav>
     </header>
 
-    <main>
-        <!-- 近作与常伴 - 移除说明框，增加上边距 -->
-        <section class="featured-section">
-            <a href="page/artwork-list.html" class="section-link">
-                <h2>近作与常伴</h2>
-                <p class="section-desc">时光中的声音印记</p>
-            </a>
-            <div class="works-container" id="featured-works-container">
-                <div class="loading-state">
-                    <p class="loading">加载作品中...</p>
-                </div>
+    <!-- ==================== 主内容区 ==================== -->
+    <main id="main-content" class="page-main">
+
+        <!-- 选录作品区域 -->
+        <section class="home-section" aria-labelledby="featured-title">
+            <div class="home-section__header">
+                <h2 class="home-section__title" id="featured-title">作品选录</h2>
+                <p class="home-section__desc">岁月里的声音印记</p>
+                <a href="/page/works.html" class="home-section__link">
+                    查看全部作品 <span class="home-section__link-arrow" aria-hidden="true">→</span>
+                </a>
+            </div>
+            <div id="featured-works-container" class="featured-works-grid" aria-live="polite">
+                <!-- 初始加载状态 -->
             </div>
         </section>
 
-        <!-- 动态时光 - 移除说明框 -->
-        <section class="dynamics-section">
-            <a href="page/dynamic.html" class="section-link">
-                <h2>动态时光</h2>
-                <p class="section-desc">创作路上的零星碎影</p>
-            </a>
-            <div class="dynamics-container" id="dynamics-container">
-                <div class="loading-state">
-                    <p class="loading">加载动态中...</p>
-                </div>
+        <!-- 最近动态区域 -->
+        <section class="home-section" aria-labelledby="dynamics-title">
+            <div class="home-section__header">
+                <h2 class="home-section__title" id="dynamics-title">最新动态</h2>
+                <p class="home-section__desc">时光中的随想片刻</p>
+                <a href="/page/dynamic.html" class="home-section__link">
+                    查看全部动态 <span class="home-section__link-arrow" aria-hidden="true">→</span>
+                </a>
+            </div>
+            <div id="recent-dynamics-container" class="recent-dynamics-list" aria-live="polite">
+                <!-- 初始加载状态 -->
             </div>
         </section>
 
-        <!-- 关于 -->
-        <!-- 关于模块 -->
-        <section class="featured-section">
-            <a href="page/about.html" class="section-link">
-                <h2>关于</h2>
-                <p class="section-desc">创作者的故事与心声</p>
-            </a>
-            <a href="page/about.html" class="preview-card">
-                <div class="preview-content">
-                    <p>"一个平平无奇的音乐爱好者，在创作中探寻自我。"</p>
-                    <span class="read-more">阅读完整故事 →</span>
-                </div>
-            </a>
-        </section>
-
-        <!-- 联系模块 -->
-        <section class="dynamics-section">
-            <a href="page/contact-close.html" class="section-link">
-                <h2>联系</h2>
-                <p class="section-desc">留下你的声音与印记</p>
-            </a>
-            <a href="page/contact-close.html" class="preview-card">
-                <div class="preview-content">
-                    <p>"每一条留言都会认真阅读，期待真诚的交流。"</p>
-                    <span class="read-more">静候知音 →</span>
-                </div>
-            </a>
-        </section>
     </main>
 
-    <footer>
-        <p>© 2025 鸥波艺境 | 探索艺术的无限可能</p>
+    <!-- ==================== 页脚 ==================== -->
+    <footer class="page-footer">
+        <p>
+            &copy; <span id="footer-year">2025</span> 鸥波艺境
+            <span class="page-footer__divider" aria-hidden="true">|</span>
+            探索艺术的无限可能
+        </p>
     </footer>
 
-    <script src="script/index.js"></script>
+    <!-- ==================== JavaScript 引入 ==================== -->
+    <!-- 注意：引入顺序很重要，依赖关系为 config → utils → data-loader → components → 页面逻辑 -->
+    <!-- 1. 全局配置 -->
+    <script src="/script/config.js"></script>
+    <!-- 2. 工具函数 -->
+    <script src="/script/utils.js"></script>
+    <!-- 3. 数据加载器 -->
+    <script src="/script/data-loader.js"></script>
+    <!-- 4. UI 组件 -->
+    <script src="/script/components.js"></script>
+    <!-- 5. 首页逻辑 -->
+    <script src="/script/index.js"></script>
+
 </body>
 </html>

@@ -1,0 +1,84 @@
+/**
+ * ============================================================================
+ * 鸥波艺境 - 作品集页面专用样式 (works.css)
+ * ============================================================================
+ *
+ * 作品集页面的专用样式，包括：
+ *   - 搜索栏区域
+ *   - 作品网格布局
+ *   - 空搜索结果提示
+ *
+ * @version 1.0.0
+ * ============================================================================
+ */
+
+
+/* ==================== 搜索区域 ==================== */
+
+/**
+ * 搜索区域容器
+ * 包含搜索框，居中显示
+ */
+.works-search {
+    max-width: var(--max-width-content);
+    margin: 0 auto var(--space-xl);
+    padding: 0 var(--page-padding);
+}
+
+
+/* ==================== 作品网格 ==================== */
+
+/**
+ * 作品网格容器
+ * 使用 CSS Grid 实现自适应列数布局
+ * 最小列宽 280px，自动填充可用空间
+ */
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    max-width: var(--max-width-wide);
+    margin: 0 auto;
+    padding: 0 var(--page-padding);
+}
+
+
+/* ==================== 搜索无结果 ==================== */
+
+/**
+ * 搜索无结果时的提示
+ */
+.works-empty {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-md);
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.works-empty__icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-md);
+    opacity: 0.5;
+}
+
+.works-empty__text {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-md);
+}
+
+
+/* ==================== 响应式调整 ==================== */
+
+@media (max-width: 768px) {
+    .works-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: var(--space-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .works-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+}

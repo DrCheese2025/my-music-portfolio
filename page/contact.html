@@ -3,73 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>联系 | 鸥波艺境</title>
-    <link rel="stylesheet" href="../style/contact.css">
+    <meta name="description" content="鸥波艺境 - 给我留言">
+    <title>留言 | 鸥波艺境</title>
+
+    <!-- ==================== CSS 样式引入 ==================== -->
+    <link rel="stylesheet" href="/style/variables.css">
+    <link rel="stylesheet" href="/style/base.css">
+    <link rel="stylesheet" href="/style/layout.css">
+    <link rel="stylesheet" href="/style/components.css">
+    <link rel="stylesheet" href="/style/contact.css">
 </head>
 <body>
-    <header class="detail-header">
-        <a href="../index.html" class="back-button" aria-label="返回首页">
-            <svg viewBox="0 0 24 24" width="24" height="24">
+
+    <!-- 跳过导航链接（无障碍：允许键盘用户快速跳到主内容区） -->
+    <a href="#main-content" class="skip-nav">跳到主要内容</a>
+
+    <!-- ==================== 页面头部 ==================== -->
+    <header class="page-header">
+        <!-- 返回首页按钮 -->
+        <a href="/" class="back-btn" aria-label="返回首页">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
                 <path d="M15.41 16.09L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" fill="currentColor"/>
             </svg>
         </a>
-        <div class="page-title-group">
-            <h1 id="detail-title">联系</h1>
-            <span class="brand-subtitle">鸥波艺境</span>
+        <div class="page-header__title-group">
+            <h1 class="page-header__title">留言</h1>
+            <span class="page-header__brand">鸥波艺境</span>
         </div>
     </header>
 
-    <main>
-        <div class="contact-container">
-            <!-- 简洁的引导文字 -->
-            <section class="contact-intro">
-                <h2>静候知音</h2>
-                <p>若有共鸣，愿闻其详。</p>
-            </section>
+    <!-- ==================== 主内容区 ==================== -->
+    <main id="main-content" class="page-main">
 
-            <!-- 精简的表单 -->
-            <form class="contact-form" id="contact-form">
+        <div class="contact-container" id="contact-form-container">
+
+            <!-- 页面引导文字 -->
+            <p class="contact-intro" id="contact-intro">
+                如果你有想对我说的话，可以在这里留言。<br>
+                无需登录，写完即发。
+            </p>
+
+            <!-- 联系表单 -->
+            <form id="contact-form" class="contact-form-card" novalidate aria-describedby="contact-intro">
+
+                <!-- 称呼 -->
                 <div class="form-group">
-                    <label for="contact-name">称呼</label>
-                    <input type="text" id="contact-name" name="name" required 
-                           placeholder="如何称呼您" maxlength="50">
+                    <label class="form-label" for="contact-name">
+                        你的称呼 <span class="form-required">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="contact-name"
+                        name="name"
+                        class="form-input"
+                        placeholder="怎么称呼你"
+                        required
+                        autocomplete="name"
+                    >
                 </div>
-                
+
+                <!-- 邮箱（可选） -->
                 <div class="form-group">
-                    <label for="contact-email">联系方式（选填）</label>
-                    <input type="email" id="contact-email" name="email" 
-                           placeholder="邮箱或其他方式" maxlength="100">
+                    <label class="form-label" for="contact-email">
+                        邮箱 <span class="form-optional">（选填，方便我回复你）</span>
+                    </label>
+                    <input
+                        type="email"
+                        id="contact-email"
+                        name="email"
+                        class="form-input"
+                        placeholder="your@email.com"
+                        autocomplete="email"
+                    >
                 </div>
-                
+
+                <!-- 主题 -->
                 <div class="form-group">
-                    <label for="contact-message">留言</label>
-                    <textarea id="contact-message" name="message" required 
-                              placeholder="请写下您想说的话..." maxlength="1000"></textarea>
-                    <div class="char-count"><span id="char-count">0</span>/1000</div>
+                    <label class="form-label" for="contact-subject">
+                        主题
+                    </label>
+                    <input
+                        type="text"
+                        id="contact-subject"
+                        name="subject"
+                        class="form-input"
+                        placeholder="留言主题"
+                    >
                 </div>
-                
-                <button type="submit" class="submit-button" id="submit-button">
-                    <span class="button-text">寄出心意</span>
-                    <span class="loading-spinner"></span>
-                </button>
+
+                <!-- 留言内容 -->
+                <div class="form-group">
+                    <label class="form-label" for="contact-message">
+                        留言内容 <span class="form-required">*</span>
+                    </label>
+                    <textarea
+                        id="contact-message"
+                        name="message"
+                        class="form-input form-textarea"
+                        placeholder="想对我说的话"
+                        required
+                    ></textarea>
+                </div>
+
+                <!-- 提交按钮 -->
+                <div class="contact-form__actions">
+                    <button type="submit" class="btn btn--primary">
+                        发送留言
+                    </button>
+                </div>
+
             </form>
-            
-            <!-- 简洁的说明 -->
-            <div class="contact-notice">
-                <h3>📮 关于留言</h3>
-                <ul>
-                    <li>内容仅我可见，不会公开</li>
-                    <li>我会认真阅读每一条留言</li>
-                    <li>通常不会回复，请予理解</li>
-                </ul>
-            </div>
+
         </div>
+
     </main>
 
-    <footer class="detail-footer">
-        <p>© 2025 鸥波艺境 | 探索艺术的无限可能</p>
+    <!-- ==================== 页脚 ==================== -->
+    <footer class="page-footer">
+        <p>
+            &copy; 2025 鸥波艺境
+            <span class="page-footer__divider" aria-hidden="true">|</span>
+            探索艺术的无限可能
+        </p>
     </footer>
 
-    <script src="../script/contact.js"></script>
+    <!-- ==================== JavaScript 引入 ==================== -->
+    <script src="/script/config.js"></script>
+    <script src="/script/utils.js"></script>
+    <script src="/script/data-loader.js"></script>
+    <script src="/script/components.js"></script>
+    <script src="/script/contact.js"></script>
+
 </body>
 </html>

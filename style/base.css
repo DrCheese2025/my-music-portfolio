@@ -1,0 +1,264 @@
+/**
+ * ============================================================================
+ * 鸥波艺境 - 基础样式重置 (base.css)
+ * ============================================================================
+ *
+ * 本文件负责：
+ *   1. 统一跨浏览器的默认样式
+ *   2. 建立全局排版基线
+ *   3. 设置基础的盒模型规则
+ *
+ * 【设计原则】
+ *   - 最小化浏览器差异
+ *   - 建立一致的排版节奏
+ *   - 优先使用 CSS 变量，确保主题一致性
+ *
+ * @version 1.0.0
+ * ============================================================================
+ */
+
+
+/* ==================== 盒模型重置 ==================== */
+
+/**
+ * 全局盒模型设置
+ * border-box 确保元素的 width/height 包含 padding 和 border，
+ * 避免布局计算时的意外溢出。
+ */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* ==================== 根元素与页面基础 ==================== */
+
+/**
+ * HTML 根元素
+ * 设置基础字体大小，作为 rem 单位的计算基准。
+ * scroll-behavior: smooth 实现锚点跳转的平滑滚动。
+ */
+html {
+    font-size: 16px;           /* 基准字号 16px = 1rem */
+    scroll-behavior: smooth;   /* 平滑滚动 */
+    -webkit-text-size-adjust: 100%; /* 防止 iOS 横屏时字体放大 */
+}
+
+/**
+ * body 基础样式
+ * 使用 CSS 变量控制主题相关属性，便于主题切换。
+ * min-height: 100vh 确保页面至少占满一屏高度。
+ * overflow-y: scroll 始终显示竖直滚动条，避免内容动态加载时的布局抖动。
+ */
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;     /* 子元素纵向排列，便于 footer 置底 */
+    overflow-y: scroll;
+    -webkit-font-smoothing: antialiased;     /* macOS 字体抗锯齿 */
+    -moz-osx-font-smoothing: grayscale;      /* Firefox 字体抗锯齿 */
+}
+
+
+/* ==================== 排版基础 ==================== */
+
+/**
+ * 标题元素
+ * 使用标题字体族，并设置统一的底部间距。
+ */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: var(--leading-tight);
+    color: var(--color-text);
+}
+
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl);  }
+h4 { font-size: var(--text-lg);  }
+
+/**
+ * 段落元素
+ * 底部间距确保段落之间有呼吸空间。
+ */
+p {
+    margin-bottom: var(--space-md);
+    line-height: var(--leading-relaxed);
+}
+
+/* 最后一个段落不需要底部间距 */
+p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ==================== 链接 ==================== */
+
+/**
+ * 全局链接样式
+ * 使用主色调作为链接颜色，移除默认下划线。
+ * 【注意】本站不使用 :hover 伪类，以保证移动端体验一致性。
+ * 交互反馈通过 :active 状态实现。
+ */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-default);
+}
+
+/**
+ * 链接按下状态 - 提供触摸/点击反馈
+ * 颜色加深表示正在被交互
+ */
+a:active {
+    color: var(--color-primary-dark);
+}
+
+
+/* ==================== 图片与媒体 ==================== */
+
+/**
+ * 图片默认响应式
+ * max-width: 100% 防止图片溢出容器
+ * height: auto 保持图片比例
+ */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;   /* 移除图片底部的基线空隙 */
+}
+
+/**
+ * 音频和视频元素
+ * 宽度100%适配容器
+ */
+audio,
+video {
+    max-width: 100%;
+}
+
+
+/* ==================== 列表重置 ==================== */
+
+/**
+ * 无序列表和有序列表
+ * 移除默认的项目符号和缩进
+ * 在具体组件中按需重新添加样式
+ */
+ul, ol {
+    list-style: none;
+    padding-left: 0;
+}
+
+
+/* ==================== 表单元素基础 ==================== */
+
+/**
+ * 输入框通用样式
+ * 继承字体设置，确保表单内文字风格与页面一致
+ */
+input,
+textarea,
+select,
+button {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    border: none;
+    background: none;
+}
+
+/**
+ * 按钮基础重置
+ * 移除默认外观，便于自定义样式
+ */
+button {
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+
+/* ==================== 焦点可见样式（无障碍） ==================== */
+
+/**
+ * 全局焦点可见样式
+ * 仅在键盘导航时显示焦点环（:focus-visible），
+ * 鼠标点击时不显示（:focus 不显示），避免视觉干扰。
+ * 焦点环使用主色调，确保与页面风格统一，同时对比度足够。
+ */
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+/**
+ * 特定元素移除焦点环的圆角
+ * 对链接、按钮等行内元素不使用圆角焦点环
+ */
+a:focus-visible,
+button:focus-visible {
+    border-radius: 0;
+}
+
+
+/* ==================== 工具类 ==================== */
+
+/**
+ * 视觉隐藏但屏幕阅读器可见
+ * 用于无障碍访问，隐藏视觉呈现但保留语义信息
+ */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/**
+ * 文字截断 - 单行
+ * 超出容器宽度的文本以省略号显示
+ */
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/**
+ * 内容区最大宽度居中
+ * 通用容器样式，限制内容宽度并水平居中
+ */
+.container {
+    max-width: var(--max-width-content);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--page-padding);
+    padding-right: var(--page-padding);
+}
+
+/**
+ * 宽容器 - 用于需要更宽布局的页面（如作品集网格）
+ */
+.container--wide {
+    max-width: var(--max-width-wide);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--page-padding);
+    padding-right: var(--page-padding);
+}

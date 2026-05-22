@@ -1,0 +1,311 @@
+/**
+ * ============================================================================
+ * 鸥波艺境 - 布局组件样式 (layout.css)
+ * ============================================================================
+ *
+ * 本文件定义了全站通用的布局组件样式，包括：
+ *   0. 跳过导航链接（无障碍）
+ *   1. 页面头部（导航栏）
+ *   2. 页脚
+ *   3. 页面主内容区布局
+ *
+ * 【设计原则】
+ *   - 头部采用 sticky 定位，滚动时始终可见
+ *   - 页脚始终置于页面底部（利用 flex 布局）
+ *   - 主内容区自动填充剩余空间
+ *
+ * @version 1.0.0
+ * ============================================================================
+ */
+
+
+/* ==================== 0. 跳过导航链接（无障碍） ==================== */
+
+/**
+ * 跳过导航链接（Skip Navigation）
+ * 无障碍设计的重要组成部分，允许键盘用户快速跳过重复的导航内容，
+ * 直接到达页面主内容区。默认不可见，仅在获得键盘焦点时显示。
+ */
+.skip-nav {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    z-index: 10000;
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 0 0 var(--radius-md) 0;
+    transition: top var(--duration-fast) var(--ease-default);
+}
+
+/** 获得焦点时显示跳过导航链接 */
+.skip-nav:focus {
+    top: 0;
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+
+/* ==================== 页面头部 ==================== */
+
+/**
+ * 通用页面头部
+ * 用于子页面的顶部导航栏，包含返回按钮、页面标题和品牌副标题。
+ * 采用 sticky 定位，滚动时固定在顶部。
+ */
+.page-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-bg-header);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    height: var(--header-height);
+    box-shadow: var(--shadow-sm);
+}
+
+/**
+ * 返回按钮
+ * 圆形按钮，包含一个左箭头 SVG 图标。
+ * 最小点击区域 44px 符合触摸交互规范。
+ */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;     /* 防止 flex 布局中被压缩 */
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-full);
+    transition: background-color var(--duration-fast) var(--ease-default),
+                color var(--duration-fast) var(--ease-default);
+    text-decoration: none;
+}
+
+/**
+ * 返回按钮 - 按下状态
+ * 背景色变为浅色，提供触摸反馈
+ */
+.back-btn:active {
+    background-color: var(--color-primary-lighter);
+    color: var(--color-primary);
+}
+
+/**
+ * 返回按钮中的 SVG 图标
+ */
+.back-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+
+/**
+ * 页面标题组
+ * 包含页面主标题和品牌副标题，纵向排列。
+ */
+.page-header__title-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;   /* 允许文本截断 */
+}
+
+/**
+ * 页面主标题
+ */
+.page-header__title {
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: var(--leading-tight);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/**
+ * 页面头部的品牌副标题
+ * 较小字号，浅灰色，显示"鸥波艺境"品牌名
+ */
+.page-header__brand {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-family: var(--font-ui);
+    letter-spacing: 0.5px;
+}
+
+
+/* ==================== 首页头部（Hero 区域） ==================== */
+
+/**
+ * 首页使用独立的 hero 头部，不同于子页面的导航栏样式。
+ * 居中展示站点标题、副标题和导航入口。
+ */
+.hero-header {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-lg) var(--space-xl);
+    background-color: var(--color-bg-header);
+    border-bottom: 1px solid var(--color-divider);
+}
+
+/**
+ * 站点主标题 - 首页大标题
+ */
+.hero-header__title {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+    letter-spacing: 4px;    /* 增加字间距，体现典雅 */
+}
+
+/**
+ * 站点副标题 - 首页副标题
+ * 副标题用正常字体，不用斜体。
+ */
+.hero-header__subtitle {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    font-style: normal;       /* 副标题用正常字体，不用斜体。 */
+    max-width: 600px;
+    margin: 0 auto var(--space-lg);
+    line-height: var(--leading-relaxed);
+}
+
+/**
+ * 首页导航区域
+ * 水平排列各页面入口链接
+ */
+.hero-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-xl);
+}
+
+/**
+ * 导航链接项
+ */
+.hero-nav__link {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    transition: color var(--duration-fast) var(--ease-default),
+                background-color var(--duration-fast) var(--ease-default);
+    letter-spacing: 0.5px;
+}
+
+/**
+ * 导航链接 - 按下状态
+ */
+.hero-nav__link:active {
+    color: var(--color-primary);
+    background-color: var(--color-primary-lighter);
+}
+
+/**
+ * 导航链接当前页面标识
+ */
+.hero-nav__link--active {
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+
+/* ==================== 页面主内容区 ==================== */
+
+/**
+ * 主内容区
+ * flex: 1 确保主内容占据头部和页脚之间的所有空间，
+ * 从而使页脚始终位于页面底部，即使内容不足一屏。
+ */
+.page-main {
+    flex: 1;
+    padding: var(--space-xl) 0;
+}
+
+
+/* ==================== 页脚 ==================== */
+
+/**
+ * 全站统一页脚
+ * 居中显示版权信息和站点标语
+ */
+.page-footer {
+    text-align: center;
+    padding: var(--space-lg) var(--space-md);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-family: var(--font-ui);
+    border-top: 1px solid var(--color-divider);
+    background-color: var(--color-bg-header);
+    line-height: var(--leading-relaxed);
+}
+
+/**
+ * 页脚中的分割符
+ * 用竖线分隔不同信息段
+ */
+.page-footer__divider {
+    display: inline-block;
+    margin: 0 var(--space-sm);
+    opacity: 0.5;
+}
+
+
+/* ==================== 响应式调整 ==================== */
+
+/**
+ * 平板及以下宽度适配
+ */
+@media (max-width: 768px) {
+    .hero-header {
+        padding: var(--space-2xl) var(--space-md) var(--space-lg);
+    }
+
+    .hero-header__title {
+        font-size: var(--text-3xl);
+        letter-spacing: 2px;
+    }
+
+    .hero-header__subtitle {
+        font-size: var(--text-sm);
+    }
+
+    .hero-nav {
+        gap: var(--space-sm) var(--space-lg);
+    }
+}
+
+/**
+ * 手机宽度适配
+ */
+@media (max-width: 480px) {
+    .page-header {
+        padding: var(--space-sm) var(--space-md);
+        gap: var(--space-sm);
+    }
+
+    .hero-header {
+        padding: var(--space-xl) var(--space-md) var(--space-lg);
+    }
+
+    .hero-header__title {
+        font-size: var(--text-2xl);
+    }
+
+    .page-footer {
+        font-size: var(--text-xs);
+    }
+}

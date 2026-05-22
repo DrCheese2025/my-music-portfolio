@@ -1,270 +1,169 @@
-/* ==================== 全局样式 ==================== */
-/* 重置所有元素的默认样式，确保跨浏览器一致性 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
-
-/* 页面基础样式 */
-body {
-    background-color: #f5f5f5; /* 初版浅灰背景 */
-    color: #333;
-    line-height: 1.6;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll; /* 始终显示竖直滚动条 */
-}
-
-/* ==================== 头部样式 ==================== */
-.detail-header {
-    background-color: #fff; /* 初版白色 */
-    padding: 20px 30px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    display: flex;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-/* 返回按钮样式 - 保持初版圆形设计 */
-.back-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    margin-right: 20px;
-    color: #2c3e50; /* 初版标题色 */
-    text-decoration: none;
-    border-radius: 50%;
-    transition: background-color 0.3s;
-}
-
-/* 返回按钮悬停效果 - 轻微灰色背景 */
-.back-button:hover {
-    background-color: #f0f0f0; /* 初版悬停色 */
-}
+/* ============================================================================
+ * about.css — 关于页面专用样式
+ * 
+ * 设计理念：以散文排版为核心，追求纸面阅读的宁静典雅感。
+ * 整体风格与网站"鸥波艺境"的意境保持一致：简洁大方，留白充裕。
+ * ============================================================================ */
 
 
-/* 页面标题组样式 */
-.page-title-group {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-}
+/* ==================== 页面容器 ==================== */
 
-/* 头部标题样式 */
-#detail-title {
-    font-size: 1.5rem;
-    color: #2c3e50; /* 初版标题色 */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin: 0;
-}
-
-/* 头部副标题样式 */
-.brand-subtitle {
-    color: #888;
-    font-size: 0.9rem;
-    font-weight: normal;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-}
-
-/* 悬停时显示完整品牌信息 */
-.detail-header:hover .brand-subtitle {
-    opacity: 1;
-}
-
-/* ==================== 主体内容 ==================== */
-
-/* about.css */
+/**
+ * 关于页面容器
+ * 采用较窄的最大宽度，营造纸面阅读的舒适感
+ */
 .about-container {
     max-width: 680px;
     margin: 0 auto;
-    padding: 2rem 1.5rem;
-    line-height: 1.7;
-    color: #333;
+    padding: var(--space-xl) var(--space-lg);
 }
 
-/* 作者信息头部 */
-.author-hero {
-    display: flex;
-    align-items: center;
-    margin-bottom: 3rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #f0f0f0;
-}
 
-.author-avatar {
-    margin-right: 1.5rem;
-}
+/* ==================== 散文主体 ==================== */
 
-.avatar-placeholder {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
+/**
+ * 散文容器
+ * 去除所有装饰性元素，仅保留文字本身的表达力
+ */
+/*
+.about-essay {
+    // 后续若有需要，可以在此扩展
 }
+*/
 
-.author-basic h2 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.8rem;
-    font-weight: 600;
-}
 
-.author-tagline {
-    margin: 0 0 0.5rem 0;
-    color: #666;
-    font-size: 1.1rem;
-}
+/* ==================== 散文标题 ==================== */
 
-.author-meta {
-    margin: 0;
-    color: #888;
-    font-size: 0.9rem;
-}
-
-/* 个人故事部分 */
-.personal-story {
-    margin-bottom: 3rem;
-}
-
-.story-section {
-    margin-bottom: 2.5rem;
-}
-
-.story-section h3 {
-    color: #4a5568;
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-    font-weight: 600;
-    position: relative;
-    padding-left: 1rem;
-}
-
-.story-section h3::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.5rem;
-    height: 1.2rem;
-    width: 3px;
-    background: linear-gradient(to bottom, #667eea, #764ba2);
-    border-radius: 2px;
-}
-
-.story-section p {
-    margin: 0;
-    text-align: justify;
-    color: #555;
-}
-
-/* 写作元信息样式 */
-.writing-meta {
-    margin-top: 3rem;
+/**
+ * 散文主标题
+ * 居中显示，字体略大但不过分突出，保持宁静感
+ */
+.about-essay__title {
     text-align: center;
-    padding: 2rem 0;
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-lg);
+    letter-spacing: 0.08em;
 }
 
-.signature-line {
-    width: 80px;
+
+/* ==================== 题记 ==================== */
+
+/**
+ * 题记（epigraph）
+ * 位于标题下方、正文之前的引言或题词
+ * 使用柔和的斜体和较浅的颜色，与正文形成视觉层次
+ */
+.about-essay__epigraph {
+    text-align: center;
+    font-style: normal;     /* 我不喜欢斜体，这里用正常字体 */
+    color: var(--color-text-muted); /* 淡色看不太清，之后考虑调整。 */
+    font-size: var(--text-base);
+    line-height: 1.8;
+    margin-bottom: var(--space-xl);
+    padding: 0 var(--space-lg);
+}
+
+
+/* ==================== 散文正文 ==================== */
+
+/**
+ * 正文段落容器
+ * 首行缩进两字符，遵循中文排版传统
+ */
+.about-essay__body p {
+    text-indent: 2em;
+    font-size: var(--text-base);
+    line-height: 2;
+    color: var(--text-primary);
+    margin-bottom: var(--space-lg);
+}
+
+/**
+ * 正文最后一段不需要额外下边距（由 colophon 间距处理）
+ */
+.about-essay__body p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ==================== 落款区域 ==================== */
+
+/**
+ * 落款容器
+ * 右对齐，与中文书信/散文的传统落款格式一致
+ */
+.about-essay__colophon {
+    text-align: right;
+    margin-top: var(--space-2xl);
+    padding-top: 0;
+}
+
+/**
+ * 落款上方的分隔线
+ * 使用较短的细线，营造书卷气
+ */
+.about-essay__colophon-line {
+    width: 3em;
     height: 1px;
-    background: linear-gradient(to right, transparent, #667eea, transparent);
-    margin: 0 auto 1.5rem auto;
-    position: relative;
+    background: var(--border-default);
+    margin-left: auto;
+    margin-bottom: var(--space-md);
 }
 
-.signature-line::before {
-    content: "♪";
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    padding: 0 10px;
-    color: #667eea;
-    font-size: 0.9rem;
+/**
+ * 落款作者名
+ */
+.about-essay__colophon-author {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
 }
 
-.writing-date {
-    color: #888;
-    font-size: 0.95rem;
-    font-style: italic;
-    margin: 0;
-    letter-spacing: 0.5px;
-}
-
-/* 悬停时的微妙动效 */
-.writing-meta:hover .signature-line {
-    width: 100px;
-    transition: width 0.3s ease;
-}
-
-.writing-meta:hover .writing-date {
-    color: #666;
-    transition: color 0.3s ease;
+/**
+ * 落款日期
+ * 使用较小的字号和更浅的颜色，作为辅助信息
+ */
+.about-essay__colophon-date {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
 }
 
 
-/* ==================== 页脚 ==================== */
-.detail-footer {
-    text-align: center;
-    padding: 20px;
-    color: #7f8c8d; /* 初版浅灰文本 */
-    font-size: 0.9rem;
-    background-color: #fff; /* 初版白色 */
-    border-top: 1px solid #eee;
-    margin-top: auto;
-}
-
-
-/* ==================== 响应式设计 ==================== */
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-    .page-title-group {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
-    }
-    
-    .brand-subtitle {
-        font-size: 0.8rem;
-    }
-}
-
+/* ==================== 响应式调整 ==================== */
 
 @media (max-width: 768px) {
     .about-container {
-        padding: 1.5rem 1rem;
+        padding: var(--space-lg) var(--space-md);
     }
-    
-    .author-hero {
-        flex-direction: column;
-        text-align: center;
+
+    .about-essay__title {
+        font-size: var(--text-xl);
     }
-    
-    .author-avatar {
-        margin-right: 0;
-        margin-bottom: 1rem;
+
+    .about-essay__epigraph {
+        padding: 0;
+        font-size: var(--text-sm);
     }
-    
-    .guestbook-section {
-        padding: 1.5rem;
-    }
-    
-    .story-section h3 {
-        font-size: 1.2rem;
+
+    .about-essay__body p {
+        line-height: 1.9;
     }
 }
 
+@media (max-width: 480px) {
+    .about-container {
+        padding: var(--space-md) var(--space-base);
+    }
+
+    .about-essay__title {
+        font-size: var(--text-lg);
+        letter-spacing: 0.05em;
+    }
+
+    .about-essay__body p {
+        font-size: var(--text-sm);
+        line-height: 1.85;
+    }
+}
