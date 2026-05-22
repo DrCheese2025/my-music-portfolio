@@ -49,7 +49,7 @@ const UIComponents = {
 
         /* 构建封面区域 - 有封面图时添加加载失败兜底 */
         const coverHTML = work.cover
-            ? `<img class="card__cover" data-src="${work.cover}" alt="${work.title}封面" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="card__cover-placeholder" style="display:none" aria-hidden="true"><span>${work.type === 'video' ? '🎬' : '🎵'}</span></div>`
+            ? `<img class="card__cover" data-src="${PathUtils.resolve(work.cover)}" alt="${work.title}封面" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="card__cover-placeholder" style="display:none" aria-hidden="true"><span>${work.type === 'video' ? '🎬' : '🎵'}</span></div>`
             : `<div class="card__cover-placeholder" aria-hidden="true">
                  <span>${work.type === 'video' ? '🎬' : '🎵'}</span>
                </div>`;
@@ -163,7 +163,7 @@ const UIComponents = {
         let imageHTML = '';
         if (dynamic.image) {
             imageHTML = `<div class="dynamic-card__image">
-                <img data-src="${dynamic.image}" alt="${dynamic.title}">
+                <img data-src="${PathUtils.resolve(dynamic.image)}" alt="${dynamic.title}">
             </div>`;
         }
 

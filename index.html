@@ -9,15 +9,15 @@
     <!-- ==================== CSS 样式引入 ==================== -->
     <!-- 注意：引入顺序很重要，后引入的样式优先级更高 -->
     <!-- 1. CSS 变量与主题（最底层，定义所有变量） -->
-    <link rel="stylesheet" href="/style/variables.css">
+    <link rel="stylesheet" href="./style/variables.css">
     <!-- 2. 基础样式重置 -->
-    <link rel="stylesheet" href="/style/base.css">
+    <link rel="stylesheet" href="./style/base.css">
     <!-- 3. 布局组件 -->
-    <link rel="stylesheet" href="/style/layout.css">
+    <link rel="stylesheet" href="./style/layout.css">
     <!-- 4. 通用组件 -->
-    <link rel="stylesheet" href="/style/components.css">
+    <link rel="stylesheet" href="./style/components.css">
     <!-- 5. 首页专用样式 -->
-    <link rel="stylesheet" href="/style/index.css">
+    <link rel="stylesheet" href="./style/index.css">
 </head>
 <body>
 
@@ -38,10 +38,10 @@
 
         <!-- 导航入口 -->
         <nav class="hero-nav" aria-label="站点导航">
-            <a href="/page/works.html" class="hero-nav__link hero-nav__link--active">作品集</a>
-            <a href="/page/dynamic.html" class="hero-nav__link">动态</a>
-            <a href="/page/about.html" class="hero-nav__link">关于</a>
-            <a href="/page/contact.html" class="hero-nav__link">留言</a>
+            <a href="./page/works.html" class="hero-nav__link hero-nav__link--active">作品集</a>
+            <a href="./page/dynamic.html" class="hero-nav__link">动态</a>
+            <a href="./page/about.html" class="hero-nav__link">关于</a>
+            <a href="./page/contact.html" class="hero-nav__link">留言</a>
         </nav>
     </header>
 
@@ -53,7 +53,7 @@
             <div class="home-section__header">
                 <h2 class="home-section__title" id="featured-title">作品选录</h2>
                 <p class="home-section__desc">岁月里的声音印记</p>
-                <a href="/page/works.html" class="home-section__link">
+                <a href="./page/works.html" class="home-section__link">
                     查看全部作品 <span class="home-section__link-arrow" aria-hidden="true">→</span>
                 </a>
             </div>
@@ -67,7 +67,7 @@
             <div class="home-section__header">
                 <h2 class="home-section__title" id="dynamics-title">最新动态</h2>
                 <p class="home-section__desc">时光中的随想片刻</p>
-                <a href="/page/dynamic.html" class="home-section__link">
+                <a href="./page/dynamic.html" class="home-section__link">
                     查看全部动态 <span class="home-section__link-arrow" aria-hidden="true">→</span>
                 </a>
             </div>
@@ -90,15 +90,15 @@
     <!-- ==================== JavaScript 引入 ==================== -->
     <!-- 注意：引入顺序很重要，依赖关系为 config → utils → data-loader → components → 页面逻辑 -->
     <!-- 1. 全局配置 -->
-    <script src="/script/config.js"></script>
+    <script src="./script/config.js"></script>
     <!-- 2. 工具函数 -->
-    <script src="/script/utils.js"></script>
+    <script src="./script/utils.js"></script>
     <!-- 3. 数据加载器 -->
-    <script src="/script/data-loader.js"></script>
+    <script src="./script/data-loader.js"></script>
     <!-- 4. UI 组件 -->
-    <script src="/script/components.js"></script>
+    <script src="./script/components.js"></script>
     <!-- 5. 首页逻辑 -->
-    <script src="/script/index.js"></script>
+    <script src="./script/index.js"></script>
 
 </body>
 </html>

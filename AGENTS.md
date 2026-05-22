@@ -61,31 +61,45 @@
 
 ### 1. 配置集中化 (`script/config.js`)
 所有可变参数集中管理，包括：
+- **基础路径配置**（`basePath`：部署到子目录时只需修改此值）
 - 站点基本信息（标题、副标题、作者）
 - **标签注册表**（`tags.registry`：标签名 → colorKey 映射）
-- 文件路径配置（数据目录、资源目录）
+- 文件路径配置（数据目录、资源目录，自动基于 basePath 解析）
 - 分页参数（每页显示数量）
 - 首页展示配置（选录作品ID、动态条数）
 - 功能开关（懒加载、搜索、联系表单）
 - 媒体配置（预加载策略、格式）
 
-### 2. CSS 变量主题系统 (`style/variables.css`)
+### 2. 路径工具 (`PathUtils`，定义于 `script/config.js`)
+提供基于 `CONFIG.basePath` 的路径解析方法，确保跨平台部署兼容：
+- **HTML 静态引用**：使用相对路径（`./` `../`），天然适配任何部署位置
+- **JS 运行时路径**：通过 `PathUtils.resolve()` 解析，自动拼合 basePath
+- **页面导航**：统一使用 `PathUtils.navigate()`，禁止直接 `window.location.href`
+- **JSON 资源路径**：使用时通过 `PathUtils.resolve()` 解析
+
+| 方法 | 用途 |
+|------|------|
+| `resolve(path)` | 站点根相对路径 → 含 basePath 的完整路径 |
+| `navigate(path)` | 跳转到指定页面（自动拼合 basePath） |
+| `getCurrentPath()` | 获取当前页面的站点根相对路径 |
+
+### 3. CSS 变量主题系统 (`style/variables.css`)
 - 使用 CSS 自定义属性实现集中配色管理
 - 支持 `data-theme="dark"` 切换暗色主题（当前为预留）
 - 配色灵感来源于"鸥波"意境（海鸥掠过水面的淡蓝与波光）
 - **标签颜色变量**：`--tag-{colorKey}-bg` / `--tag-{colorKey}-text`，与 config.js 标签注册表联动
 
-### 3. 数据层 (`script/data-loader.js`)
+### 4. 数据层 (`script/data-loader.js`)
 - 自动缓存已加载的 JSON 数据，避免重复请求
 - 提供按 ID、按关键词搜索的方法
 - 支持强制刷新缓存
 
-### 4. UI 组件化 (`script/components.js`)
+### 5. UI 组件化 (`script/components.js`)
 - 作品卡片、动态卡片、分页、标签页、消息提示
 - 组件与数据解耦，通过参数传入
 - 事件监听通过回调传递，保持可复用性
 
-### 5. 标签系统（三层架构）
+### 6. 标签系统（三层架构）
 标签系统采用 **配置层 → 样式层 → 渲染层** 三层分离架构：
 
 | 层级 | 文件 | 职责 |
@@ -122,11 +136,11 @@
   "creator": "鸥波萍迹",      // 创作者
   "createDate": "2025-03", // 创作日期
   "description": "简短描述",  // 描述（可选）
-  "audio": "/artwork/audio/S001.mp3",  // 音频路径（可选）
-  "video": null,             // 视频路径（可选）
-  "cover": "/artwork/cover/S001.jpg",  // 封面图（可选）
+  "audio": "/artwork/audio/S001.mp3",  // 音频路径（站点根相对，运行时通过 PathUtils.resolve() 解析）
+  "video": null,             // 视频路径（站点根相对，可选）
+  "cover": "/artwork/cover/S001.jpg",  // 封面图（站点根相对，可选）
   "lyrics": "歌词文本",       // 歌词（可选）
-  "score": "/artwork/score/S001.jpg",  // 曲谱图片（可选）
+  "score": "/artwork/score/S001.jpg",  // 曲谱图片（站点根相对，可选）
   "diary": {                 // 创作手记（可选）
     "title": "手记标题",
     "paragraphs": ["段落1", "段落2"]
@@ -178,6 +192,13 @@
 3. 在 `script/` 目录创建对应 JS 文件
 4. 引入公共模块：variables.css → base.css → layout.css → components.css → 页面CSS
 5. 引入公共脚本：config.js → utils.js → data-loader.js → components.js → 页面JS
+6. HTML 中使用相对路径引用 CSS/JS（`../style/`、`../script/`）
+
+### 部署到 GitHub Pages
+1. 修改 `script/config.js` 中的 `basePath` 为 `'/仓库名/'`
+2. 确保路径以 `/` 开头和结尾
+3. 推送代码到 GitHub，在仓库 Settings → Pages 中选择分支和目录
+4. HTML 中的相对路径无需修改
 
 ## 开发与部署
 
@@ -185,10 +206,20 @@
 - 构建部署：`coze build && coze start`
 - 包管理器：本项目无 npm 依赖，纯原生开发
 
+### 跨平台部署（basePath 配置）
+
+- 根目录部署：`CONFIG.basePath = '/'`（默认值）
+- GitHub Pages：`CONFIG.basePath = '/仓库名/'`
+- 自定义子目录：`CONFIG.basePath = '/子目录/'`
+- **只需修改 `config.js` 中的一处 `basePath`**，所有 JS 运行时路径自动更新
+- HTML 中使用相对路径（`./` `../`），无需随 basePath 变化
+
 ## 注意事项
 
 - **禁止使用 Hover 伪类**：移动端兼容性考虑
 - **CSS 变量引用**：所有颜色值通过 `var(--变量名)` 引用
+- **HTML 路径规范**：所有 CSS/JS/页面链接使用相对路径（`./` `../`），禁止绝对路径（`/`）
+- **JS 路径规范**：页面导航使用 `PathUtils.navigate()`，资源路径使用 `PathUtils.resolve()`
 - **懒加载**：作品封面、曲谱图片统一使用 `data-src` + IntersectionObserver（`Utils.observeLazyImages`）
 - **搜索防抖**：搜索输入使用 300ms 防抖优化
 - **无障碍**：卡片支持 `tabindex` + 键盘回车导航

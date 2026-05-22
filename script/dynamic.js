@@ -138,7 +138,7 @@ function renderDynamics(allDynamics) {
     pageDynamics.forEach(dynamic => {
         const card = UIComponents.createDynamicCard(dynamic, (refId) => {
             /* 点击关联作品跳转到对应作品详情 */
-            window.location.href = `${CONFIG.paths.pages}work-detail.html?id=${refId}`;
+            PathUtils.navigate(`${CONFIG.paths.pages}work-detail.html?id=${refId}`);
         });
 
         /* 为动态配图绑定加载失败处理 */

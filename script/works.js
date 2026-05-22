@@ -162,7 +162,7 @@ async function renderWorks() {
     const fragment = document.createDocumentFragment();
     pageWorks.forEach(work => {
         const card = UIComponents.createWorkCard(work, (w) => {
-            window.location.href = `${CONFIG.paths.pages}work-detail.html?id=${w.id}`;
+            PathUtils.navigate(`${CONFIG.paths.pages}work-detail.html?id=${w.id}`);
         });
         fragment.appendChild(card);
     });

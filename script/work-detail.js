@@ -67,7 +67,7 @@ function renderPlayer(work) {
 
     /* 构建封面元素，绑定封面图片加载失败处理 */
     const coverHTML = work.cover
-        ? `<img class="detail-player__cover" data-src="${work.cover}" alt="${work.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        ? `<img class="detail-player__cover" data-src="${PathUtils.resolve(work.cover)}" alt="${work.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
            <div class="detail-player__cover-placeholder" style="display:none" aria-hidden="true">
                <span>${work.type === 'video' ? '🎬' : '🎵'}</span>
            </div>`
@@ -82,7 +82,7 @@ function renderPlayer(work) {
         /* 视频播放器，添加加载失败提示 */
         playerHTML = `
             <video class="detail-player__video" controls preload="${CONFIG.media.videoPreload}">
-                <source src="${work.video}" type="${CONFIG.media.videoFormat}">
+                <source src="${PathUtils.resolve(work.video)}" type="${CONFIG.media.videoFormat}">
                 您的浏览器不支持视频播放
             </video>
             <div class="media-error" style="display:none">
@@ -102,7 +102,7 @@ function renderPlayer(work) {
                     </div>
                 </div>
                 <audio class="detail-player__audio" controls preload="${CONFIG.media.audioPreload}">
-                    <source src="${work.audio}" type="${CONFIG.media.audioFormat}">
+                    <source src="${PathUtils.resolve(work.audio)}" type="${CONFIG.media.audioFormat}">
                     您的浏览器不支持音频播放
                 </audio>
                 <div class="media-error" style="display:none">
@@ -148,7 +148,7 @@ function renderTabs(work) {
         tabs.push({
             id: 'score',
             label: '曲谱',
-            content: `<div class="score-content"><img data-src="${work.score}" alt="${work.title}曲谱"></div>`,
+            content: `<div class="score-content"><img data-src="${PathUtils.resolve(work.score)}" alt="${work.title}曲谱"></div>`,
         });
     }
 
@@ -255,7 +255,7 @@ function showDetailError(error) {
     mainEl.innerHTML = '';
     mainEl.appendChild(
         UIComponents.createErrorState(message, () => {
-            window.location.href = `${CONFIG.paths.pages}works.html`;
+            PathUtils.navigate(`${CONFIG.paths.pages}works.html`);
         })
     );
 }

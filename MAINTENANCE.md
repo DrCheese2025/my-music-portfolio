@@ -117,7 +117,8 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
 
 | 全局对象 | 定义文件 | 职责 |
 |----------|----------|------|
-| `CONFIG` | config.js | 站点配置 |
+| `CONFIG` | config.js | 站点配置（含 basePath 部署路径） |
+| `PathUtils` | config.js | 路径解析与页面导航（基于 basePath） |
 | `Utils` | utils.js | 工具函数 |
 | `DataLoader` | data-loader.js | 数据加载与查询 |
 | `UIComponents` | components.js | UI 组件渲染 |
@@ -134,7 +135,9 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
 
 | 分区 | 关键字段 | 修改场景 |
 |------|----------|----------|
+| `basePath` | basePath | 部署到子目录（如 GitHub Pages）时修改 |
 | `site` | title, subtitle, author | 站点更名、作者变更 |
+| `tags` | registry | 添加/修改作品分类标签 |
 | `paths` | data, artwork, audio 等 | 调整目录结构 |
 | `dataFiles` | artworks, dynamics | 更换数据源位置 |
 | `pagination` | worksPerPage, dynamicsPerPage | 调整分页数量 |
@@ -174,7 +177,34 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
    - 作品日期只显示年月（`formatDateYearMonth`）
    - 动态日期显示年月日+时分，时分强制两位数（`formatDate`）
 
-### 3.3 数据加载器 `data-loader.js`
+### 3.3 路径工具 `PathUtils`
+
+`PathUtils` 定义在 `config.js` 中，提供基于 `CONFIG.basePath` 的路径解析方法，是跨平台部署的核心基础设施。
+
+**设计原则**：
+
+| 层面 | 路径策略 | 说明 |
+|------|----------|------|
+| HTML 静态引用 | 相对路径（`./` `../`） | CSS/JS/页面链接使用相对路径，天然适配任何部署位置 |
+| JS 运行时路径 | `PathUtils.resolve()` | 数据加载、页面导航、媒体资源通过 PathUtils 解析 |
+| JSON 数据路径 | `PathUtils.resolve()` | artwork.json 中的资源路径（如 `/artwork/audio/S001.mp3`）由 JS 在使用时解析 |
+
+**核心方法**：
+
+| 方法 | 用途 | 示例 |
+|------|------|------|
+| `resolve(path)` | 将站点根相对路径解析为含 basePath 的完整路径 | `PathUtils.resolve('/data/artwork.json')` → `/my-repo/data/artwork.json` |
+| `navigate(path)` | 跳转到指定页面 | `PathUtils.navigate('/page/works.html')` |
+| `getCurrentPath()` | 获取当前页面的站点根相对路径 | 返回 `/page/works.html`（去除 basePath 前缀） |
+
+**`resolve()` 处理规则**：
+- 以 `/` 开头的路径视为"站点根相对路径"，自动拼合 `CONFIG.basePath`
+- 不以 `/` 开头的路径（外部 URL、`data:` URI、相对路径）原样返回
+- `null`/`undefined`/空字符串原样返回
+
+**部署时只需修改 `CONFIG.basePath`**，所有 JS 运行时路径自动更新，HTML 相对路径无需任何修改。
+
+### 3.4 数据加载器 `data-loader.js`
 
 封装了作品和动态数据的加载、缓存、查询逻辑。
 
@@ -196,7 +226,7 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
 | `searchDynamics(keyword)` | 在标题和内容中搜索 |
 | `getAllTags()` | 获取所有去重的分类标签 |
 
-### 3.4 UI 组件库 `components.js`
+### 3.5 UI 组件库 `components.js`
 
 每个组件方法返回 `HTMLElement`，由调用者负责插入 DOM。事件监听通过回调函数传递，保持组件的可复用性。
 
@@ -217,6 +247,34 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
 - `aria-selected` / `aria-controls` / `aria-labelledby` 关联
 - 左右箭头键切换标签、Home/End 跳转首尾
 - 切换后焦点自动移到对应面板
+
+### 3.6 标签系统（三层架构）
+
+标签系统采用**配置层 → 样式层 → 渲染层**三层分离架构，实现标签颜色与业务逻辑的解耦：
+
+| 层级 | 文件 | 职责 |
+|------|------|------|
+| 配置层 | `config.js` → `tags.registry` | 标签名 → colorKey 映射 |
+| 样式层 | `variables.css` → `--tag-{key}-bg/text` | 每种标签的背景色与文字色 |
+| 样式层 | `components.css` → `.tag--{key}` | 标签变体 CSS 类（引用变量） |
+| 渲染层 | `components.js` → `_getTagInfo()` | 根据标签名查找注册表，返回 CSS 类名 |
+
+**工作流程**：
+1. 作品数据中的 `tag` 字段（如 `"原创歌曲"`）传入 `UIComponents._getTagInfo(tag)`
+2. `_getTagInfo` 在 `CONFIG.tags.registry` 中查找，返回 `{ cssClass: 'tag--song', label: '原创歌曲', colorKey: 'song' }`
+3. 渲染时生成 `<span class="tag tag--song">原创歌曲</span>`
+4. CSS 中 `.tag--song` 引用 `var(--tag-song-bg)` 和 `var(--tag-song-text)` 获取颜色
+
+**已注册标签**：
+
+| 标签名 | colorKey | CSS 类 | 色调 |
+|--------|----------|--------|------|
+| 原创歌曲 | `song` | `.tag--song` | 柔和红 |
+| 纯音乐 | `instrumental` | `.tag--instrumental` | 柔和蓝 |
+| 音乐MV | `video` | `.tag--video` | 柔和绿 |
+| 生活随笔 | `essay` | `.tag--essay` | 柔和黄（预留） |
+| 创作记录 | `creation` | `.tag--creation` | 柔和紫（预留） |
+| 未注册标签 | — | `.tag--default` | 浅灰 |
 
 ---
 
@@ -258,11 +316,11 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
 | `creator` | string | **是** | 创作者名称 |
 | `createDate` | string | **是** | 创作日期，格式 `"YYYY-MM"` |
 | `description` | string | 否 | 简短描述 |
-| `audio` | string\|null | 否 | 音频路径（相对根目录），纯视频作品可为 null |
-| `video` | string\|null | 否 | 视频路径，纯音频作品可为 null |
-| `cover` | string\|null | 否 | 封面图路径，暂无封面可为 null |
+| `audio` | string\|null | 否 | 音频路径（站点根相对，如 `/artwork/audio/S001.mp3`），运行时通过 PathUtils.resolve() 解析 |
+| `video` | string\|null | 否 | 视频路径，运行时通过 PathUtils.resolve() 解析 |
+| `cover` | string\|null | 否 | 封面图路径，运行时通过 PathUtils.resolve() 解析 |
 | `lyrics` | string\|null | 否 | 歌词文本，纯音乐可为 null |
-| `score` | string\|null | 否 | 曲谱图片路径，纯音乐可为 null |
+| `score` | string\|null | 否 | 曲谱图片路径，运行时通过 PathUtils.resolve() 解析 |
 | `diary` | object\|null | 否 | 创作手记，结构见下方 |
 
 **创作手记 `diary` 结构**：
@@ -570,6 +628,8 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
 8. **日期格式化**：作品用 `formatDateYearMonth`，动态用 `formatDate`，禁止手动拼接日期
 9. 注释使用中文，说明"为什么"而非"做什么"
 10. 代码缩进使用 4 个空格
+11. **页面导航统一使用 `PathUtils.navigate()`**，禁止直接设置 `window.location.href` 进行站内跳转
+12. **JSON 数据中的资源路径必须通过 `PathUtils.resolve()` 解析**后使用，禁止直接作为 `src` 或 `data-src`
 
 ### 9.3 HTML 编码规范
 
@@ -578,7 +638,8 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
 3. **所有交互元素必须有 `aria-label` 或关联 `<label>`**
 4. **装饰性 SVG 和图标添加 `aria-hidden="true"`**
 5. **CSS/JS 引入顺序严格遵循第二章规定的依赖链**
-6. 页面标题格式：`页面名 - 鸥波艺境`（作品详情页由 JS 动态设置为作品标题）
+6. **所有 CSS/JS/页面链接使用相对路径**（`./` 或 `../`），禁止使用绝对路径（`/`），确保跨平台部署兼容
+7. 页面标题格式：`页面名 - 鸥波艺境`（作品详情页由 JS 动态设置为作品标题）
 
 ### 9.4 命名约定
 
@@ -609,7 +670,15 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
 2. 如有配图，放入 `dynamic/` 目录，在 `image` 字段填写路径
 3. 如关联作品，在 `relatedWorkId` 填写作品 ID
 
-### 10.3 添加新的标签页（作品详情页）
+### 10.3 添加新的标签类型
+
+1. 在 `script/config.js` 的 `tags.registry` 中新增条目：`'标签名': { colorKey: 'key' }`
+2. 在 `style/variables.css` 中添加 `--tag-key-bg` 和 `--tag-key-text` CSS 变量
+3. 在 `style/components.css` 中添加 `.tag--key` 样式类
+4. 如需暗色主题适配，在 `variables.css` 的 `[data-theme="dark"]` 中添加对应变量
+5. 在 `data/artwork.json` 中使用该标签名作为 `tag` 字段值
+
+### 10.4 添加新的标签页（作品详情页）
 
 1. 在 `work-detail.js` 的 `buildTabs` 函数中，向 `tabs` 数组追加新项：
    ```javascript
@@ -624,7 +693,7 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
 2. 标签页组件会自动生成导航按钮和内容面板，无需额外 CSS
 3. 如需专用样式，在 `work-detail.css` 中添加
 
-### 10.4 添加新页面
+### 10.5 添加新页面
 
 1. 在 `page/` 目录创建 HTML 文件，引入公共 CSS 和 JS（严格按第二章顺序）
 2. 在 `style/` 目录创建对应 CSS 文件
@@ -632,7 +701,7 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
 4. 在导航栏中添加链接（修改所有 HTML 页面的 `.page-header__nav` 部分）
 5. 如需数据，通过 `DataLoader` 的查询方法获取
 
-### 10.5 启用暗色主题
+### 10.6 启用暗色主题
 
 1. 编辑 `style/variables.css`，取消暗色主题注释块
 2. 可在页面头部添加主题切换按钮，通过 JS 切换 `data-theme` 属性：
@@ -640,13 +709,39 @@ config.js → utils.js → data-loader.js → components.js → 页面专用.js
    document.documentElement.setAttribute('data-theme', 'dark');
    ```
 
-### 10.6 启用留言功能
+### 10.7 启用留言功能
 
 1. 实现 `CONFIG.features.contactFormEndpoint` 指定的后端接口
 2. 在 `config.js` 中将 `features.contactFormEnabled` 设为 `true`
 3. 前端表单逻辑（`contact.js`）已完整实现，无需修改
 
-### 10.7 更换数据源
+### 10.8 部署到 GitHub Pages 或其他子目录
+
+本项目支持一键切换部署位置，只需修改 `config.js` 中的 `CONFIG.basePath`：
+
+1. 编辑 `script/config.js`，修改 `basePath` 字段：
+   ```javascript
+   // 根目录部署（独立域名 / localhost）
+   basePath: '/',
+
+   // GitHub Pages 项目站点
+   basePath: '/你的仓库名/',
+
+   // 自定义子目录
+   basePath: '/子目录路径/',
+   ```
+
+2. 确保路径以 `/` 开头并以 `/` 结尾
+
+3. 推送代码到 GitHub，在仓库 Settings → Pages 中选择分支和目录
+
+**路径机制说明**：
+- HTML 中的 CSS/JS/页面链接使用相对路径（`./` `../`），天然适配任何部署位置，无需修改
+- JS 运行时路径（数据加载、页面跳转、媒体资源）通过 `PathUtils.resolve()` 自动拼合 `basePath`
+- JSON 数据中的资源路径（如 `/artwork/audio/S001.mp3`）在使用时通过 `PathUtils.resolve()` 解析
+- 修改 `basePath` 后，所有 JS 运行时路径自动更新，HTML 无需任何改动
+
+### 10.9 更换数据源
 
 如果需要从 JSON 文件迁移到 API 接口：
 
@@ -699,7 +794,17 @@ coze build
 coze start
 ```
 
-### 12.3 文件修改后的生效方式
+### 12.3 部署到 GitHub Pages
+
+1. 将代码推送到 GitHub 仓库
+2. 在仓库 Settings → Pages 中选择分支和目录（通常为 `main` 分支 `/` 根目录）
+3. 修改 `script/config.js` 中的 `basePath` 为 `'/你的仓库名/'`
+4. 推送后等待 GitHub Actions 构建完成
+5. 访问 `https://你的用户名.github.io/你的仓库名/`
+
+> **注意**：`basePath` 必须以 `/` 开头和结尾，如 `/my-music-site/`。
+
+### 12.4 文件修改后的生效方式
 
 本项目配置了热更新（HMR），修改代码后会自动触发页面更新，无需手动重启服务或刷新浏览器。
 
@@ -740,3 +845,6 @@ coze start
 | 分页不工作 | 检查数据量是否超过 `pagination.xxxPerPage` 阈值 |
 | 日期显示异常 | 作品用 `formatDateYearMonth`，动态用 `formatDate`；检查日期字段格式 |
 | 手机端布局异常 | 检查是否误用了 `:hover` 伪类；检查响应式断点 |
+| GitHub Pages 页面 404 | 检查 `CONFIG.basePath` 是否已改为 `'/仓库名/'`；检查 HTML 中是否残留绝对路径 |
+| 部署后资源加载失败 | 检查 `basePath` 是否以 `/` 结尾；在浏览器控制台查看 404 请求路径是否缺少仓库名前缀 |
+| 标签颜色不正确 | 检查 `config.js` 中 `tags.registry` 的 colorKey 与 `variables.css` 的 `--tag-{key}-bg/text` 是否对应 |

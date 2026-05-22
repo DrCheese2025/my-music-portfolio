@@ -66,7 +66,7 @@ function renderFeaturedWorks(allWorks) {
     featuredWorks.forEach(work => {
         const card = UIComponents.createWorkCard(work, (w) => {
             /* 点击卡片跳转到作品详情页 */
-            window.location.href = `${CONFIG.paths.pages}work-detail.html?id=${w.id}`;
+            PathUtils.navigate(`${CONFIG.paths.pages}work-detail.html?id=${w.id}`);
         });
         fragment.appendChild(card);
     });
@@ -108,7 +108,7 @@ function renderRecentDynamics(allDynamics) {
     recent.forEach(dynamic => {
         const card = UIComponents.createDynamicCard(dynamic, (refId) => {
             /* 点击关联作品跳转到对应作品详情 */
-            window.location.href = `${CONFIG.paths.pages}work-detail.html?id=${refId}`;
+            PathUtils.navigate(`${CONFIG.paths.pages}work-detail.html?id=${refId}`);
         });
         fragment.appendChild(card);
     });

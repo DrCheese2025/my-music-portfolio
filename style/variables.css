@@ -289,9 +289,8 @@
     --color-bg-header:         #1e1e22;
     --color-border:            #3a3a3e;
     --color-divider:           #2e2e32;
-*/
+
     /* 暗色主题标签色 - 降低饱和度 + 压暗底色，保持可读性 */
-/*
     --tag-default-bg:          #3a3a3e;
     --tag-default-text:        #b0ada8;
     --tag-song-bg:             #4a2a2a;
