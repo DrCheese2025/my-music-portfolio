@@ -223,6 +223,9 @@ const Utils = {
      * const works = await Utils.loadJSON('/data/artwork.json', { retries: 3 });
      */
     async loadJSON(url, options = {}) {
+        /* 解析 basePath ，拼接为正确的URL */
+        url = PathUtils.resolve(url);
+        
         /* 获取重试配置，允许调用方覆盖默认值 */
         const maxRetries = options.retries ?? this._fetchConfig.retries;
         const requestTimeout = options.timeout ?? this._fetchConfig.timeout;
