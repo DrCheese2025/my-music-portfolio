@@ -574,7 +574,24 @@
     "relatedWorkId": null,
     "date": "2026-06-01",
     "time": "10:00"
+  },
+  {
+    "id": "D065",
+    "title": "愚蠢的事",
+    "content": "我真的是干了自己所能干出的最愚蠢的事。我该怎么办？我的天哪。",
+    "image": null,
+    "relatedWorkId": null,
+    "date": "2026-06-01",
+    "time": "12:00"
+  },
+  {
+    "id": "D066",
+    "title": "恍惚",
+    "content": "荒谬的话一句接着一句，整日就这样迷迷糊糊，搞不清楚自己的言语到底在表达什么。甚至连道歉的话语都不知该怎样说。",
+    "image": null,
+    "relatedWorkId": null,
+    "date": "2026-06-01",
+    "time": "12:30"
   }
-  
   
 ]
